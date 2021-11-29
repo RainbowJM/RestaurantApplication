@@ -1,0 +1,62 @@
+version: "3.9"
+services:
+  menu-service:
+    build:
+      dockerfile: "../development/Dockerfile"
+      context: "../MenuService"
+      args:
+        - "/target/*.jar"
+    networks:
+      - services-network
+    ports:
+      - "8080:8080"
+  order-service:
+    build:
+      dockerfile: "../development/Dockerfile"
+      context: "../OrderService"
+      args:
+        - "/target/*.jar"
+    networks:
+      - services-network
+    ports:
+      - "8081:8081"
+  table-service:
+    build:
+      dockerfile: "../development/Dockerfile"
+      context: "../TableService"
+      args:
+        - "/target/*.jar"
+    networks:
+      - services-network
+    ports:
+      - "8082:8082"
+  user-service:
+    build:
+      dockerfile: "../development/Dockerfile"
+      context: "../UserService"
+      args:
+        - "/target/*.jar"
+    networks:
+      - services-network
+    ports:
+      - "8083:8083"
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./rabbitmq/volume/data/:/var/lib/rabbitmq/mnesia
+      - ./rabbitmq/volume/log/:/var/log/rabbitmq/
+  mongo:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_DATABASE=restaurantdb
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    ports:
+      - 27017:27017
+
+networks:
+  services-network:
+    driver: bridge
