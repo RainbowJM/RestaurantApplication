@@ -8,8 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="OrderService" />
         <module name="UserService" />
-        <module name="TableService" />
         <module name="MenuService" />
+        <module name="TableService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
