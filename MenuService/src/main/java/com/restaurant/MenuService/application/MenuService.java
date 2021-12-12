@@ -1,7 +1,11 @@
 package com.restaurant.MenuService.application;
 
+import com.restaurant.MenuService.data.MenuDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -10,8 +14,8 @@ public class MenuService {
     public MenuService() {
     }
 
-    public String placeholder() {
-        // Try to have as much logic happen in the domain model
-        return "This endpoint is working!";
+    public List<MenuDTO> getMenuByRestaurantId(long restaurantId){
+        //repository text
     }
+
 }

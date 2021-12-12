@@ -4,18 +4,21 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collection="Menu")
+import javax.annotation.processing.Generated;
+import java.lang.reflect.Array;
+import java.util.List;
+
 public class Menu {
-    @Id
-    public String id;
 
-    @Field("test")
-    private String test;
+    private long id;
+    private Array dishes;
+    private long restaurantId;
 
-    public Menu() {
-    }
+    public Menu() {}
 
-    public Menu(String test) {
-        this.test = test;
+    public Menu(long id, Array dishes, long restaurantId) {
+        this.id = id;
+        this.dishes = dishes;
+        this.restaurantId = restaurantId;
     }
 }
