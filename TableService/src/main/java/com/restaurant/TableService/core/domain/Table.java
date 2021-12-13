@@ -10,11 +10,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Table {
     @Id
     @Getter
-    private Long id;
+    private String id;
 
     @Id
     @Getter
-    private Long restaurantId;
+    private String restaurantId;
 
     @Getter
     @Setter
@@ -23,7 +23,7 @@ public class Table {
     public Table() {
     }
 
-    public Table(Long id, Long restaurantId, Long numberOfSeats) {
+    public Table(String id, String restaurantId, Long numberOfSeats) {
         this.id = id;
         this.restaurantId = restaurantId;
         this.numberOfSeats = numberOfSeats;
