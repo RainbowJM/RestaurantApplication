@@ -12,6 +12,10 @@ public class Table {
     @Getter
     private int id;
 
+    @Id
+    @Getter
+    private int restaurantId;
+
     @Getter
     @Setter
     private int numberOfSeats;
@@ -19,8 +23,9 @@ public class Table {
     public Table() {
     }
 
-    public Table(int id, int numberOfSeats) {
+    public Table(int id, int restaurantId, int numberOfSeats) {
         this.id = id;
+        this.restaurantId = restaurantId;
         this.numberOfSeats = numberOfSeats;
     }
 }
