@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "5c5d4a99-f84b-44da-961c-d61cd44faf96",
+		"name": "UserService Endpoint",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Basic Tests",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{UserServiceAddress}}/user/",
+							"host": [
+								"{{UserServiceAddress}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register New User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"testuser@email.com\",\r\n    \"password\": \"password123\",\r\n    \"firstName\": \"first\",\r\n    \"lastName\": \"last\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{UserServiceAddress}}/user/",
+							"host": [
+								"{{UserServiceAddress}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{UserServiceAddress}}/user/testuser@email.com/",
+							"host": [
+								"{{UserServiceAddress}}"
+							],
+							"path": [
+								"user",
+								"testuser@email.com",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "MenuServiceAddress",
+			"value": "localhost:8080"
+		},
+		{
+			"key": "OrderServiceAddress",
+			"value": "localhost:8081"
+		},
+		{
+			"key": "TableServiceAddress",
+			"value": "localhost:8082"
+		},
+		{
+			"key": "UserServiceAddress",
+			"value": "localhost:8083"
+		}
+	]
+}
