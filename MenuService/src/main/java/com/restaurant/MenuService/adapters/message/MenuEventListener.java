@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MenuEventListener {
-	private MenuCommandService  menuCommandService;
+	private final MenuCommandService  menuCommandService;
 
 	public MenuEventListener(MenuCommandService menuCommandService) {
 		this.menuCommandService = menuCommandService;
