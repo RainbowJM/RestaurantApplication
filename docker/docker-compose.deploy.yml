@@ -40,6 +40,16 @@ services:
       - mongo
     ports:
       - "8083:8083"
+  storage-service:
+    build:
+      dockerfile: "../docker/Dockerfile"
+      context: "../StorageService"
+      target: "deploy"
+    depends_on:
+      - rabbitmq
+      - mongo
+    ports:
+      - "8084:8084"
   rabbitmq:
     image: rabbitmq:3-management-alpine
     volumes:
