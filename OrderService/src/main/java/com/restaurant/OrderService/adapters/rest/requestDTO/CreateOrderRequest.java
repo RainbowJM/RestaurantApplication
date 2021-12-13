@@ -7,7 +7,7 @@ import java.util.Date;
 @Getter
 public class CreateOrderRequest {
     Long customerId;
-    Date orderDate;
+    String orderDate;
     String status;
     String deliverAddress;
     float totalPrice;

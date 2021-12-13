@@ -10,6 +10,9 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -19,8 +22,9 @@ public class OrderCommandService {
 
     public OrderCommandService(OrderRepository repository) { this.repository = repository; }
 
-    public Order handle(CreateOrderCommand orderCommand){
-        Order order = new Order(orderCommand.customerId(), orderCommand.orderdate(), orderCommand.status(), orderCommand.deliverAddress(), orderCommand.totalPrice());
+    public Order handle(CreateOrderCommand orderCommand) throws ParseException {
+        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(orderCommand.orderdate());
+        Order order = new Order(orderCommand.customerId(), date, orderCommand.status(), orderCommand.deliverAddress(), orderCommand.totalPrice());
         return this.repository.save(order);
     }
 
