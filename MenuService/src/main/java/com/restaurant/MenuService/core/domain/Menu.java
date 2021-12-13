@@ -12,19 +12,19 @@ public class Menu {
 
     @Id
     @Getter
-    private long id;
+    private Long id;
 
     @Getter
     @Setter
-    private List dishes;
+    private List<Long> dishes;
 
-    @Id
+    @Setter
     @Getter
-    private long restaurantId;
+    private Long restaurantId;
 
     public Menu() {}
 
-    public Menu(long id, List dishes, long restaurantId) {
+    public Menu(Long id, List<Long> dishes, Long restaurantId) {
         this.id = id;
         this.dishes = dishes;
         this.restaurantId = restaurantId;
