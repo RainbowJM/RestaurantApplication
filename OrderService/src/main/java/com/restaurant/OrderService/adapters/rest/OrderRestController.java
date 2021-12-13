@@ -44,9 +44,9 @@ public class OrderRestController {
         return this.commandService.handle( new ChangeOrderCommand( changeOrderRequest.getOrderId(), changeOrderRequest.getCustomerId(), changeOrderRequest.getOrderDate(), changeOrderRequest.getStatus(), changeOrderRequest.getDeliverAddress(), changeOrderRequest.getTotalPrice()));
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("{id}/")
     public void deleteUser(@PathVariable Long id) {
-        this.commandService.handle(new CancelOrderCommand(id));
+        this.commandService.handle(new CancelOrderCommand(id.toString()));
     }
 
 }

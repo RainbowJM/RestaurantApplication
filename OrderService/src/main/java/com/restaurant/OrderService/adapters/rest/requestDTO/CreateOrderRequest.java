@@ -6,8 +6,8 @@ import java.util.Date;
 
 @Getter
 public class CreateOrderRequest {
-    Long customerId;
-    String orderDate;
+    String customerId;
+    Date orderDate;
     String status;
     String deliverAddress;
     float totalPrice;
