@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/MenuService/MenuService.iml" filepath="$PROJECT_DIR$/MenuService/MenuService.iml" />
       <module fileurl="file://$PROJECT_DIR$/OrderService/OrderService.iml" filepath="$PROJECT_DIR$/OrderService/OrderService.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/RestaurantApplication.iml" filepath="$PROJECT_DIR$/.idea/RestaurantApplication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/StorageService/StorageService.iml" filepath="$PROJECT_DIR$/StorageService/StorageService.iml" />
       <module fileurl="file://$PROJECT_DIR$/TableService/TableService.iml" filepath="$PROJECT_DIR$/TableService/TableService.iml" />
       <module fileurl="file://$PROJECT_DIR$/UserService/UserService.iml" filepath="$PROJECT_DIR$/UserService/UserService.iml" />
     </modules>
