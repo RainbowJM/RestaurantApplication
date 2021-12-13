@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -34,7 +35,7 @@ public class OrderRestController {
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public Order createOrder(@Valid @RequestBody CreateOrderRequest createOrderRequest){
+    public Order createOrder(@Valid @RequestBody CreateOrderRequest createOrderRequest) throws ParseException {
         return this.commandService.handle(new CreateOrderCommand(createOrderRequest.getCustomerId(), createOrderRequest.getOrderDate(), createOrderRequest.getStatus(), createOrderRequest.getDeliverAddress(), createOrderRequest.getTotalPrice()));
     }
 

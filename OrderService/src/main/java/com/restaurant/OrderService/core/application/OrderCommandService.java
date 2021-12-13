@@ -23,8 +23,7 @@ public class OrderCommandService {
     public OrderCommandService(OrderRepository repository) { this.repository = repository; }
 
     public Order handle(CreateOrderCommand orderCommand) throws ParseException {
-        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(orderCommand.orderdate());
-        Order order = new Order(orderCommand.customerId(), date, orderCommand.status(), orderCommand.deliverAddress(), orderCommand.totalPrice());
+        Order order = new Order(orderCommand.customerId(), orderCommand.orderdate(), orderCommand.status(), orderCommand.deliverAddress(), orderCommand.totalPrice());
         return this.repository.save(order);
     }
 
