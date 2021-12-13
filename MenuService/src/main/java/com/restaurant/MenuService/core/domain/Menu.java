@@ -18,7 +18,7 @@ public class Menu {
     @Setter
     private List<Long> dishes;
 
-    @Id
+    @Setter
     @Getter
     private Long restaurantId;
 
