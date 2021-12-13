@@ -17,7 +17,7 @@ public class MenuQueryService {
         this.menuRepository = menuRepository;
     }
 
-    public List<Menu> getAllMenusByRestaurantId(long restaurantId){
+    public List<Menu> getAllMenusByRestaurantId(String restaurantId){
         return this.menuRepository.findAllByRestaurantId(restaurantId);
     }
 

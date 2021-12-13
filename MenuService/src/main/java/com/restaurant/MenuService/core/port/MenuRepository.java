@@ -4,9 +4,10 @@ import com.restaurant.MenuService.core.domain.Menu;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface MenuRepository extends MongoRepository<Menu, Long> {
-	List<Menu> findAllByRestaurantId(long restaurantId);
-	Menu findById(long menuId);
-	Boolean deleteMenuById(long menuId);
+public interface MenuRepository extends MongoRepository<Menu, String> {
+	List<Menu> findAllByRestaurantId(String restaurantId);
+	Optional<Menu> findById(String menuId);
+	Boolean deleteMenuById(String menuId);
 }

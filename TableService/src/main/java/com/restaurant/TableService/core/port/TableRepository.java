@@ -6,10 +6,10 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface TableRepository extends MongoRepository<Table, Long> {
+public interface TableRepository extends MongoRepository<Table, String> {
     List<Table> findAll();
-    Optional<Table> findById(Long id);
-    boolean existsById(Long id);
+    Optional<Table> findById(String id);
+    boolean existsById(String id);
 
-    Optional<Table> deleteTableById(Long id);
+    Optional<Table> deleteByTableId(String id);
 }
