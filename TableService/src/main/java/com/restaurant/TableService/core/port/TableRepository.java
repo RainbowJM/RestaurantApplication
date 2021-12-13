@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public interface TableRepository extends MongoRepository<Table, Long> {
     List<Table> findAll();
-    Optional<Table> findById(int id);
-    boolean existsById(int id);
+    Optional<Table> findById(Long id);
+    boolean existsById(Long id);
 
-    Optional<Table> deleteByTableId(int id);
+    Optional<Table> deleteByTableId(Long id);
 }
