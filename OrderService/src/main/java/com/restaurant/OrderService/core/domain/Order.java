@@ -12,14 +12,14 @@ import java.util.Date;
 @NoArgsConstructor
 public class Order {
     @Id
-    Long orderId;
-    Long customerId;
+    String orderId;
+    String customerId;
     Date orderDate;
     String status;
     String deliverAddress;
     float totalPrice;
 
-    public Order(Long customerId, Date orderDate, String status, String deliverAddress, float totalPrice){
+    public Order(String customerId, Date orderDate, String status, String deliverAddress, float totalPrice){
         this.customerId = customerId;
         this.orderDate = orderDate;
         this.status = status;

@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Getter
 public class CreateOrderRequest {
-    Long customerId;
+    String customerId;
     Date orderDate;
     String status;
     String deliverAddress;
