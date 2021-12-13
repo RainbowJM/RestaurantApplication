@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class User {
     @Id
     @Getter
-    private String id;
+    private Long id;
 
     @Indexed(unique = true)
     @Getter @Setter
