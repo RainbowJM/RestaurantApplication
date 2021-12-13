@@ -12,7 +12,6 @@ public class Table {
     @Getter
     private Long id;
 
-    @Id
     @Getter
     private Long restaurantId;
 
