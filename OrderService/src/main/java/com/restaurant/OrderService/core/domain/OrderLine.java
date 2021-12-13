@@ -9,9 +9,9 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 public class OrderLine {
     @Id
-    Long orderLineId;
-    Long orderId;
-    Long productId;
+    String orderLineId;
+    String orderId;
+    String productId;
     int amount;
     float price;
 }
