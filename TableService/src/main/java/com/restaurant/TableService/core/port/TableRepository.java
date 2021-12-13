@@ -11,5 +11,5 @@ public interface TableRepository extends MongoRepository<Table, String> {
     Optional<Table> findById(String id);
     boolean existsById(String id);
 
-    Optional<Table> deleteByTableId(String id);
+    Optional<Table> deleteTableById(String id);
 }
