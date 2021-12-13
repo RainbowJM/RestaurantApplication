@@ -7,7 +7,6 @@ import org.springframework.data.annotation.Id;
 
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class OrderLine {
     @Id
     Long orderLineId;
