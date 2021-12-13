@@ -6,8 +6,8 @@ import java.util.Date;
 
 @Getter
 public class ChangeOrderRequest {
-    Long orderId;
-    Long customerId;
+    String orderId;
+    String customerId;
     Date orderDate;
     String status;
     String deliverAddress;

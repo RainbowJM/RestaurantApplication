@@ -12,19 +12,19 @@ public class Menu {
 
     @Id
     @Getter
-    private Long id;
+    private String id;
 
     @Getter
     @Setter
-    private List<Long> dishes;
+    private List<String> dishes;
 
     @Setter
     @Getter
-    private Long restaurantId;
+    private String restaurantId;
 
     public Menu() {}
 
-    public Menu(Long id, List<Long> dishes, Long restaurantId) {
+    public Menu(String id, List<String> dishes, String restaurantId) {
         this.id = id;
         this.dishes = dishes;
         this.restaurantId = restaurantId;
