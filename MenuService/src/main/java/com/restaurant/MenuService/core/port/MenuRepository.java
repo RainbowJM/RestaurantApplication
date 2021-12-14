@@ -8,6 +8,8 @@ import java.util.Optional;
 
 public interface MenuRepository extends MongoRepository<Menu, String> {
 	List<Menu> findAllByRestaurantId(String restaurantId);
-	Optional<Menu> findById(String menuId);
+	Optional<Menu> findMenuById(String menuId);
+	Optional<Menu> findMenuByRestaurantId(String restaurantId);
+	boolean existsById(String menuId);
 	Boolean deleteMenuById(String menuId);
 }
