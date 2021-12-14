@@ -19,6 +19,10 @@ public class Table {
     @Setter
     private Long numberOfSeats;
 
+    @Getter
+    @Setter
+    private String user;
+
     public Table() {
     }
 

@@ -1,6 +1,6 @@
-package com.restaurant.UserService.adapter.rest;
+package com.restaurant.UserService.adapter.ingoing.rest;
 
-import com.restaurant.UserService.adapter.rest.requestDTO.RegisterUserRequest;
+import com.restaurant.UserService.adapter.ingoing.rest.requestDTO.RegisterUserRequest;
 import com.restaurant.UserService.core.application.UserCommandService;
 import com.restaurant.UserService.core.application.UserQueryService;
 import com.restaurant.UserService.core.application.command.DeleteUserCommand;

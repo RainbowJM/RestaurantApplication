@@ -1,4 +1,4 @@
-package com.restaurant.UserService.adapter.rest.requestDTO;
+package com.restaurant.UserService.adapter.ingoing.rest.requestDTO;
 
 import lombok.Getter;
 
