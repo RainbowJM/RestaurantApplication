@@ -9,6 +9,7 @@ import com.restaurant.UserService.core.application.query.ListAllUsersQuery;
 import com.restaurant.UserService.core.domain.User;
 import com.restaurant.UserService.core.domain.exception.FailedToDeleteUser;
 import com.restaurant.UserService.core.domain.exception.UsernameAlreadyTaken;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,16 +19,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping(path="/user")
 public class UserRestController {
     public final UserQueryService queryService;
     public final UserCommandService commandService;
-
-    public UserRestController(UserQueryService queryService, UserCommandService commandService) {
-        this.queryService = queryService;
-        this.commandService = commandService;
-    }
 
     @GetMapping(path="/")
     @ResponseStatus(HttpStatus.OK)
@@ -38,7 +35,7 @@ public class UserRestController {
     @PostMapping(path="/")
     @ResponseStatus(HttpStatus.CREATED)
     public User registerUser(@Valid @RequestBody RegisterUserRequest registerRequest) {
-        return this.commandService.handle(new RegisterUserCommand(registerRequest.getUsername(), registerRequest.getPassword(), registerRequest.getFirstName(), registerRequest.getLastName()));
+        return this.commandService.handle(new RegisterUserCommand(registerRequest.username, registerRequest.password, registerRequest.firstName, registerRequest.lastName));
     }
 
     @DeleteMapping(path="/{id}/")

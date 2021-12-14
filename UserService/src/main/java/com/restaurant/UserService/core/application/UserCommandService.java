@@ -26,6 +26,7 @@ public class UserCommandService {
         User newUser = new User(registerCommand.username(), registerCommand.password(), registerCommand.firstName(), registerCommand.lastName());
 
         // todo: publish events when a new user has been registered
+        // todo: check if user had any tables and if so prevent it from being deleted
         return this.repository.save(newUser);
     }
 
