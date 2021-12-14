@@ -1,5 +1,6 @@
 package com.restaurant.MenuService.core.domain;
 
+import com.restaurant.MenuService.core.domain.exceptions.InvalidRestaurantIdException;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -18,7 +19,6 @@ public class Menu {
     @Setter
     private List<String> dishes;
 
-    @Setter
     @Getter
     private String restaurantId;
 
@@ -27,6 +27,17 @@ public class Menu {
     public Menu(String id, List<String> dishes, String restaurantId) {
         this.id = id;
         this.dishes = dishes;
-        this.restaurantId = restaurantId;
+        setRestaurantId(restaurantId);
+    }
+
+    public void setRestaurantId(String restaurantId){
+        try {
+            if (Integer.parseInt(restaurantId) < 1) {
+                throw new InvalidRestaurantIdException(restaurantId);
+            }
+            this.restaurantId= restaurantId;
+        } catch (NumberFormatException e){
+            System.out.println("input string cannot be parsed");
+        }
     }
 }
