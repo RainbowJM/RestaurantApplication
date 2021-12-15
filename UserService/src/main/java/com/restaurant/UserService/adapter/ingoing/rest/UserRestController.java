@@ -8,6 +8,7 @@ import com.restaurant.UserService.core.application.command.RegisterUserCommand;
 import com.restaurant.UserService.core.application.query.ListAllUsersQuery;
 import com.restaurant.UserService.core.domain.User;
 import com.restaurant.UserService.core.domain.exception.FailedToDeleteUser;
+import com.restaurant.UserService.core.domain.exception.UserDeleteWithActiveOrders;
 import com.restaurant.UserService.core.domain.exception.UsernameAlreadyTaken;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -44,7 +45,7 @@ public class UserRestController {
         this.commandService.handle(new DeleteUserCommand(id));
     }
 
-    @ExceptionHandler({FailedToDeleteUser.class})
+    @ExceptionHandler({FailedToDeleteUser.class, UserDeleteWithActiveOrders.class})
     public ResponseEntity<Map<String, String>> handleForbiddenType(RuntimeException exception) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Collections.singletonMap("error", exception.getMessage()));
     }

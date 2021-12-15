@@ -51,6 +51,9 @@ public class UserCommandService {
             throw new UserDeleteWithActiveOrders(deleteCommand.username());
         }
 
+        // fixme: delete all orders from this user
+        // fixme: send event over message queues
+
         if (this.userRepository.deleteByUsername(deleteCommand.username()).isEmpty()) {
             throw new FailedToDeleteUser(deleteCommand.username());
         }
