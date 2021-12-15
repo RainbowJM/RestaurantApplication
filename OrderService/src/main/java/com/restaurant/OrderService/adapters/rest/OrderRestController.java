@@ -45,7 +45,8 @@ public class OrderRestController {
     }
 
     @DeleteMapping("/{id}/")
-    public void deleteUser(@PathVariable String id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void cancelOrder(@PathVariable String id) {
         this.commandService.handle(new CancelOrderCommand(id));
     }
 
