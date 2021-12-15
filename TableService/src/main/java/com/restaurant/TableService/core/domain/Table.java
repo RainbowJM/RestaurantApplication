@@ -25,7 +25,7 @@ public class Table {
 
     @Getter
     @Setter
-    private String user;
+    private String order;
 
     public Table() {
     }
