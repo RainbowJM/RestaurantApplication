@@ -27,13 +27,13 @@
 					"response": []
 				},
 				{
-					"name": "Create New Order",
+					"name": "Create New Online Order",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"customerId\": \"123\",\r\n    \"orderDate\" : \"31/10/2021\",\r\n    \"status\" : \"Status\",\r\n    \"deliverAddress\" : \"Adres\",\r\n    \"totalPrice\" : \"10\"\r\n}",
+							"raw": "{\r\n    \"customerId\": \"testuser@email.com\",\r\n    \"orderDate\" : \"31/10/2021\",\r\n    \"status\" : \"Active\",\r\n    \"deliverAddress\" : \"Adres\",\r\n    \"totalPrice\" : \"10\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -54,7 +54,7 @@
 					"response": []
 				},
 				{
-					"name": "Cancel Order",
+					"name": "Delete Order",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -67,6 +67,25 @@
 								"order",
 								"61b8e0b897aca07af2a8cc8c",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{OrderServiceAddress}}/order/61b8e0b897aca07af2a8cc8c/cancel",
+							"host": [
+								"{{OrderServiceAddress}}"
+							],
+							"path": [
+								"order",
+								"61b8e0b897aca07af2a8cc8c",
+								"cancel"
 							]
 						}
 					},
