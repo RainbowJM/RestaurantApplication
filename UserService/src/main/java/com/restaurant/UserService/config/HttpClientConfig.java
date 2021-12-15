@@ -1,5 +1,6 @@
 package com.restaurant.UserService.config;
 
+import com.restaurant.UserService.adapter.outgoing.rest.OrderRestRepository;
 import com.restaurant.UserService.adapter.outgoing.rest.TableRestRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,9 +12,17 @@ public class HttpClientConfig {
     @Value("${restaurant.rest.table-path}")
     private String tableEndpointPath;
 
+    @Value("${restaurant.rest.order-path}")
+    private String orderEndpointPath;
+
     @Bean
-    public TableRestRepository httpJobRepository() {
+    public TableRestRepository httpTableRepository() {
         return new TableRestRepository(tableEndpointPath, restTemplate());
+    }
+
+    @Bean
+    public OrderRestRepository httpOrderRepository() {
+        return new OrderRestRepository(orderEndpointPath, restTemplate());
     }
 
     @Bean
