@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class Order {
     @Id
-    String orderId;
+    String id;
     String customerId;
     Date orderDate;
     String status;

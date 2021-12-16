@@ -21,14 +21,18 @@ public class Table {
 
     @Getter
     @Setter
-    private String user;
+    private String location;
+
+    @Getter
+    @Setter
+    private String order;
 
     public Table() {
     }
 
-    public Table(String id, String restaurantId, Long numberOfSeats) {
-        this.id = id;
+    public Table(String restaurantId, String location, Long numberOfSeats) {
         this.restaurantId = restaurantId;
+        this.location = location;
         this.numberOfSeats = numberOfSeats;
     }
 }
