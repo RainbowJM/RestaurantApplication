@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="RestaurantServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="RestaurantService" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.restaurant.RestaurantService.RestaurantServiceApplication" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

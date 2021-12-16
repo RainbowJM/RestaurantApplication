@@ -12,13 +12,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="User")
 @ToString(exclude="password")
-@EqualsAndHashCode(exclude={"firstName", "lastName"})
+@EqualsAndHashCode
 public class User {
     @Id
-    @Getter
-    private String id;
-
-    @Indexed(unique = true)
     @Getter @Setter
     private String username;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

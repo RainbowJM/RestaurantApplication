@@ -50,6 +50,16 @@ services:
       - mongo
     ports:
       - "8084:8084"
+  restaurant-service:
+    build:
+      dockerfile: "../docker/Dockerfile"
+      context: "../RestaurantService"
+      target: "deploy"
+    depends_on:
+      - rabbitmq
+      - mongo
+    ports:
+      - "8085:8085"
   rabbitmq:
     image: rabbitmq:3-management-alpine
     volumes:
