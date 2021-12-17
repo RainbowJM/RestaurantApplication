@@ -35,12 +35,6 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        // todo: check what the best way is to handle cross-service calls in terms of authentication
-        if (request.getRemoteAddr().equals("localhost")) { // "0:0:0:0:0:0:0:1"
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken("OtherService", null, Arrays.asList(new SimpleGrantedAuthority("ROLE_"+UserRole.OtherService)));
-            SecurityContextHolder.getContext().setAuthentication(token);
-        }
-
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.toUpperCase().startsWith("BEARER ")) {
             chain.doFilter(request, response);
@@ -51,8 +45,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
         UsernamePasswordAuthenticationToken authToken;
         try {
             authToken = parseAuthToken(authTokenString);
-        }
-        catch (SignatureException exception) {
+        } catch (SignatureException exception) {
             chain.doFilter(request, response);
             return;
         }
@@ -61,6 +54,11 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken parseAuthToken(String authToken) throws SignatureException {
+        if (environment.getProperty("restaurant.rest.private-token").equals(authToken)) {
+            return new UsernamePasswordAuthenticationToken("OtherService", null, Arrays.asList(new SimpleGrantedAuthority("ROLE_"+UserRole.OtherService)));
+        }
+
+        // Parse token if it's not the private shared token
         JwtParser parser = Jwts.parser().setSigningKey(LoginRestController.key);
         Claims claims = parser.parseClaimsJws(authToken).getBody();
         String user = claims.getSubject();

@@ -34,7 +34,7 @@ public class UserRestController {
 
     @GetMapping(path="/")
     @ResponseStatus(HttpStatus.OK)
-    @RolesAllowed({"Staff", "Management"})
+    @RolesAllowed({"Staff", "Management", "OtherService"})
     public List<User> getUsers() {
         return this.queryService.handle(new ListAllUsersQuery());
     }
@@ -47,26 +47,24 @@ public class UserRestController {
 
     @DeleteMapping(path="/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RolesAllowed({"User", "Staff", "Management"})
+    @RolesAllowed({"User", "Staff", "Management", "OtherService"})
     public void deleteOwnAccount(Authentication auth) {
         this.commandService.handle(new DeleteUserCommand(auth.getName()));
     }
 
     @DeleteMapping(path="/{username}/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RolesAllowed({"Staff", "Management"})
+    @RolesAllowed({"Staff", "Management", "OtherService"})
     public void deleteOtherUser(Authentication auth, @PathVariable String username) {
         this.commandService.handle(new DeleteUserCommand(username));
     }
 
     @GetMapping(path="/{username}/")
     @ResponseStatus(HttpStatus.OK)
-    @RolesAllowed({"Staff", "Management"})
+    @RolesAllowed({"Staff", "Management", "OtherService"})
     public List<User> getUserName(@PathVariable String username) {
         return this.queryService.handle(new ListAllUsersQuery());
     }
-
-
 
     @ExceptionHandler({AccessDeniedException.class})
     public ResponseEntity<Map<String, String>> handleOldTokenException(Exception exception) {

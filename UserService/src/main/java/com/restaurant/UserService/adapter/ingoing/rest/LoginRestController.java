@@ -12,8 +12,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -39,6 +41,7 @@ public class LoginRestController {
     }
 
     @PostMapping(path="/login")
+    @ResponseStatus(HttpStatus.OK)
     public LoginTokenResponse loginUser(@Valid @RequestBody LoginRequest loginRequest) {
         User user = this.queryService.handle(new GetUserQuery(loginRequest.username));
         if (user == null)
