@@ -1,7 +1,7 @@
-package com.restaurant.OrderService.adapters.rest;
+package com.restaurant.OrderService.adapters.incoming.rest;
 
-import com.restaurant.OrderService.adapters.rest.requestDTO.ChangeOrderRequest;
-import com.restaurant.OrderService.adapters.rest.requestDTO.CreateOrderRequest;
+import com.restaurant.OrderService.adapters.incoming.rest.requestDTO.ChangeOrderRequest;
+import com.restaurant.OrderService.adapters.incoming.rest.requestDTO.CreateOrderRequest;
 import com.restaurant.OrderService.core.application.OrderCommandService;
 import com.restaurant.OrderService.core.application.OrderQueryService;
 import com.restaurant.OrderService.core.application.command.CancelOrderCommand;
@@ -46,16 +46,16 @@ public class OrderRestController {
         return this.commandService.handle( new ChangeOrderCommand( changeOrderRequest.getOrderId(), changeOrderRequest.getCustomerId(), changeOrderRequest.getOrderDate(), changeOrderRequest.getStatus(), changeOrderRequest.getDeliverAddress(), changeOrderRequest.getTotalPrice()));
     }
 
+    @PutMapping("/{id}/cancel")
+    @ResponseStatus(HttpStatus.OK)
+    public Order cancelOrder(@PathVariable String id) {
+        return this.commandService.handle(new CancelOrderCommand(id));
+    }
+
     @DeleteMapping("/{id}/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteOrder(@PathVariable String id) {
         this.commandService.handle(new DeleteOrderCommand(id));
-    }
-
-    @PostMapping("/{id}/cancel")
-    @ResponseStatus(HttpStatus.OK)
-    public Order cancelOrder(@PathVariable String id) {
-        return this.commandService.handle(new CancelOrderCommand(id));
     }
 
 }
