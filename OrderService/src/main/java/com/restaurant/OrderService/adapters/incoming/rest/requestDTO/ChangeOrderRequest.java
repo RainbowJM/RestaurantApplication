@@ -1,4 +1,4 @@
-package com.restaurant.OrderService.adapters.rest.requestDTO;
+package com.restaurant.OrderService.adapters.incoming.rest.requestDTO;
 
 import lombok.Getter;
 

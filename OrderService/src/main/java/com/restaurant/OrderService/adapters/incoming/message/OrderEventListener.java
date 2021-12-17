@@ -1,4 +1,4 @@
-package com.restaurant.OrderService.adapters.message;
+package com.restaurant.OrderService.adapters.incoming.message;
 
 import com.restaurant.OrderService.core.application.OrderCommandService;
 import org.springframework.stereotype.Component;
