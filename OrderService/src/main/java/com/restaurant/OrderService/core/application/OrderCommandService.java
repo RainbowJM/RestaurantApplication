@@ -3,6 +3,7 @@ package com.restaurant.OrderService.core.application;
 import com.restaurant.OrderService.core.application.command.CancelOrderCommand;
 import com.restaurant.OrderService.core.application.command.ChangeOrderCommand;
 import com.restaurant.OrderService.core.application.command.CreateOrderCommand;
+import com.restaurant.OrderService.core.application.command.DeleteOrderCommand;
 import com.restaurant.OrderService.core.domain.Order;
 import com.restaurant.OrderService.core.domain.exception.OrderNotFound;
 import com.restaurant.OrderService.core.port.OrderRepository;
@@ -37,13 +38,21 @@ public class OrderCommandService {
         return order;
     }
 
-    public void handle(CancelOrderCommand orderCommand){
+    public Order handle(CancelOrderCommand orderCommand){
         Optional<Order> optOrder = this.repository.findById(orderCommand.orderId());
         if (optOrder.isEmpty())
             throw new OrderNotFound(orderCommand.orderId());
 
         Order order = optOrder.get();
         order.setStatus("Cancelled");
-        this.repository.save(order);
+        return this.repository.save(order);
+    }
+
+    public void handle(DeleteOrderCommand orderCommand) {
+        Optional<Order> optOrder = this.repository.findById(orderCommand.orderId());
+        if (optOrder.isEmpty())
+            throw new OrderNotFound(orderCommand.orderId());
+
+        this.repository.deleteOrderById(orderCommand.orderId());
     }
 }

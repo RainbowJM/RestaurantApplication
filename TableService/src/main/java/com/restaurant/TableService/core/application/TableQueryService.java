@@ -1,5 +1,6 @@
 package com.restaurant.TableService.core.application;
 
+import com.restaurant.TableService.core.application.query.ListTablesQuery;
 import com.restaurant.TableService.core.domain.Table;
 import com.restaurant.TableService.core.port.TableRepository;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,10 @@ public class TableQueryService {
         this.tableRepository = tableRepository;
     }
 
-    public List<Table> GetAllTables(){
-       return this.tableRepository.findAll();
+    public List<Table> handle(ListTablesQuery listTablesQuery) {
+        if (listTablesQuery.optionalUserId() == null)
+            return this.tableRepository.findAll();
+        else
+            return this.tableRepository.findTablesByUser(listTablesQuery.optionalUserId());
     }
 }

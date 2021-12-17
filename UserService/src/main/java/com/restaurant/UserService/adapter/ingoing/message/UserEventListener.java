@@ -1,4 +1,4 @@
-package com.restaurant.UserService.adapter.message;
+package com.restaurant.UserService.adapter.ingoing.message;
 
 import com.restaurant.UserService.core.application.UserCommandService;
 import org.springframework.stereotype.Component;

@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface OrderRepository extends MongoRepository<Order, String> {
     List<Order> findAll();
     Optional<Order> findById(String id);
+
+    Optional<Order> deleteOrderById(String orderId);
 }

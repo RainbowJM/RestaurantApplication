@@ -7,6 +7,7 @@ import com.restaurant.OrderService.core.application.OrderQueryService;
 import com.restaurant.OrderService.core.application.command.CancelOrderCommand;
 import com.restaurant.OrderService.core.application.command.ChangeOrderCommand;
 import com.restaurant.OrderService.core.application.command.CreateOrderCommand;
+import com.restaurant.OrderService.core.application.command.DeleteOrderCommand;
 import com.restaurant.OrderService.core.application.query.ListAllOrdersQuery;
 import com.restaurant.OrderService.core.domain.Order;
 import org.springframework.http.HttpStatus;
@@ -46,8 +47,15 @@ public class OrderRestController {
     }
 
     @DeleteMapping("/{id}/")
-    public void deleteUser(@PathVariable String id) {
-        this.commandService.handle(new CancelOrderCommand(id));
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOrder(@PathVariable String id) {
+        this.commandService.handle(new DeleteOrderCommand(id));
+    }
+
+    @PostMapping("/{id}/cancel")
+    @ResponseStatus(HttpStatus.OK)
+    public Order cancelOrder(@PathVariable String id) {
+        return this.commandService.handle(new CancelOrderCommand(id));
     }
 
 }
