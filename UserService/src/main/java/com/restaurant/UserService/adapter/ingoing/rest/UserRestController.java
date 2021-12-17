@@ -7,12 +7,16 @@ import com.restaurant.UserService.core.application.command.DeleteUserCommand;
 import com.restaurant.UserService.core.application.command.RegisterUserCommand;
 import com.restaurant.UserService.core.application.query.ListAllUsersQuery;
 import com.restaurant.UserService.core.domain.User;
+import com.restaurant.UserService.core.domain.exception.CantDeleteOtherUser;
 import com.restaurant.UserService.core.domain.exception.FailedToDeleteUser;
 import com.restaurant.UserService.core.domain.exception.UserDeleteWithActiveOrders;
 import com.restaurant.UserService.core.domain.exception.UsernameAlreadyTaken;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
@@ -30,7 +34,7 @@ public class UserRestController {
 
     @GetMapping(path="/")
     @ResponseStatus(HttpStatus.OK)
-    @RolesAllowed({""})
+    @RolesAllowed({"Staff", "Management"})
     public List<User> getUsers() {
         return this.queryService.handle(new ListAllUsersQuery());
     }
@@ -41,10 +45,32 @@ public class UserRestController {
         return this.commandService.handle(new RegisterUserCommand(registerRequest.username, registerRequest.password, registerRequest.firstName, registerRequest.lastName));
     }
 
-    @DeleteMapping(path="/{id}/")
+    @DeleteMapping(path="/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable String id) {
-        this.commandService.handle(new DeleteUserCommand(id));
+    @RolesAllowed({"User", "Staff", "Management"})
+    public void deleteOwnAccount(Authentication auth) {
+        this.commandService.handle(new DeleteUserCommand(auth.getName()));
+    }
+
+    @DeleteMapping(path="/{username}/")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RolesAllowed({"Staff", "Management"})
+    public void deleteOtherUser(Authentication auth, @PathVariable String username) {
+        this.commandService.handle(new DeleteUserCommand(username));
+    }
+
+    @GetMapping(path="/{username}/")
+    @ResponseStatus(HttpStatus.OK)
+    @RolesAllowed({"Staff", "Management"})
+    public List<User> getUserName(@PathVariable String username) {
+        return this.queryService.handle(new ListAllUsersQuery());
+    }
+
+
+
+    @ExceptionHandler({AccessDeniedException.class})
+    public ResponseEntity<Map<String, String>> handleOldTokenException(Exception exception) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Collections.singletonMap("error", "Access was denied! You should make sure that your login token is still up-to-date."));
     }
 
     @ExceptionHandler({FailedToDeleteUser.class, UserDeleteWithActiveOrders.class})

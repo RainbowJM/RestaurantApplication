@@ -2,8 +2,11 @@ package com.restaurant.UserService.adapter.ingoing.rest;
 
 import com.restaurant.UserService.adapter.ingoing.rest.requestDTO.LoginRequest;
 import com.restaurant.UserService.core.application.UserQueryService;
+import com.restaurant.UserService.core.application.query.GetUserQuery;
+import com.restaurant.UserService.core.domain.User;
 import com.restaurant.UserService.core.domain.UserRole;
 import com.restaurant.UserService.adapter.ingoing.rest.respondDTO.LoginTokenResponse;
+import com.restaurant.UserService.core.domain.exception.UserCannotBeFound;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,7 +23,7 @@ import java.util.Calendar;
 @AllArgsConstructor
 @RestController
 public class LoginRestController {
-    private final static Key key = MacProvider.generateKey();
+    public final static Key key = MacProvider.generateKey();
     private final UserQueryService queryService;
 
     public String generateToken(String username, UserRole role) throws JwtException {
@@ -37,6 +40,9 @@ public class LoginRestController {
 
     @PostMapping(path="/login")
     public LoginTokenResponse loginUser(@Valid @RequestBody LoginRequest loginRequest) {
-        return new LoginTokenResponse(loginRequest.username, generate);
+        User user = this.queryService.handle(new GetUserQuery(loginRequest.username));
+        if (user == null)
+            throw new UserCannotBeFound(loginRequest.username);
+        return new LoginTokenResponse(loginRequest.username, generateToken(user.getUsername(), user.getRole()));
     }
 }

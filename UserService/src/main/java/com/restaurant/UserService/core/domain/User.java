@@ -21,7 +21,7 @@ import java.util.Collection;
 @Document(collection="User")
 @ToString(exclude="password")
 @EqualsAndHashCode
-public class User{
+public class User {
     @Id
     @Getter @Setter
     private String username;
@@ -46,29 +46,4 @@ public class User{
         this.lastName = lastName;
         this.role = UserRole.User;
     }
-
-    /*@Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_"+getRole()));
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }*/
 }
