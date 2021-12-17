@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
@@ -24,11 +25,12 @@ import java.util.Map;
 @RestController
 @RequestMapping(path="/user")
 public class UserRestController {
-    public final UserQueryService queryService;
-    public final UserCommandService commandService;
+    private final UserQueryService queryService;
+    private final UserCommandService commandService;
 
     @GetMapping(path="/")
     @ResponseStatus(HttpStatus.OK)
+    @RolesAllowed({""})
     public List<User> getUsers() {
         return this.queryService.handle(new ListAllUsersQuery());
     }
