@@ -24,7 +24,7 @@ public class OrderCommandService {
     public OrderCommandService(OrderRepository repository) { this.repository = repository; }
 
     public Order handle(CreateOrderCommand orderCommand) throws ParseException {
-        Order order = new Order(orderCommand.customerId(), orderCommand.orderdate(), orderCommand.status(), orderCommand.deliverAddress(), orderCommand.totalPrice());
+        Order order = new Order(orderCommand.customerId(), orderCommand.restaurantId(), orderCommand.orderdate(), orderCommand.status(), orderCommand.deliverAddress(), orderCommand.totalPrice());
         return this.repository.save(order);
     }
 

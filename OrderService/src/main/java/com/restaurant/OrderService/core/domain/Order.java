@@ -13,14 +13,16 @@ import java.util.Date;
 public class Order {
     @Id
     String id;
+    String restaurantId;
     String customerId;
     Date orderDate;
     String status;
     String deliverAddress;
     float totalPrice;
 
-    public Order(String customerId, Date orderDate, String status, String deliverAddress, float totalPrice){
+    public Order(String customerId, String restaurantId, Date orderDate, String status, String deliverAddress, float totalPrice){
         this.customerId = customerId;
+        this.restaurantId = restaurantId;
         this.orderDate = orderDate;
         this.status = status;
         this.deliverAddress = deliverAddress;

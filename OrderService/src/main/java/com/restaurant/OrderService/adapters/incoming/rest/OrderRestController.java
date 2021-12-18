@@ -1,14 +1,9 @@
 package com.restaurant.OrderService.adapters.incoming.rest;
 
-import com.restaurant.OrderService.adapters.incoming.rest.requestDTO.ChangeOrderRequest;
-import com.restaurant.OrderService.adapters.incoming.rest.requestDTO.CreateOrderRequest;
-import com.restaurant.OrderService.core.application.OrderCommandService;
-import com.restaurant.OrderService.core.application.OrderQueryService;
-import com.restaurant.OrderService.core.application.command.CancelOrderCommand;
-import com.restaurant.OrderService.core.application.command.ChangeOrderCommand;
-import com.restaurant.OrderService.core.application.command.CreateOrderCommand;
-import com.restaurant.OrderService.core.application.command.DeleteOrderCommand;
-import com.restaurant.OrderService.core.application.query.ListAllOrdersQuery;
+import com.restaurant.OrderService.adapters.incoming.rest.requestDTO.*;
+import com.restaurant.OrderService.core.application.*;
+import com.restaurant.OrderService.core.application.command.*;
+import com.restaurant.OrderService.core.application.query.*;
 import com.restaurant.OrderService.core.domain.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -34,10 +29,22 @@ public class OrderRestController {
         return this.queryService.handle(new ListAllOrdersQuery());
     }
 
+    @GetMapping("/{restaurantId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Order> getOrdersFromRestaurant(@PathVariable String restaurantId ) {
+        return this.queryService.handle(new ListRestaurantOrdersQuery(restaurantId));
+    }
+
+    @GetMapping("/one/{orderId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Order getOneOrder(@PathVariable String orderId ) {
+        return this.queryService.handle(new OrderQuery(orderId));
+    }
+
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public Order createOrder(@Valid @RequestBody CreateOrderRequest createOrderRequest) throws ParseException {
-        return this.commandService.handle(new CreateOrderCommand(createOrderRequest.getCustomerId(), createOrderRequest.getOrderDate(), createOrderRequest.getStatus(), createOrderRequest.getDeliverAddress(), createOrderRequest.getTotalPrice()));
+        return this.commandService.handle(new CreateOrderCommand(createOrderRequest.getCustomerId(), createOrderRequest.getRestaurantId(), createOrderRequest.getOrderDate(), createOrderRequest.getStatus(), createOrderRequest.getDeliverAddress(), createOrderRequest.getTotalPrice()));
     }
 
     @PutMapping("/")
@@ -57,5 +64,4 @@ public class OrderRestController {
     public void deleteOrder(@PathVariable String id) {
         this.commandService.handle(new DeleteOrderCommand(id));
     }
-
 }
