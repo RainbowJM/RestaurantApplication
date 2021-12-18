@@ -31,6 +31,7 @@ public class Order {
 
     public Order changeOrder(ChangeOrderCommand orderCommand){
         this.customerId = orderCommand.customerId();
+        this.restaurantId = orderCommand.restaurantId();
         this.orderDate = orderCommand.orderdate();
         this.status = orderCommand.status();
         this.deliverAddress = orderCommand.deliverAddress();

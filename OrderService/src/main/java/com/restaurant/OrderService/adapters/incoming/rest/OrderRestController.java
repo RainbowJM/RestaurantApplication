@@ -50,7 +50,7 @@ public class OrderRestController {
     @PutMapping("/")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Order changeOrder(@Valid @RequestBody ChangeOrderRequest changeOrderRequest){
-        return this.commandService.handle( new ChangeOrderCommand( changeOrderRequest.getOrderId(), changeOrderRequest.getCustomerId(), changeOrderRequest.getOrderDate(), changeOrderRequest.getStatus(), changeOrderRequest.getDeliverAddress(), changeOrderRequest.getTotalPrice()));
+        return this.commandService.handle( new ChangeOrderCommand( changeOrderRequest.getOrderId(), changeOrderRequest.getRestaurantId(), changeOrderRequest.getCustomerId(), changeOrderRequest.getOrderDate(), changeOrderRequest.getStatus(), changeOrderRequest.getDeliverAddress(), changeOrderRequest.getTotalPrice()));
     }
 
     @PutMapping("/{id}/cancel")
