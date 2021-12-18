@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -26,11 +27,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AuthorizationFilter extends BasicAuthenticationFilter {
-    @Autowired
-    private Environment environment;
+    private String privateToken;
+    private String signingKey;
 
-    public AuthorizationFilter(AuthenticationManager authenticationManager) {
+    public AuthorizationFilter(AuthenticationManager authenticationManager, String privateToken, String signingKey) {
         super(authenticationManager);
+        this.privateToken = privateToken;
+        this.signingKey = signingKey;
     }
 
     @Override
@@ -54,12 +57,13 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken parseAuthToken(String authToken) throws SignatureException {
-        if (environment.getProperty("restaurant.rest.private-token").equals(authToken)) {
-            return new UsernamePasswordAuthenticationToken("OtherService", null, Arrays.asList(new SimpleGrantedAuthority("ROLE_"+UserRole.OtherService)));
+        // Check if token matches the private token, in which case the request was sent by another service and gets its own role granted
+        if (privateToken.equals(authToken)) {
+            return new UsernamePasswordAuthenticationToken("OtherService", null, Arrays.asList(new SimpleGrantedAuthority("ROLE_OtherService")));
         }
 
         // Parse token if it's not the private shared token
-        JwtParser parser = Jwts.parser().setSigningKey(LoginRestController.key);
+        JwtParser parser = Jwts.parser().setSigningKey(signingKey);
         Claims claims = parser.parseClaimsJws(authToken).getBody();
         String user = claims.getSubject();
         String role = (String)claims.get("role");

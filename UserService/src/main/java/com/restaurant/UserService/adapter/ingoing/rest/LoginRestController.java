@@ -12,6 +12,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,11 +25,16 @@ import javax.validation.Valid;
 import java.security.Key;
 import java.util.Calendar;
 
-@AllArgsConstructor
 @RestController
 public class LoginRestController {
-    public final static Key key = MacProvider.generateKey();
+    @Value("${restaurant.rest.signing-key}")
+    private String signingKey;
+
     private final UserQueryService queryService;
+
+    public LoginRestController(UserQueryService queryService) {
+        this.queryService = queryService;
+    }
 
     public String generateToken(String username, UserRole role) throws JwtException {
         Calendar tokenExpirationTime = Calendar.getInstance();
@@ -36,7 +44,7 @@ public class LoginRestController {
                 .setSubject(username)
                 .setExpiration(tokenExpirationTime.getTime())
                 .claim("role", role.toString())
-                .signWith(SignatureAlgorithm.HS512, key)
+                .signWith(SignatureAlgorithm.HS512, signingKey)
                 .compact();
     }
 
