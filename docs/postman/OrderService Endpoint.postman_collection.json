@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3064bd55-6218-402f-89e8-a34d913f11ef",
+		"_postman_id": "04534751-cdc1-454b-aa87-648d3077f098",
 		"name": "OrderService Endpoint",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -9,10 +9,36 @@
 			"name": "All Requests",
 			"item": [
 				{
-					"name": "Get All Orders",
+					"name": "Get Single Order",
 					"request": {
 						"method": "GET",
 						"header": [],
+						"url": {
+							"raw": "{{OrderServiceAddress}}/order/one/61be3804c215ca23e1565ddd",
+							"host": [
+								"{{OrderServiceAddress}}"
+							],
+							"path": [
+								"order",
+								"one",
+								"61be3804c215ca23e1565ddd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{OrderServiceAddress}}/order/",
 							"host": [
@@ -27,13 +53,58 @@
 					"response": []
 				},
 				{
+					"name": "Get All From Restaurant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{OrderServiceAddress}}/order/91230ed03i0r",
+							"host": [
+								"{{OrderServiceAddress}}"
+							],
+							"path": [
+								"order",
+								"91230ed03i0r"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create New Online Order",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"customerId\": \"testuser@email.com\",\r\n    \"orderDate\" : \"31/10/2021\",\r\n    \"status\" : \"Active\",\r\n    \"deliverAddress\" : \"Adres\",\r\n    \"totalPrice\" : \"10\"\r\n}",
+							"raw": "{\r\n    \"restaurantId\": \"91230ed03i0r\",\r\n    \"customerId\": \"12\",\r\n    \"lines\": [\r\n        {\r\n            \"productId\": \"34rf\",\r\n            \"amount\": \"3\",\r\n            \"price\": \"12\"\r\n        },\r\n        {\r\n            \"productId\": \"34\",\r\n            \"amount\": \"1\",\r\n            \"price\": \"4\"\r\n        }\r\n    ],\r\n    \"orderDate\" : \"13/12/2021\",\r\n    \"status\" : \"Active\",\r\n    \"deliverAddress\" : \"Adres\",\r\n    \"totalPrice\" : \"10\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OrderServiceAddress}}/order/",
+							"host": [
+								"{{OrderServiceAddress}}"
+							],
+							"path": [
+								"order",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Existing Order",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orderId\": \"61be4c0bf3b87013afeec64a\",\r\n    \"restaurantId\": \"91230ed03i0r\",\r\n    \"customerId\": \"12\",\r\n    \"lines\": [\r\n        {\r\n            \"productId\": \"34rf\",\r\n            \"amount\": \"3\",\r\n            \"price\": \"12\"\r\n        },\r\n        {\r\n            \"productId\": \"34\",\r\n            \"amount\": \"1\",\r\n            \"price\": \"4\"\r\n        }\r\n    ],\r\n    \"orderDate\" : \"13/12/2021\",\r\n    \"status\" : \"Active\",\r\n    \"deliverAddress\" : \"Adres\",\r\n    \"totalPrice\" : \"10\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -59,13 +130,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{OrderServiceAddress}}/order/61b8e0b897aca07af2a8cc8c/",
+							"raw": "{{OrderServiceAddress}}/order/61be4b9cd031947d0a8c1311/",
 							"host": [
 								"{{OrderServiceAddress}}"
 							],
 							"path": [
 								"order",
-								"61b8e0b897aca07af2a8cc8c",
+								"61be4b9cd031947d0a8c1311",
 								""
 							]
 						}
@@ -75,16 +146,25 @@
 				{
 					"name": "Cancel Order",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{OrderServiceAddress}}/order/61b8e0b897aca07af2a8cc8c/cancel",
+							"raw": "{{OrderServiceAddress}}/order/61be38f9c215ca23e1565dde/cancel",
 							"host": [
 								"{{OrderServiceAddress}}"
 							],
 							"path": [
 								"order",
-								"61b8e0b897aca07af2a8cc8c",
+								"61be38f9c215ca23e1565dde",
 								"cancel"
 							]
 						}

@@ -18,9 +18,9 @@ public class TableQueryService {
     }
 
     public List<Table> handle(ListTablesQuery listTablesQuery) {
-        if (listTablesQuery.optionalUserId() == null)
+        if (listTablesQuery.optionalOrderId() == null)
             return this.tableRepository.findAll();
         else
-            return this.tableRepository.findTablesByUser(listTablesQuery.optionalUserId());
+            return this.tableRepository.findByOrder(listTablesQuery.optionalOrderId());
     }
 }
