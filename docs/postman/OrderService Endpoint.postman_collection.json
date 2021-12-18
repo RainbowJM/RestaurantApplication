@@ -77,7 +77,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"restaurantId\": \"91230ed03i0r\",\r\n    \"customerId\": \"12\",\r\n    \"orderDate\" : \"13/12/2021\",\r\n    \"status\" : \"Active\",\r\n    \"deliverAddress\" : \"Adres\",\r\n    \"totalPrice\" : \"10\"\r\n}",
+							"raw": "{\r\n    \"restaurantId\": \"91230ed03i0r\",\r\n    \"customerId\": \"12\",\r\n    \"lines\": [\r\n        {\r\n            \"productId\": \"34rf\",\r\n            \"amount\": \"3\",\r\n            \"price\": \"12\"\r\n        },\r\n        {\r\n            \"productId\": \"34\",\r\n            \"amount\": \"1\",\r\n            \"price\": \"4\"\r\n        }\r\n    ],\r\n    \"orderDate\" : \"13/12/2021\",\r\n    \"status\" : \"Active\",\r\n    \"deliverAddress\" : \"Adres\",\r\n    \"totalPrice\" : \"10\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -104,7 +104,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"orderId\": \"61be38f9c215ca23e1565dde\",\r\n    \"restaurantId\": \"91230ed03i0r\",\r\n    \"customerId\": \"12\",\r\n    \"orderDate\" : \"13/12/2021\",\r\n    \"status\" : \"Status\",\r\n    \"deliverAddress\" : \"Adres\",\r\n    \"totalPrice\" : \"10\"\r\n}",
+							"raw": "{\r\n    \"orderId\": \"61be4c0bf3b87013afeec64a\",\r\n    \"restaurantId\": \"91230ed03i0r\",\r\n    \"customerId\": \"12\",\r\n    \"lines\": [\r\n        {\r\n            \"productId\": \"34rf\",\r\n            \"amount\": \"3\",\r\n            \"price\": \"12\"\r\n        },\r\n        {\r\n            \"productId\": \"34\",\r\n            \"amount\": \"1\",\r\n            \"price\": \"4\"\r\n        }\r\n    ],\r\n    \"orderDate\" : \"13/12/2021\",\r\n    \"status\" : \"Active\",\r\n    \"deliverAddress\" : \"Adres\",\r\n    \"totalPrice\" : \"10\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -130,13 +130,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{OrderServiceAddress}}/order/61b8e0b897aca07af2a8cc8c/",
+							"raw": "{{OrderServiceAddress}}/order/61be4b9cd031947d0a8c1311/",
 							"host": [
 								"{{OrderServiceAddress}}"
 							],
 							"path": [
 								"order",
-								"61b8e0b897aca07af2a8cc8c",
+								"61be4b9cd031947d0a8c1311",
 								""
 							]
 						}
