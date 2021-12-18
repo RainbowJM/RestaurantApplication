@@ -51,6 +51,48 @@
 					"response": []
 				},
 				{
+					"name": "Login Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.globals.set(\"JWToken\", jsonData.token);\r",
+									"console.info(\"Logged in successfully, and got a new JSON Web Token to be used for other requests: \"+jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"testadmin@email.com\",\r\n    \"password\": \"password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{UserServiceAddress}}/login",
+							"host": [
+								"{{UserServiceAddress}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get All Users",
 					"request": {
 						"method": "GET",
@@ -89,6 +131,61 @@
 							],
 							"path": [
 								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Own User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"password123\",\r\n    \"firstName\": \"First\",\r\n    \"lastName\": \"Last\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{UserServiceAddress}}/user/",
+							"host": [
+								"{{UserServiceAddress}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"password123\",\r\n    \"role\": \"User\",\r\n    \"firstName\": \"First\",\r\n    \"lastName\": \"Last\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{UserServiceAddress}}/user/testuser@email.com/",
+							"host": [
+								"{{UserServiceAddress}}"
+							],
+							"path": [
+								"user",
+								"testuser@email.com",
 								""
 							]
 						}

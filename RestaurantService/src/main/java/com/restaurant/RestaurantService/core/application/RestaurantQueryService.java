@@ -1,5 +1,6 @@
 package com.restaurant.RestaurantService.core.application;
 
+import com.restaurant.RestaurantService.core.application.query.GetRestaurantQuery;
 import com.restaurant.RestaurantService.core.application.query.ListRestaurantsQuery;
 import com.restaurant.RestaurantService.core.domain.Restaurant;
 import com.restaurant.RestaurantService.core.port.RestaurantRepository;
@@ -19,5 +20,9 @@ public class RestaurantQueryService {
 
     public List<Restaurant> handle(ListRestaurantsQuery listRestaurantsQuery) {
         return this.repository.findAll();
+    }
+
+    public Restaurant handle(GetRestaurantQuery getRestaurantQuery) {
+        return this.repository.findByName(getRestaurantQuery.name());
     }
 }
