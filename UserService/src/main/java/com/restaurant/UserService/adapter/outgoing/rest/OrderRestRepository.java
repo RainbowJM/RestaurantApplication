@@ -3,6 +3,8 @@ package com.restaurant.UserService.adapter.outgoing.rest;
 import com.restaurant.UserService.adapter.outgoing.message.OrderResult;
 import com.restaurant.UserService.core.port.OrderRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -12,16 +14,22 @@ import java.util.List;
 
 @AllArgsConstructor
 public class OrderRestRepository implements OrderRepository {
+    private final String privateToken;
     private final String orderEndpointPath;
     private final RestTemplate client;
 
     @Override
     public List<OrderResult> getAllOrdersFromUser(String id) {
         URI path = URI.create(this.orderEndpointPath + "/order/?user="); // todo: add query filters
-        OrderResult[] results = this.client.getForObject(path, OrderResult[].class);
-        if (results == null)
-            return new ArrayList<OrderResult>();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(privateToken);
+        ResponseEntity<OrderResult[]> ordersResponse = this.client.exchange(path, HttpMethod.GET, new HttpEntity(headers), OrderResult[].class);
 
-        return Arrays.stream(results).toList();
+        if (ordersResponse.getStatusCode() == HttpStatus.OK && ordersResponse.getBody() != null) {
+            return List.of(ordersResponse.getBody());
+        }
+        else {
+            return new ArrayList<>();
+        }
     }
 }

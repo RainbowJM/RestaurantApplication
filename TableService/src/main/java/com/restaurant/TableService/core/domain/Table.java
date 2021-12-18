@@ -1,5 +1,6 @@
 package com.restaurant.TableService.core.domain;
 
+import com.restaurant.TableService.core.application.command.ModifyTableCommand;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -34,5 +35,12 @@ public class Table {
         this.restaurantId = restaurantId;
         this.location = location;
         this.numberOfSeats = numberOfSeats;
+    }
+
+    public Table changeTable(ModifyTableCommand modifyTableCommand) {
+        this.restaurantId = modifyTableCommand.restaurantId();
+        this.location = modifyTableCommand.location();
+        this.numberOfSeats = modifyTableCommand.numberOfSeats();
+        return this;
     }
 }

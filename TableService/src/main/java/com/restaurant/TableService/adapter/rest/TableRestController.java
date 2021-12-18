@@ -1,10 +1,12 @@
 package com.restaurant.TableService.adapter.rest;
 
 import com.restaurant.TableService.adapter.rest.requestDTO.CreateTableRequest;
+import com.restaurant.TableService.adapter.rest.requestDTO.ModifyTableRequest;
 import com.restaurant.TableService.core.application.TableCommandService;
 import com.restaurant.TableService.core.application.TableQueryService;
 import com.restaurant.TableService.core.application.command.AddTableCommand;
 import com.restaurant.TableService.core.application.command.DeleteTableCommand;
+import com.restaurant.TableService.core.application.command.ModifyTableCommand;
 import com.restaurant.TableService.core.application.query.ListTablesQuery;
 import com.restaurant.TableService.core.domain.Table;
 import lombok.AllArgsConstructor;
@@ -31,6 +33,12 @@ public class TableRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public Table addTable(@Valid @RequestBody CreateTableRequest tableRequest) {
         return this.tableCommandService.handle(new AddTableCommand(tableRequest.restaurantName, tableRequest.location, tableRequest.numberOfSeats));
+    }
+
+    @PutMapping(path = "/")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Table modifyTable(@Valid @RequestBody ModifyTableRequest modifyTableRequest){
+        return this.tableCommandService.handle(new ModifyTableCommand(modifyTableRequest.getTableId(), modifyTableRequest.getRestaurantId(), modifyTableRequest.getLocation(), modifyTableRequest.getNumberOfSeats()));
     }
 
     @DeleteMapping(path="/{id}/")
