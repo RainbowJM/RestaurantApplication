@@ -31,9 +31,9 @@ public class User {
     @Getter @Setter
     private UserRole role;
 
-    @Getter
+    @Getter @Setter
     private String firstName;
-    @Getter
+    @Getter @Setter
     private String lastName;
 
     public User() {
