@@ -1,4 +1,4 @@
-package com.restaurant.UserService.adapter.rest.requestDTO;
+package com.restaurant.UserService.adapter.ingoing.rest.requestDTO;
 
 import lombok.Getter;
 
@@ -6,7 +6,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-@Getter
 public class RegisterUserRequest {
     @NotBlank(message="Username can't be empty")
     @Size(min=5, max=25, message="Your username has to be at least 5 characters and can't be longer then 25 characters")

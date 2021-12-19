@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Basic Tests",
+			"name": "All Requests",
 			"item": [
 				{
 					"name": "Get All Users",
@@ -111,6 +111,14 @@
 		{
 			"key": "UserServiceAddress",
 			"value": "localhost:8083"
+		},
+		{
+			"key": "StorageServiceAddress",
+			"value": "localhost:8084"
+		},
+		{
+			"key": "RestaurantServiceAddress",
+			"value": "localhost:8085"
 		}
 	]
 }

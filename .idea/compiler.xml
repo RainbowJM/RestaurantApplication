@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="RestaurantService" />
         <module name="OrderService" />
         <module name="UserService" />
         <module name="MenuService" />
@@ -23,6 +24,7 @@
     <bytecodeTargetLevel>
       <module name="MenuService" target="17" />
       <module name="OrderService" target="17" />
+      <module name="RestaurantService" target="17" />
       <module name="StorageService" target="17" />
       <module name="TableService" target="17" />
       <module name="UserService" target="17" />
@@ -33,6 +35,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="MenuService" options="-parameters" />
       <module name="OrderService" options="-parameters" />
+      <module name="RestaurantService" options="-parameters" />
       <module name="StorageService" options="-parameters" />
       <module name="TableService" options="-parameters" />
       <module name="UserService" options="-parameters" />
