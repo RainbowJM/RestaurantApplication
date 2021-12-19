@@ -12,11 +12,11 @@ public class RabbitMqConfig {
     @Value("${spring.rabbitmq.port}")
     private int port;
 
-    @Value("${restaurant.message.}")
-    private String host;
-
-    @Bean
-    public Queue UserCommandsQueue() {
-        return new Queue("asdasd", true);
-    }
+//    @Value("${message.queue.restaurant-commands}")
+//    private String messageQueueName;
+//
+//    @Bean
+//    public Queue UserCommandsQueue() {
+//        return new Queue("asdasd", true);
+//    }
 }

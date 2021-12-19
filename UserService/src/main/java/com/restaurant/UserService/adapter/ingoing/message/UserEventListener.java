@@ -15,7 +15,7 @@ public class UserEventListener {
         this.commandService = commandService;
     }
 
-    @RabbitListener(queues="user-commands")
+    //@RabbitListener(queues="user-commands")
     public void listen(UserEvent event) {
         switch(event.getEventKey()) {
             case UserDeleteEvent.KEY:

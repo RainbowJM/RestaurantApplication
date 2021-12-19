@@ -1,0 +1,18 @@
+[
+  {
+    "_class": "com.restaurant.UserService.core.domain.User",
+    "username": "admin@example.com",
+    "password": "password123",
+    "role": "Management",
+    "firstName": "Default",
+    "lastName": "Admin"
+  },
+  {
+    "_class": "com.restaurant.UserService.core.domain.User",
+    "username": "user@example.com",
+    "password": "password123",
+    "role": "User",
+    "firstName": "Default",
+    "lastName": "User"
+  }
+]
