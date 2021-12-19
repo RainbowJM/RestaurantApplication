@@ -1,5 +1,6 @@
 package com.restaurant.MenuService.core.application;
 
+import com.restaurant.MenuService.core.domain.Dish;
 import com.restaurant.MenuService.core.domain.Menu;
 import com.restaurant.MenuService.core.port.MenuRepository;
 import org.springframework.stereotype.Service;

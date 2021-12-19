@@ -1,10 +1,12 @@
 package com.restaurant.MenuService.adapters.rest;
 
+import com.restaurant.MenuService.adapters.rest.requestDTO.DishRequest;
 import com.restaurant.MenuService.adapters.rest.requestDTO.MenuRequest;
 import com.restaurant.MenuService.core.application.MenuCommandService;
 import com.restaurant.MenuService.core.application.MenuQueryService;
 import com.restaurant.MenuService.core.application.command.AddMenuCommand;
 import com.restaurant.MenuService.core.application.command.DeleteMenuCommand;
+import com.restaurant.MenuService.core.domain.Dish;
 import com.restaurant.MenuService.core.domain.Menu;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,12 +46,30 @@ public class MenuRestController {
 	}
 
 	@DeleteMapping(path = "/{id}/")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseStatus(HttpStatus.OK)
 	public void deleteMenu(@PathVariable String id) throws InstanceNotFoundException {this.menuCommandService.DeleteMenu(new DeleteMenuCommand(id));}
 
 	@PatchMapping(path = "/{id}/")
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	public void updateMenu(@RequestBody MenuRequest menuRequest, @PathVariable String id) throws InstanceNotFoundException {
 		this.menuCommandService.EditMenu(new AddMenuCommand(menuRequest.id, menuRequest.dishes, menuRequest.restaurantId));
+	}
+
+	@GetMapping(path = "/{menuId}/{dishId}")
+	@ResponseStatus(HttpStatus.OK)
+	public Dish getDishfromMenu(@PathVariable String menuId, @PathVariable String dishId){
+		return this.menuQueryService.getMenuById(menuId).get().getDishById(dishId);
+	}
+
+	@PostMapping("/{id}/")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void addDishToMenu(@RequestBody DishRequest dishRequest, @PathVariable String id){
+		this.menuQueryService.getMenuById(id).get().getDish().add(dishRequest.dish);
+	}
+
+	@DeleteMapping("/{id}/{dishId}/")
+	@ResponseStatus(HttpStatus.OK)
+	public void deleteDishFromMenu(@PathVariable String id, @PathVariable String dishId){
+		this.menuQueryService.getMenuById(id).get().deleteDishById(dishId);
 	}
 }

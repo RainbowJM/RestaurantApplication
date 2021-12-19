@@ -1,5 +1,6 @@
 package com.restaurant.MenuService.core.port;
 
+import com.restaurant.MenuService.core.domain.Dish;
 import com.restaurant.MenuService.core.domain.Menu;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
