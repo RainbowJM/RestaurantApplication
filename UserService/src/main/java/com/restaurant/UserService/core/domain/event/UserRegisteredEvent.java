@@ -12,6 +12,6 @@ public class UserRegisteredEvent extends UserEvent {
 
     @Override
     public String getEventKey() {
-        return "user.registered";
+        return "user.events.registered";
     }
 }
