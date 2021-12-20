@@ -9,7 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/StorageService/StorageService.iml" filepath="$PROJECT_DIR$/StorageService/StorageService.iml" />
       <module fileurl="file://$PROJECT_DIR$/TableService/TableService.iml" filepath="$PROJECT_DIR$/TableService/TableService.iml" />
       <module fileurl="file://$PROJECT_DIR$/UserService/UserService.iml" filepath="$PROJECT_DIR$/UserService/UserService.iml" />
-      <module fileurl="file://$PROJECT_DIR$/StorageService/.mvn/wrapper/wrapper.iml" filepath="$PROJECT_DIR$/StorageService/.mvn/wrapper/wrapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RestaurantService/.mvn/wrapper/wrapper.iml" filepath="$PROJECT_DIR$/RestaurantService/.mvn/wrapper/wrapper.iml" />
     </modules>
   </component>
 </project>
