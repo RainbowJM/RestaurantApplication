@@ -28,15 +28,15 @@ public class MenuRestController {
 		this.menuCommandService = menuCommandService;
 	}
 
-	@GetMapping(path="/{id}/")
+	@GetMapping(path="/{menuId}/")
 	@ResponseStatus(HttpStatus.OK)
-	public Optional<Menu> getMenuById(@PathVariable String id){return this.menuQueryService.getMenuById(id);
+	public Optional<Menu> getMenuById(@PathVariable String menuId){return this.menuQueryService.getMenuById(menuId);
 	}
 
-	@GetMapping(path="/restaurant/{id}/")
+	@GetMapping(path="/restaurant/{menuId}/")
 	@ResponseStatus(HttpStatus.OK)
-	public Optional<Menu> getMenuByRestaurantId(@PathVariable String id){
-		return this.menuQueryService.getMenuByRestaurantId(id);
+	public Optional<Menu> getMenuByRestaurantId(@PathVariable String menuId){
+		return this.menuQueryService.getMenuByRestaurantId(menuId);
 	}
 
 	@PostMapping(path="/")
@@ -45,13 +45,13 @@ public class MenuRestController {
 		return this.menuCommandService.createMenu(new AddMenuCommand(menuRequest.id, menuRequest.dishes, menuRequest.restaurantId));
 	}
 
-	@DeleteMapping(path = "/{id}/")
+	@DeleteMapping(path = "/{menuId}/")
 	@ResponseStatus(HttpStatus.OK)
-	public void deleteMenu(@PathVariable String id) throws InstanceNotFoundException {this.menuCommandService.DeleteMenu(new DeleteMenuCommand(id));}
+	public void deleteMenu(@PathVariable String menuId) throws InstanceNotFoundException {this.menuCommandService.DeleteMenu(new DeleteMenuCommand(menuId));}
 
-	@PatchMapping(path = "/{id}/")
+	@PatchMapping(path = "/{menuId}/")
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public void updateMenu(@RequestBody MenuRequest menuRequest, @PathVariable String id) throws InstanceNotFoundException {
+	public void updateMenu(@RequestBody MenuRequest menuRequest, @PathVariable String menuId) throws InstanceNotFoundException {
 		this.menuCommandService.EditMenu(new AddMenuCommand(menuRequest.id, menuRequest.dishes, menuRequest.restaurantId));
 	}
 
@@ -61,15 +61,15 @@ public class MenuRestController {
 		return this.menuQueryService.getMenuById(menuId).get().getDishById(dishId);
 	}
 
-	@PostMapping("/{id}/")
+	@PostMapping("/{menuId}/")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void addDishToMenu(@RequestBody DishRequest dishRequest, @PathVariable String id){
-		this.menuQueryService.getMenuById(id).get().getDish().add(new Dish(dishRequest.id, dishRequest.naam, dishRequest.prijs, dishRequest.ingredienten, dishRequest.calorien));
+	public void addDishToMenu(@RequestBody DishRequest dishRequest, @PathVariable String menuId){
+		this.menuQueryService.getMenuById(menuId).get().getDish().add(new Dish(dishRequest.id, dishRequest.naam, dishRequest.prijs, dishRequest.ingredienten, dishRequest.calorien));
 	}
 
-	@DeleteMapping("/{id}/{dishId}/")
+	@DeleteMapping("/{menuId}/{dishId}/")
 	@ResponseStatus(HttpStatus.OK)
-	public void deleteDishFromMenu(@PathVariable String id, @PathVariable String dishId){
-		this.menuQueryService.getMenuById(id).get().deleteDishById(dishId);
+	public void deleteDishFromMenu(@PathVariable String menuId, @PathVariable String dishId){
+		this.menuQueryService.getMenuById(menuId).get().deleteDishById(dishId);
 	}
 }
