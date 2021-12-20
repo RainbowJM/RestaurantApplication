@@ -1,11 +1,13 @@
 package com.restaurant.MenuService.core.application;
 
+import com.restaurant.MenuService.core.domain.Dish;
 import com.restaurant.MenuService.core.domain.Menu;
 import com.restaurant.MenuService.core.port.MenuRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -17,8 +19,12 @@ public class MenuQueryService {
         this.menuRepository = menuRepository;
     }
 
-    public List<Menu> getAllMenusByRestaurantId(String restaurantId){
-        return this.menuRepository.findAllByRestaurantId(restaurantId);
+    public Optional<Menu> getMenuById(String menuId){
+        return this.menuRepository.findMenuById(menuId);
+    }
+
+    public Optional<Menu> getMenuByRestaurantId(String restaurantId){
+        return this.menuRepository.findMenuByRestaurantId(restaurantId);
     }
 
 }
