@@ -64,7 +64,7 @@ public class MenuRestController {
 	@PostMapping("/{menuId}/")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void addDishToMenu(@RequestBody DishRequest dishRequest, @PathVariable String menuId){
-		this.menuQueryService.getMenuById(menuId).get().getDish().add(new Dish(dishRequest.id, dishRequest.naam, dishRequest.prijs, dishRequest.ingredienten, dishRequest.calorien));
+		this.menuQueryService.getMenuById(menuId).get().getDishes().add(new Dish(dishRequest.id, dishRequest.naam, dishRequest.prijs, dishRequest.ingredienten, dishRequest.calorien));
 	}
 
 	@DeleteMapping("/{menuId}/{dishId}/")
