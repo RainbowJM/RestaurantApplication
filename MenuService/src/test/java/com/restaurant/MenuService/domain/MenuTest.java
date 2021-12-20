@@ -30,12 +30,12 @@ class MenuTest {
 	@Test
 	@DisplayName("Should create a menu")
 	void shouldCreateAmenu(){
-		assertDoesNotThrow(() -> new Menu(id, dishes, restaurantId));
+		assertDoesNotThrow(() -> new Menu(id, restaurantId));
 	}
 
 	@Test
 	@DisplayName("should throw restaurant Id exception")
 	void shouldThrowRestaurantIdException() {
-		assertThrows(InvalidRestaurantIdException.class , () -> new Menu(id, dishes, "-1"));
+		assertThrows(InvalidRestaurantIdException.class , () -> new Menu(id, "-1"));
 	}
 }

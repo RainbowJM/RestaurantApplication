@@ -22,9 +22,8 @@ public class Menu {
     @Getter
     private String restaurantId;
 
-    public Menu(String id, List<Dish> dishes, String restaurantId) {
+    public Menu(String id, String restaurantId) {
         this.id = id;
-        this.dishes = dishes;
         setRestaurantId(restaurantId);
     }
 
