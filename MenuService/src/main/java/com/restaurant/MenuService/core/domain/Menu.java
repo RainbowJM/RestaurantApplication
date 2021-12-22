@@ -17,14 +17,13 @@ public class Menu {
 
     @Getter
     @Setter
-    private List<Dish> dish;
+    private List<Dish> dishes;
 
     @Getter
     private String restaurantId;
 
-    public Menu(String id, List<Dish> dish, String restaurantId) {
+    public Menu(String id, String restaurantId) {
         this.id = id;
-        this.dish = dish;
         setRestaurantId(restaurantId);
     }
 
@@ -40,7 +39,7 @@ public class Menu {
     }
 
     public Dish getDishById (String id){
-        for (Dish dish : this.dish){
+        for (Dish dish : this.dishes){
             if (dish.getId().equals(id)){
                 return dish;
             }
@@ -49,6 +48,6 @@ public class Menu {
     }
 
     public void deleteDishById (String id){
-        this.dish.removeIf(dish -> dish.getId().equals(id));
+        this.dishes.removeIf(dish -> dish.getId().equals(id));
     }
 }
