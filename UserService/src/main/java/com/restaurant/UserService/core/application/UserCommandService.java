@@ -1,6 +1,6 @@
 package com.restaurant.UserService.core.application;
 
-import com.restaurant.UserService.adapter.outgoing.message.OrderResult;
+import com.restaurant.UserService.adapter.outgoing.rest.OrderResult;
 import com.restaurant.UserService.core.application.command.ChangeUserCommand;
 import com.restaurant.UserService.core.application.command.DeleteUserCommand;
 import com.restaurant.UserService.core.application.command.RegisterUserCommand;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -47,6 +46,7 @@ public class UserCommandService {
             // fixme: This should probably be using an enum
             if (order.status().equals("Active")) {
                 activeOrders = true;
+                break;
             }
         }
 
@@ -54,7 +54,6 @@ public class UserCommandService {
             throw new UserDeleteWithActiveOrders(deleteCommand.username());
         }
 
-        // fixme: delete all orders from this user
         // fixme: send event over message queues
 
         if (this.userRepository.deleteByUsername(deleteCommand.username()).isEmpty()) {

@@ -15,11 +15,11 @@ import com.restaurant.UserService.core.domain.UserRole;
 import com.restaurant.UserService.core.domain.exception.FailedToDeleteUser;
 import com.restaurant.UserService.core.domain.exception.UserDeleteWithActiveOrders;
 import com.restaurant.UserService.core.domain.exception.UsernameAlreadyTaken;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -85,9 +85,15 @@ public class UserRestController {
         return this.commandService.handle(new ChangeUserCommand(username, changeRequest.password, changeRequest.role, changeRequest.firstName, changeRequest.lastName));
     }
 
+    // fixme: Have an old token throw a proper exception
+    @ExceptionHandler({ExpiredJwtException.class})
+    public ResponseEntity<Map<String, String>> handleOldTokenException(ExpiredJwtException exception) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Collections.singletonMap("error", "Access was denied because your login has expired."));
+    }
+
     @ExceptionHandler({AccessDeniedException.class})
-    public ResponseEntity<Map<String, String>> handleOldTokenException(Exception exception) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Collections.singletonMap("error", "Access was denied! You probably don't have the necessary privileges to call this endpoint or your login token has expired."));
+    public ResponseEntity<Map<String, String>> handleBadTokenException(Exception exception) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Collections.singletonMap("error", "Access was denied! You probably don't have the necessary privileges to call this endpoint."));
     }
 
     @ExceptionHandler({FailedToDeleteUser.class, UserDeleteWithActiveOrders.class})

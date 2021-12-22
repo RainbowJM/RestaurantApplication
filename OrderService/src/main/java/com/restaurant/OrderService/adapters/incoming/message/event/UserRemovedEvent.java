@@ -1,4 +1,4 @@
-package com.restaurant.UserService.core.domain.event;
+package com.restaurant.OrderService.adapters.incoming.message.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

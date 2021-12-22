@@ -1,4 +1,4 @@
-package com.restaurant.UserService.adapter.outgoing.message;
+package com.restaurant.UserService.adapter.outgoing.rest;
 
 import java.util.Date;
 

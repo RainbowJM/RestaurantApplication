@@ -1,6 +1,6 @@
 package com.restaurant.UserService.core.port;
 
-import com.restaurant.UserService.adapter.outgoing.message.OrderResult;
+import com.restaurant.UserService.adapter.outgoing.rest.OrderResult;
 
 import java.util.List;
 
