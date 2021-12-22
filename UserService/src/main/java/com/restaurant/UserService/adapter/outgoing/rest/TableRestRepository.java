@@ -1,5 +1,6 @@
 package com.restaurant.UserService.adapter.outgoing.rest;
 
+import com.restaurant.UserService.core.domain.external.Table;
 import com.restaurant.UserService.core.port.TableRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.*;
@@ -16,11 +17,11 @@ public class TableRestRepository implements TableRepository {
     private final RestTemplate client;
 
     @Override
-    public List<TableResult> getAllTablesFromUser(String id) {
+    public List<Table> getAllTablesFromUser(String id) {
         URI path = URI.create(this.tableEndpointPath + "/table/?user="); // todo: add query filters
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(privateToken);
-        ResponseEntity<TableResult[]> tablesResponse = this.client.exchange(path, HttpMethod.GET, new HttpEntity(headers), TableResult[].class);
+        ResponseEntity<Table[]> tablesResponse = this.client.exchange(path, HttpMethod.GET, new HttpEntity(headers), Table[].class);
 
         if (tablesResponse.getStatusCode() == HttpStatus.OK && tablesResponse.getBody() != null) {
             return List.of(tablesResponse.getBody());

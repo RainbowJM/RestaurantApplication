@@ -1,13 +1,11 @@
-package com.restaurant.UserService.core.domain.event;
+package com.restaurant.OrderService.core.domain.event;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.Instant;
 import java.util.UUID;
 
-@AllArgsConstructor
-public abstract class UserEvent {
+public abstract class OrderEvent {
     @Getter
     private final UUID id = UUID.randomUUID();
     @Getter

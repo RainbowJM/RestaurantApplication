@@ -1,11 +1,13 @@
-package com.restaurant.UserService.core.domain.event;
+package com.restaurant.OrderService.adapters.incoming.message.event;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-public class UserRegisteredEvent extends UserEvent {
-    public static final String KEY = "user.event.registered";
+@JsonTypeName(UserChangedEvent.KEY)
+public class UserChangedEvent extends UserEvent {
+    public static final String KEY = "user.event.changed";
 
     @Override
     public String getEventKey() {

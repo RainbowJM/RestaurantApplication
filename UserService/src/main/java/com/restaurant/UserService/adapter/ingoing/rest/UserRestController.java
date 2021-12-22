@@ -3,6 +3,7 @@ package com.restaurant.UserService.adapter.ingoing.rest;
 import com.restaurant.UserService.adapter.ingoing.rest.requestDTO.ChangeOtherUserRequest;
 import com.restaurant.UserService.adapter.ingoing.rest.requestDTO.ChangeUserRequest;
 import com.restaurant.UserService.adapter.ingoing.rest.requestDTO.RegisterUserRequest;
+import com.restaurant.UserService.adapter.outgoing.message.EventPublisher;
 import com.restaurant.UserService.core.application.UserCommandService;
 import com.restaurant.UserService.core.application.UserQueryService;
 import com.restaurant.UserService.core.application.command.ChangeUserCommand;

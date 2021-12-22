@@ -1,5 +1,7 @@
 package com.restaurant.OrderService.core.application;
 
+import com.restaurant.OrderService.adapters.incoming.message.UserEventListener;
+import com.restaurant.OrderService.adapters.incoming.message.event.UserEvent;
 import com.restaurant.OrderService.adapters.incoming.rest.requestDTO.CreateOrderLineRequest;
 import com.restaurant.OrderService.core.application.command.CancelOrderCommand;
 import com.restaurant.OrderService.core.application.command.ChangeOrderCommand;
@@ -8,6 +10,7 @@ import com.restaurant.OrderService.core.application.command.DeleteOrderCommand;
 import com.restaurant.OrderService.core.domain.Order;
 import com.restaurant.OrderService.core.domain.OrderLine;
 import com.restaurant.OrderService.core.domain.exception.OrderNotFound;
+import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownUsername;
 import com.restaurant.OrderService.core.port.OrderRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,9 +25,15 @@ import java.util.Optional;
 public class OrderCommandService {
     private final OrderRepository repository;
 
-    public OrderCommandService(OrderRepository repository) { this.repository = repository; }
+    public OrderCommandService(OrderRepository repository) {
+        this.repository = repository;
+    }
 
-    public Order handle(CreateOrderCommand orderCommand) throws ParseException {
+    public Order handle(CreateOrderCommand orderCommand) {
+        if (!UserEventListener.userExists(orderCommand.customerId())) {
+            throw new OrderWithUnknownUsername();
+        }
+
         List<OrderLine> orderLines = new ArrayList<>();
         for(CreateOrderLineRequest lines :  orderCommand.lines()){
             orderLines.add(new OrderLine(lines.getProductId(), lines.getAmount(), lines.getPrice()));
