@@ -1,6 +1,5 @@
 package com.restaurant.MenuService.adapters.rest.requestDTO;
 
-import com.restaurant.MenuService.core.domain.Dish;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
@@ -15,7 +14,8 @@ public class DishRequest {
 	@NotBlank(message = "dish must have a price")
 	public Double prijs;
 	@NotBlank(message = "a dish must have ingredients")
-	public List<String> ingredienten;
+	public String ingredienten;
 	@NotBlank(message = "There must be a calorie amount submitted")
-	public int calorien;
+	public int calories;
+
 }

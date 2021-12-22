@@ -21,9 +21,9 @@ class MenuTest {
 	@BeforeEach
 	public void initialize(){
 		this.id = "1";
-		this.dishes.add(new Dish("1","kip",10.00,Arrays.asList("kip","kruiden", "boter"),1000));
-		this.dishes.add(new Dish("2","vis",11.99,Arrays.asList("vis","kruiden", "olijf olie"), 1200));
-		this.dishes.add(new Dish("3","spaghetti",12.50,Arrays.asList("pasta","kruiden", "olijf olie", "boter", "tomatensaus", "gehakt"), 1400));
+		this.dishes.add(new Dish("1","kip",10.00,"kip, boter, kruiden",1000));
+		this.dishes.add(new Dish("2","vis",11.99,"kip, boter, kruiden", 1200));
+		this.dishes.add(new Dish("3","spaghetti",12.50,"kip, boter, kruiden", 1400));
 		this.restaurantId = "1";
 	}
 
