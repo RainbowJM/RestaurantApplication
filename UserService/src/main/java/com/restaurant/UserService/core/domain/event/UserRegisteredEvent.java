@@ -5,13 +5,16 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public class UserRegisteredEvent extends UserEvent {
-    @Getter
-    private final String userId;
-    @Getter
-    private final String username;
+    public static final String KEY = "user.event.registered";
 
     @Override
     public String getEventKey() {
-        return "user.events.registered";
+        return KEY;
     }
+
+    @Getter
+    private final String username;
+
+    @Getter
+    private final String role;
 }

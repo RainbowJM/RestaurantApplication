@@ -12,7 +12,6 @@
         <module name="UserService" />
         <module name="MenuService" />
         <module name="TableService" />
-        <module name="StorageService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
