@@ -9,6 +9,14 @@ import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.security.auth.Subject;
+import java.security.Principal;
+import java.util.Arrays;
+import java.util.Collection;
 
 @Document(collection="User")
 @ToString(exclude="password")
@@ -23,9 +31,9 @@ public class User {
     @Getter @Setter
     private UserRole role;
 
-    @Getter
+    @Getter @Setter
     private String firstName;
-    @Getter
+    @Getter @Setter
     private String lastName;
 
     public User() {

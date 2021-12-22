@@ -15,7 +15,9 @@ public class RegisterUserRequest {
     @Size(min=5, max=25, message="Your password has to be at least 5 characters and can't be longer then 25 characters")
     public String password;
     @NotBlank(message="You need to provide a first name")
+    @Size(min=1, max=50, message="You need to use a first name that's at least 1 character and a maximum of 50 characters long")
     public String firstName;
+    @Size(min=1, max=50, message="You need to use a last name that's at least 1 character and a maximum of 50 characters long")
     @NotBlank(message="You need to provide a last name")
     public String lastName;
 }

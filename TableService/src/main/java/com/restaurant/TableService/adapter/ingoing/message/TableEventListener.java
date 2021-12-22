@@ -1,4 +1,4 @@
-package com.restaurant.TableService.adapter.message;
+package com.restaurant.TableService.adapter.ingoing.message;
 
 import com.restaurant.TableService.core.application.TableCommandService;
 import org.springframework.stereotype.Component;

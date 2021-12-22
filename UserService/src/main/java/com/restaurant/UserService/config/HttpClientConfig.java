@@ -15,14 +15,17 @@ public class HttpClientConfig {
     @Value("${restaurant.rest.order-path}")
     private String orderEndpointPath;
 
+    @Value("${restaurant.rest.private-token}")
+    public static String privateToken;
+
     @Bean
     public TableRestRepository httpTableRepository() {
-        return new TableRestRepository(tableEndpointPath, restTemplate());
+        return new TableRestRepository(privateToken, tableEndpointPath, restTemplate());
     }
 
     @Bean
     public OrderRestRepository httpOrderRepository() {
-        return new OrderRestRepository(orderEndpointPath, restTemplate());
+        return new OrderRestRepository(privateToken, orderEndpointPath, restTemplate());
     }
 
     @Bean

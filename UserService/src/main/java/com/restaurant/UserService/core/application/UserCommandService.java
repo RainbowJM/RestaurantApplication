@@ -1,10 +1,12 @@
 package com.restaurant.UserService.core.application;
 
 import com.restaurant.UserService.adapter.outgoing.message.OrderResult;
+import com.restaurant.UserService.core.application.command.ChangeUserCommand;
 import com.restaurant.UserService.core.application.command.DeleteUserCommand;
 import com.restaurant.UserService.core.application.command.RegisterUserCommand;
 import com.restaurant.UserService.core.domain.User;
 import com.restaurant.UserService.core.domain.exception.FailedToDeleteUser;
+import com.restaurant.UserService.core.domain.exception.UserCannotBeFound;
 import com.restaurant.UserService.core.domain.exception.UserDeleteWithActiveOrders;
 import com.restaurant.UserService.core.domain.exception.UsernameAlreadyTaken;
 import com.restaurant.UserService.core.port.OrderRepository;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -57,5 +60,17 @@ public class UserCommandService {
         if (this.userRepository.deleteByUsername(deleteCommand.username()).isEmpty()) {
             throw new FailedToDeleteUser(deleteCommand.username());
         }
+    }
+
+    public User handle(ChangeUserCommand changeCommand) {
+        User user = this.userRepository.findUserByUsername(changeCommand.username());
+        if (user == null)
+            throw new UserCannotBeFound(changeCommand.username());
+
+        if (changeCommand.password() != null) user.setPassword(changeCommand.password());
+        if (changeCommand.role() != null) user.setRole(changeCommand.role());
+        if (changeCommand.firstName() != null) user.setFirstName(changeCommand.firstName());
+        if (changeCommand.password() != null) user.setLastName(changeCommand.lastName());
+        return this.userRepository.save(user);
     }
 }

@@ -12,7 +12,6 @@
         <module name="UserService" />
         <module name="MenuService" />
         <module name="TableService" />
-        <module name="StorageService" />
       </profile>
       <profile name="Annotation profile for Unknown" enabled="true">
         <sourceOutputDir name="../../target/generated-sources/annotations" />

@@ -1,6 +1,4 @@
-package com.restaurant.TableService.adapter.rest.requestDTO;
-
-import lombok.Getter;
+package com.restaurant.TableService.adapter.ingoing.rest.requestDTO;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;

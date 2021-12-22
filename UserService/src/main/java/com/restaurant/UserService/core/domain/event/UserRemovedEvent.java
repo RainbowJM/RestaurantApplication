@@ -12,6 +12,6 @@ public class UserRemovedEvent extends UserEvent {
 
     @Override
     public String getEventKey() {
-        return "user.removed";
+        return "user.events.removed";
     }
 }
