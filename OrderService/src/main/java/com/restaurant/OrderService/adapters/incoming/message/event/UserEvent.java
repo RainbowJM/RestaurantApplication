@@ -12,6 +12,7 @@ import java.util.UUID;
         property = "eventKey"
 )
 @JsonSubTypes({
+        @JsonSubTypes.Type(value = UserReadyEvent.class),
         @JsonSubTypes.Type(value = UserRegisteredEvent.class),
         @JsonSubTypes.Type(value = UserRemovedEvent.class),
         @JsonSubTypes.Type(value = UserChangedEvent.class),
