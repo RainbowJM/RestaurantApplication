@@ -1,15 +1,12 @@
 package com.restaurant.UserService.adapter.outgoing.rest;
 
-import com.restaurant.UserService.adapter.outgoing.message.OrderResult;
 import com.restaurant.UserService.core.port.OrderRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @AllArgsConstructor

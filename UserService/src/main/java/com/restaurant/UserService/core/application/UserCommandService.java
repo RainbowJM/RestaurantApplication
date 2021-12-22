@@ -1,6 +1,6 @@
 package com.restaurant.UserService.core.application;
 
-import com.restaurant.UserService.adapter.outgoing.message.OrderResult;
+import com.restaurant.UserService.adapter.outgoing.rest.OrderResult;
 import com.restaurant.UserService.core.application.command.ChangeUserCommand;
 import com.restaurant.UserService.core.application.command.DeleteUserCommand;
 import com.restaurant.UserService.core.application.command.RegisterUserCommand;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional

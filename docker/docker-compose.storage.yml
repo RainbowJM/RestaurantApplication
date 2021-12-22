@@ -3,8 +3,8 @@ services:
   rabbitmq:
     image: rabbitmq:3-management-alpine
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "127.0.0.1:5672:5672"
+      - "127.0.0.1:15672:15672"
     volumes:
       - ./rabbitmq/volume/data/:/var/lib/rabbitmq/mnesia
       - ./rabbitmq/volume/log/:/var/log/rabbitmq/
@@ -15,7 +15,7 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin
     ports:
-      - "27017:27017"
+      - "127.0.0.1:27017:27017"
 
 networks:
   default:
