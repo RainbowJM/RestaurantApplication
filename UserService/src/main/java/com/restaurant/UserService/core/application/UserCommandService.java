@@ -46,6 +46,7 @@ public class UserCommandService {
             // fixme: This should probably be using an enum
             if (order.status().equals("Active")) {
                 activeOrders = true;
+                break;
             }
         }
 
@@ -53,7 +54,6 @@ public class UserCommandService {
             throw new UserDeleteWithActiveOrders(deleteCommand.username());
         }
 
-        // fixme: delete all orders from this user
         // fixme: send event over message queues
 
         if (this.userRepository.deleteByUsername(deleteCommand.username()).isEmpty()) {

@@ -1,11 +1,11 @@
-package com.restaurant.UserService.core.domain.event;
+package com.restaurant.OrderService.adapters.incoming.message.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-public class UserRegisteredEvent extends UserEvent {
-    public static final String KEY = "user.event.registered";
+public class UserChangedEvent extends UserEvent {
+    public static final String KEY = "user.event.changed";
 
     @Override
     public String getEventKey() {
