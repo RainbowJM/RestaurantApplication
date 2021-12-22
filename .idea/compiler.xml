@@ -12,12 +12,7 @@
         <module name="UserService" />
         <module name="MenuService" />
         <module name="TableService" />
-      </profile>
-      <profile name="Annotation profile for Unknown" enabled="true">
-        <sourceOutputDir name="../../target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../../target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="wrapper" />
+        <module name="StorageService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
