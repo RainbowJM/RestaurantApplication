@@ -1,11 +1,13 @@
 package com.restaurant.MenuService.core.domain;
 
 import com.restaurant.MenuService.core.domain.exceptions.InvalidRestaurantIdException;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.management.InstanceAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,19 +16,18 @@ public class Menu {
 
     @Id
     @Getter
+    @Generated
     private String id;
 
     @Getter
     @Setter
-    private List<Dish> dishes;
+    private List<Dish> dishes = new ArrayList<>();
 
     @Getter
     private String restaurantId;
 
-    public Menu(String id, String restaurantId) {
-        this.id = id;
+    public Menu(String restaurantId) {
         setRestaurantId(restaurantId);
-        this.dishes = new ArrayList<>();
     }
 
     public void setRestaurantId(String restaurantId){
@@ -38,6 +39,23 @@ public class Menu {
         } catch (NumberFormatException e){
             System.out.println("input string cannot be parsed");
         }
+    }
+
+    public void AddDishToDishes(Dish dish) throws InstanceAlreadyExistsException {
+        if (this.dishes.contains(dish)){
+            throw new InstanceAlreadyExistsException();
+        }
+        else {
+            this.dishes.add(dish);
+        }
+    }
+
+    public List<String> getAllDishIds(){
+        List<String> dishIds = new ArrayList<>();
+        for (Dish dish : dishes){
+            dishIds.add(dish.getId());
+        }
+        return dishIds;
     }
 
     public Dish getDishById (String id){

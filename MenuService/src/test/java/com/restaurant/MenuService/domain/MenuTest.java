@@ -20,7 +20,6 @@ class MenuTest {
 
 	@BeforeEach
 	public void initialize(){
-		this.id = "1";
 		this.dishes.add(new Dish("1","kip",10.00,"kip, boter, kruiden",1000));
 		this.dishes.add(new Dish("2","vis",11.99,"kip, boter, kruiden", 1200));
 		this.dishes.add(new Dish("3","spaghetti",12.50,"kip, boter, kruiden", 1400));
@@ -30,12 +29,12 @@ class MenuTest {
 	@Test
 	@DisplayName("Should create a menu")
 	void shouldCreateAmenu(){
-		assertDoesNotThrow(() -> new Menu(id, restaurantId));
+		assertDoesNotThrow(() -> new Menu(restaurantId));
 	}
 
 	@Test
 	@DisplayName("should throw restaurant Id exception")
 	void shouldThrowRestaurantIdException() {
-		assertThrows(InvalidRestaurantIdException.class , () -> new Menu(id, "-1"));
+		assertThrows(InvalidRestaurantIdException.class , () -> new Menu("-1"));
 	}
 }

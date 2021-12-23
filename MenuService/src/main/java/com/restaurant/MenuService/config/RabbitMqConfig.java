@@ -12,8 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
-import javax.swing.event.MenuEvent;
-
 @Configuration
 public class RabbitMqConfig {
 	@Value("${spring.rabbitmq.host}")
@@ -30,13 +28,11 @@ public class RabbitMqConfig {
 		return new TopicExchange(projectExchange);
 	}
 
-	// Register user event publisher
 	@Bean
-	public EventPublisher TableEventPublisher(RabbitTemplate template) {
+	public EventPublisher MenuEventPublisher(RabbitTemplate template) {
 		return new EventPublisher(projectExchange, template);
 	}
 
-	// Setup RabbitMQ communication
 	@Bean
 	public RabbitTemplate rabbitTemplate(Jackson2JsonMessageConverter converter) {
 		RabbitTemplate rabbitTemplate = new RabbitTemplate();
