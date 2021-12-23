@@ -18,7 +18,7 @@ public class TableModifiedEvent extends TableEvent {
     private final String restaurantId;
 
     @Getter
-    private final String numberOfSeats;
+    private final Long numberOfSeats;
 
     @Getter
     private final String location;

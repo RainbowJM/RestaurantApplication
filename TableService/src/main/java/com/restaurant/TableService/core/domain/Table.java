@@ -37,10 +37,10 @@ public class Table {
         this.numberOfSeats = numberOfSeats;
     }
 
-    public Table changeTable(ModifyTableCommand modifyTableCommand) {
-        this.restaurantId = modifyTableCommand.restaurantId();
-        this.location = modifyTableCommand.location();
-        this.numberOfSeats = modifyTableCommand.numberOfSeats();
-        return this;
-    }
+//    public Table changeTable(ModifyTableCommand modifyTableCommand) {
+//        this.restaurantId = modifyTableCommand.restaurantId();
+//        this.location = modifyTableCommand.location();
+//        this.numberOfSeats = modifyTableCommand.numberOfSeats();
+//        return this;
+//    }
 }
