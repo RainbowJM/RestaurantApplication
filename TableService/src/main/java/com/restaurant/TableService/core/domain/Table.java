@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Table {
     @Id
     @Getter
-    private String id;
+    private String tableId;
 
     @Getter
     private String restaurantId;
