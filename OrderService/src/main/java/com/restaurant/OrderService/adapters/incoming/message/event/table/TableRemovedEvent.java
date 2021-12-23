@@ -15,6 +15,6 @@ public class TableRemovedEvent extends TableEvent{
     }
 
     @Getter
-    public final String name;
+    public final String tableId;
 
 }

@@ -2,6 +2,7 @@ package com.restaurant.OrderService.adapters.incoming.message;
 
 import com.restaurant.OrderService.adapters.incoming.message.event.table.TableCreatedEvent;
 import com.restaurant.OrderService.adapters.incoming.message.event.table.TableEvent;
+import com.restaurant.OrderService.adapters.incoming.message.event.table.TableReadyEvent;
 import com.restaurant.OrderService.adapters.incoming.message.event.table.TableRemovedEvent;
 import com.restaurant.OrderService.core.application.OrderCommandService;
 import com.restaurant.OrderService.core.application.OrderQueryService;
@@ -47,18 +48,18 @@ public class TableEventListener {
     @RabbitListener(queues = "#{'${message.queue.restaurant-event}'}")
     private void listen(TableEvent event){
         switch (event.getEventKey()) {
-//            case RestaurantReadyEvent.KEY -> this.initializeRestaurants();
+            case TableReadyEvent.KEY -> this.initializeTables();
             case TableCreatedEvent.KEY -> this.handle((TableCreatedEvent)event);
             case TableRemovedEvent.KEY -> this.handle((TableRemovedEvent)event);
         }
     }
 
     private void handle(TableCreatedEvent event){
-        tables.add(new Table(event.getName()));
+        tables.add(new Table(event.getTableId()));
     }
 
     private void handle(TableRemovedEvent event){
-        tables.removeIf(table -> table.getName().equals(event.getName()));
+        tables.removeIf(table -> table.getName().equals(event.getTableId()));
     }
 
     public static List<Table> getTables(){
