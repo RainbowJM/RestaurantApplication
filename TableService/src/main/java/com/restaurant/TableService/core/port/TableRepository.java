@@ -19,5 +19,5 @@ public interface TableRepository extends MongoRepository<Table, String> {
 
     Table findTableById(String id);
 
-    List<Table> findByOrder(String orderId);
+    List<Table> findTablesByOrder(String order);
 }

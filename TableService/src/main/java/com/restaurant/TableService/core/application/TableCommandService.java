@@ -53,14 +53,14 @@ public class TableCommandService {
     public Table handle(ModifyTableCommand modifyTableCommand) {
         Table table = this.tableRepository.findTableById(modifyTableCommand.tableId());
 
-        if (table == null){
-            throw  new TableNotFound(modifyTableCommand.tableId());
+        if (table == null) {
+            throw new TableNotFound(modifyTableCommand.tableId());
         }
 
-        if (modifyTableCommand.location() != null){
+        if (modifyTableCommand.location() != null) {
             table.setLocation(modifyTableCommand.location());
         }
-        if (modifyTableCommand.numberOfSeats() != null){
+        if (modifyTableCommand.numberOfSeats() != null) {
             table.setNumberOfSeats(modifyTableCommand.numberOfSeats());
         }
 
