@@ -7,12 +7,12 @@
 - While we use REST endpoints, the com.restaurant.OrderService.core(s) within services are communicated with using commands and queries following CQRS.
 
 
-### Testing guidelines
+### Testing guidelines  
 - Each domain object is tested using domain tests.
 - Each service is tested individually using service tests.
 - All of the endpoints are tested using multiple Postman scripts.
 
-###Postman Collection 
+### Postman Collection  
 For each microservice there is a postman collection for the testing in `docs/postman`
 
 ### Docker
@@ -45,7 +45,7 @@ POST /menu/:menuId/dish/
 DELETE /menu/:menuId/dish/:id
 - Deletes a dish from a menu
 
-####Order Service
+#### Order Service
 path: http://localhost:8081
 
 GET /order/:restaurantId/ 
@@ -92,7 +92,7 @@ DELETE /table/:id/
 - Delete table at a certain restaurant
 
 
-####User Service
+#### User Service
 path: http://localhost:8083 
 
 GET /user/:restaurantId/
@@ -111,7 +111,7 @@ DELETE /user/:id/
 - Delete a user
 
 
-####Restaurant Service
+#### Restaurant Service
 path: http://localhost:8085 
 
 GET /restaurant/
