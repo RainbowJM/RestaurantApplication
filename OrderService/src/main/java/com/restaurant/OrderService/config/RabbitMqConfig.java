@@ -1,6 +1,7 @@
 package com.restaurant.OrderService.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.restaurant.OrderService.adapters.outgoing.message.EventPublisher;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -37,6 +38,12 @@ public class RabbitMqConfig {
     @Bean
     public TopicExchange exchange() {
         return new TopicExchange(projectExchange);
+    }
+
+    // Register order event publisher
+    @Bean
+    public EventPublisher orderEventPublisher(RabbitTemplate template) {
+        return new EventPublisher(projectExchange, template);
     }
 
     // Register user event listener
