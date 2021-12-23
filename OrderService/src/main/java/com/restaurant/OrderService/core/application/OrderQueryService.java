@@ -1,5 +1,6 @@
 package com.restaurant.OrderService.core.application;
 
+import com.restaurant.OrderService.core.application.query.GetOrderQuery;
 import com.restaurant.OrderService.core.application.query.ListAllOrdersQuery;
 import com.restaurant.OrderService.core.application.query.ListRestaurantOrdersQuery;
 import com.restaurant.OrderService.core.application.query.OrderQuery;

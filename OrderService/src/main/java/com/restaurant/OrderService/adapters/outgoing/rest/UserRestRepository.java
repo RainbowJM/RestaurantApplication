@@ -1,8 +1,10 @@
-package com.restaurant.UserService.adapter.outgoing.rest;
+package com.restaurant.OrderService.adapters.outgoing.rest;
 
-import com.restaurant.UserService.core.domain.external.Order;
-import com.restaurant.UserService.core.port.OrderRepository;
+import com.restaurant.OrderService.core.domain.external.User;
+import com.restaurant.OrderService.core.port.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -11,17 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
-public class OrderRestRepository implements OrderRepository {
+public class UserRestRepository implements UserRepository {
     private final String privateToken;
-    private final String orderEndpointPath;
+    private final String userEndpointPath;
     private final RestTemplate client;
 
     @Override
-    public List<Order> getAllOrdersFromUser(String id) {
-        URI path = URI.create(this.orderEndpointPath + "/order/?user="); // todo: add query filters
+    public List<User> getAllUsers() {
+        URI path = URI.create(this.userEndpointPath + "/user/");
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(privateToken);
-        ResponseEntity<Order[]> ordersResponse = this.client.exchange(path, HttpMethod.GET, new HttpEntity(headers), Order[].class);
+
+        ResponseEntity<User[]> ordersResponse = this.client.exchange(path, HttpMethod.GET, new HttpEntity(headers), User[].class);
 
         if (ordersResponse.getStatusCode() == HttpStatus.OK && ordersResponse.getBody() != null) {
             return List.of(ordersResponse.getBody());

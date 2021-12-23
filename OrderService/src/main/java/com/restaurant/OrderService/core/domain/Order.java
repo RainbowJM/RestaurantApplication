@@ -2,26 +2,41 @@ package com.restaurant.OrderService.core.domain;
 
 import com.restaurant.OrderService.adapters.incoming.rest.requestDTO.CreateOrderLineRequest;
 import com.restaurant.OrderService.core.application.command.ChangeOrderCommand;
+import com.restaurant.OrderService.core.domain.external.Restaurant;
+import com.restaurant.OrderService.core.domain.external.User;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.aggregation.BooleanOperators;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
 @NoArgsConstructor
+@Document(collection = "Order")
 public class Order {
     @Id
+    @Getter
     String id;
+
+    @Getter @Setter
     String restaurantId;
+    @Getter @Setter
     String customerId;
+
+    @Getter
     List<OrderLine> orderLines;
+    @Getter @Setter
     Date orderDate;
+    @Getter @Setter
     String status;
+    @Getter @Setter
     String deliverAddress;
+    @Getter @Setter
     float totalPrice;
 
     public Order(String customerId, String restaurantId, List<OrderLine> lines, Date orderDate, String status, String deliverAddress){
@@ -31,7 +46,7 @@ public class Order {
         this.orderDate = orderDate;
         this.status = status;
         this.deliverAddress = deliverAddress;
-        if(!lines.isEmpty()){
+        if (!lines.isEmpty()) {
             for(OrderLine line : lines){
                 this.totalPrice += line.getPrice();
             }
