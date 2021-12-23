@@ -43,6 +43,7 @@ public class TableCommandService {
         if (createdTable != null) {
             this.eventPublisher.publish(
                     new TableAddedEvent(
+                            createdTable.getId(),
                             addTableCommand.restaurantId(),
                             addTableCommand.numberOfSeats(),
                             addTableCommand.location()));

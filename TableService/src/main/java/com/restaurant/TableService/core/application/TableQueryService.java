@@ -34,7 +34,7 @@ public class TableQueryService {
         if (listTablesQuery.optionalOrderId() == null)
             return this.tableRepository.findAll();
         else
-            return this.tableRepository.findByOrder(listTablesQuery.optionalOrderId());
+            return this.tableRepository.findTablesByOrder(listTablesQuery.optionalOrderId());
     }
 
     public List<Table> handle(ListRestaurantTablesQuery listRestaurantTablesQuery){
