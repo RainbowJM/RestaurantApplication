@@ -91,16 +91,20 @@ DELETE /table/:id/
 ####User Service
 path: http://localhost:8083 
 
-GET /user/:restaurantId/ (only for staff)
-Gets all users from a certain restaurant
+GET /user/:restaurantId/
+- Gets all users from a certain restaurant
+
 GET /user/:id/
-Gets information of a user/guest/tableguest
+- Gets information of a user/guest/tableguest
+
 PATCH /user/:id/
-Allows you to update the user information, like roles etc.
+- Allows you to update the user information, like roles 
+
 POST /user/
-Creates a user
+- Creates a user
+
 DELETE /user/:id/
-Delete a user
+- Delete a user
 
 
 ####Restaurant Service
