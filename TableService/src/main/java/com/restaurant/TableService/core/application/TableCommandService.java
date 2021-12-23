@@ -46,6 +46,7 @@ public class TableCommandService {
         table.changeTable(modifyTableCommand);
         return this.tableRepository.save(table);
     }
+
     public void handle(DeleteTableCommand deleteTableCommand) {
         if (this.tableRepository.deleteTableById(deleteTableCommand.id()).isEmpty()) {
             throw new FailedToDeleteTable(deleteTableCommand.id());
