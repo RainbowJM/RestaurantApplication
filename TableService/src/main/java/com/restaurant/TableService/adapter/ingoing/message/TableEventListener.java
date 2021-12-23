@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 public class TableEventListener {
     private final TableCommandService  tableCommandService;
 
-
     public TableEventListener(TableCommandService tableCommandService) {
         this.tableCommandService = tableCommandService;
     }

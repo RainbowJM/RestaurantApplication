@@ -1,22 +1,19 @@
 package com.restaurant.OrderService.adapters.incoming.message;
 
 import com.restaurant.OrderService.adapters.incoming.message.event.*;
-import com.restaurant.OrderService.adapters.outgoing.rest.UserRestRepository;
 import com.restaurant.OrderService.core.application.OrderCommandService;
 import com.restaurant.OrderService.core.application.OrderQueryService;
 import com.restaurant.OrderService.core.application.command.DeleteOrderCommand;
-import com.restaurant.OrderService.core.application.query.ListAllOrdersQuery;
+import com.restaurant.OrderService.core.application.query.ListOrdersQuery;
 import com.restaurant.OrderService.core.domain.Order;
 import com.restaurant.OrderService.core.domain.external.User;
 import com.restaurant.OrderService.core.port.UserRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.ResourceAccessException;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +33,7 @@ public class UserEventListener {
     }
 
     @EventListener
-    private void onReadyEvent(ContextRefreshedEvent event) {
+    public void onReadyEvent(ContextRefreshedEvent event) {
         initializeUsers();
     }
 
@@ -75,7 +72,7 @@ public class UserEventListener {
         System.out.println(String.format("Deleting orders from this user %s because a user deletion event was received", event.getUsername()));
 
         // todo: maybe implement delete command could use a delete query to delete from certain users
-        for (Order order : queryService.handle(new ListAllOrdersQuery())) {
+        for (Order order : queryService.handle(new ListOrdersQuery(null, null))) {
             if (order.getCustomerId().equals(event.getUsername())) {
                 this.commandService.handle(new DeleteOrderCommand(order.getId()));
             }
