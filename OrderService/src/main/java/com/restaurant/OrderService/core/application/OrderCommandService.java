@@ -33,7 +33,7 @@ public class OrderCommandService {
 
     public OrderCommandService(OrderRepository repository, EventPublisher eventPublisher) {
         this.repository = repository;
-//        this.eventPublisher = eventPublisher;
+        this.eventPublisher = eventPublisher;
     }
 
     public Order handle(CreateOrderCommand orderCommand) {
@@ -87,8 +87,8 @@ public class OrderCommandService {
         this.repository.deleteOrderById(orderCommand.orderId());
     }
 
-//    @EventListener
-//    public void sendOrderReadyEvent(ApplicationReadyEvent event) {
-//        eventPublisher.publish(new OrderReadyEvent());
-//    }
+    @EventListener
+    public void sendOrderReadyEvent(ApplicationReadyEvent event) {
+        eventPublisher.publish(new OrderReadyEvent());
+    }
 }

@@ -79,12 +79,22 @@ public class RabbitMqConfig {
 
     // Register table event listener
     @Bean
-    public Queue tableEventListeningQueue(){
+    public Queue tableEventListeningQueue() {
         return new Queue(tableEventQueue, true);
     }
     @Bean
     public Binding tableEventListeningBinding(Queue tableEventListeningQueue, TopicExchange exchange){
         return BindingBuilder.bind(tableEventListeningQueue).to(exchange).with(tableEventBinding);
+    }
+
+    // Register menu event listener
+    @Bean
+    public Queue menuEventListeningQueue() {
+        return new Queue(menuEventQueue, true);
+    }
+    @Bean
+    public Binding menuEventListeningBinding(Queue menuEventListeningQueue, TopicExchange exchange){
+        return BindingBuilder.bind(menuEventListeningQueue).to(exchange).with(menuEventBinding);
     }
 
     // Setup RabbitMQ communication
