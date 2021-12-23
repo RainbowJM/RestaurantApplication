@@ -11,12 +11,8 @@ public class EventPublisher implements MenuEventPublisher {
 	private final String menuEventExchange;
 	private final RabbitTemplate rabbitTemplate;
 
+	@Override
 	public void publish(MenuEvent event) {
 		this.rabbitTemplate.convertAndSend(menuEventExchange, event.getEventKey(), event);
-	}
-
-	@Override
-	public void publish(javax.swing.event.MenuEvent event) {
-
 	}
 }

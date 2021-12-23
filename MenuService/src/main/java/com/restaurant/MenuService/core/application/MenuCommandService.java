@@ -1,12 +1,15 @@
 package com.restaurant.MenuService.core.application;
 
 import com.restaurant.MenuService.adapters.incoming.message.RestaurantEventListener;
+import com.restaurant.MenuService.adapters.outgoing.message.EventPublisher;
 import com.restaurant.MenuService.core.application.command.AddDishToMenuCommand;
 import com.restaurant.MenuService.core.application.command.AddMenuCommand;
 import com.restaurant.MenuService.core.application.command.DeleteDishFromMenuCommand;
 import com.restaurant.MenuService.core.application.command.DeleteMenuCommand;
 import com.restaurant.MenuService.core.domain.Dish;
 import com.restaurant.MenuService.core.domain.Menu;
+import com.restaurant.MenuService.core.domain.event.MenuChangedEvent;
+import com.restaurant.MenuService.core.domain.event.MenuRemovedEvent;
 import com.restaurant.MenuService.core.domain.exceptions.InvalidRestaurantIdException;
 import com.restaurant.MenuService.core.port.MenuRepository;
 import org.springframework.stereotype.Service;
@@ -20,9 +23,11 @@ import java.util.Optional;
 @Transactional
 public class MenuCommandService {
 	private final MenuRepository menuRepository;
+	private final EventPublisher eventPublisher;
 
-	public MenuCommandService(MenuRepository menuRepository) {
+	public MenuCommandService(MenuRepository menuRepository, EventPublisher eventPublisher) {
 		this.menuRepository = menuRepository;
+		this.eventPublisher = eventPublisher;
 	}
 
 	public Menu handle(AddMenuCommand addMenuCommand) throws InvalidRestaurantIdException {
@@ -35,7 +40,9 @@ public class MenuCommandService {
 
 	public void handle(DeleteMenuCommand deleteMenuCommand) throws InstanceNotFoundException {
 		if (menuRepository.existsById(deleteMenuCommand.menuId())){
+			Menu menu = menuRepository.findMenuById(deleteMenuCommand.menuId()).get();
 			menuRepository.deleteMenuById(deleteMenuCommand.menuId());
+			this.eventPublisher.publish(new MenuRemovedEvent(menu.getId()));
 		}
 		else throw new InstanceNotFoundException(deleteMenuCommand.menuId());
 	}
@@ -48,6 +55,7 @@ public class MenuCommandService {
 			this.menuRepository.deleteMenuById(addDishToMenuCommand.menuId());
 			menu.AddDishToDishes(dish);
 			this.menuRepository.save(menu);
+			this.eventPublisher.publish(new MenuChangedEvent(menu.getId(), menu.getAllDishIds(), menu.getRestaurantId()));
 		}
 		else throw new InstanceNotFoundException(addDishToMenuCommand.menuId());
 	}
@@ -59,6 +67,7 @@ public class MenuCommandService {
 			this.menuRepository.deleteMenuById(deleteDishFromMenu.menuId());
 			menu.deleteDishById(deleteDishFromMenu.dishId());
 			this.menuRepository.save(menu);
+			this.eventPublisher.publish(new MenuChangedEvent(menu.getId(), menu.getAllDishIds(), menu.getRestaurantId()));
 		}
 		else throw new InstanceNotFoundException();
 	}

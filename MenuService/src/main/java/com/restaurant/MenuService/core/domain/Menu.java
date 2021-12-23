@@ -50,6 +50,14 @@ public class Menu {
         }
     }
 
+    public List<String> getAllDishIds(){
+        List<String> dishIds = new ArrayList<>();
+        for (Dish dish : dishes){
+            dishIds.add(dish.getId());
+        }
+        return dishIds;
+    }
+
     public Dish getDishById (String id){
         for (Dish dish : this.dishes){
             if (dish.getId().equals(id)){
