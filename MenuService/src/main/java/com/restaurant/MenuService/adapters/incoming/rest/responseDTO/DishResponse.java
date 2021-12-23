@@ -1,11 +1,8 @@
-package com.restaurant.MenuService.adapters.incoming.rest.requestDTO;
-
-import lombok.Getter;
+package com.restaurant.MenuService.adapters.incoming.rest.responseDTO;
 
 import javax.validation.constraints.NotBlank;
 
-@Getter
-public class DishRequest {
+public class DishResponse {
 	@NotBlank(message = "dish should get an id")
 	public String id;
 	@NotBlank(message = "dish needs to have a name")
@@ -17,4 +14,11 @@ public class DishRequest {
 	@NotBlank(message = "There must be a calorie amount submitted")
 	public int calories;
 
+	public DishResponse(String id, String name, Double price, String ingredients, int calories) {
+		this.id = id;
+		this.name = name;
+		this.price = price;
+		this.ingredients = ingredients;
+		this.calories = calories;
+	}
 }

@@ -1,5 +1,6 @@
 package com.restaurant.MenuService.core.application;
 
+import com.restaurant.MenuService.adapters.incoming.rest.responseDTO.DishResponse;
 import com.restaurant.MenuService.core.application.query.GetDishByMenuQuery;
 import com.restaurant.MenuService.core.application.query.GetMenuQuery;
 import com.restaurant.MenuService.core.application.query.GetAllMenus;
@@ -35,8 +36,8 @@ public class MenuQueryService {
         }
     }
 
-    public Dish handle(GetDishByMenuQuery getDishByMenuQuery){
-        return this.menuRepository.findById(getDishByMenuQuery.menuId()).get().getDishById(getDishByMenuQuery.dishId());
+    public DishResponse handle(GetDishByMenuQuery getDishByMenuQuery){
+        Dish dish = this.menuRepository.findById(getDishByMenuQuery.menuId()).get().getDishById(getDishByMenuQuery.dishId());
+        return new DishResponse(dish.getId(),dish.getName(),dish.getPrice(),dish.getIngredients(),dish.getCalories());
     }
-
 }

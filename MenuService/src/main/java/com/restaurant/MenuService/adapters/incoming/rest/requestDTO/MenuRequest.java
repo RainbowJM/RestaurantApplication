@@ -8,6 +8,4 @@ import javax.validation.constraints.NotBlank;
 public class MenuRequest {
 	@NotBlank(message = "restaurant id cannot be empty")
 	public String restaurantId;
-	@NotBlank(message = "the menu id cannot be empty")
-	public String id;
 }

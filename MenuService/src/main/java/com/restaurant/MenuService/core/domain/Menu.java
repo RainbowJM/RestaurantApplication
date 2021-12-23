@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.management.InstanceAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,14 +21,13 @@ public class Menu {
 
     @Getter
     @Setter
-    private List<Dish> dishes;
+    private List<Dish> dishes = new ArrayList<>();
 
     @Getter
     private String restaurantId;
 
     public Menu(String restaurantId) {
         setRestaurantId(restaurantId);
-        this.dishes = new ArrayList<>();
     }
 
     public void setRestaurantId(String restaurantId){
@@ -38,6 +38,15 @@ public class Menu {
             this.restaurantId= restaurantId;
         } catch (NumberFormatException e){
             System.out.println("input string cannot be parsed");
+        }
+    }
+
+    public void AddDishToDishes(Dish dish) throws InstanceAlreadyExistsException {
+        if (this.dishes.contains(dish)){
+            throw new InstanceAlreadyExistsException();
+        }
+        else {
+            this.dishes.add(dish);
         }
     }
 
