@@ -61,5 +61,4 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
         String role = (String)claims.get("role");
         return new UsernamePasswordAuthenticationToken(user, null, Arrays.asList(new SimpleGrantedAuthority("ROLE_"+role)));
     }
-
 }
