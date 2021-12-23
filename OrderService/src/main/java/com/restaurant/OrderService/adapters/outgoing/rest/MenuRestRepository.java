@@ -26,7 +26,7 @@ public class MenuRestRepository implements MenuRepository {
         ResponseEntity<Menu[]> menusResponse = this.client.exchange(path, HttpMethod.GET, new HttpEntity(headers), Menu[].class);
 
         if (menusResponse.getStatusCode() == HttpStatus.OK && menusResponse.getBody() != null) {
-            return java.util.List.of(menusResponse.getBody());
+            return List.of(menusResponse.getBody());
         }
         else {
             return new ArrayList<>();

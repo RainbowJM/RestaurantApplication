@@ -3,11 +3,14 @@ package com.restaurant.OrderService.core.domain.external;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Table {
+public class MenuResult {
     private String id;
+    private List<String> dishIds;
+    private String restaurantId;
 }

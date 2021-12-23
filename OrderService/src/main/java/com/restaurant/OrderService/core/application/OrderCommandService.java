@@ -45,9 +45,9 @@ public class OrderCommandService {
         for(CreateOrderLineRequest lines :  orderCommand.lines())
             orderLines.add(new OrderLine(lines.getProductId(), lines.getAmount(), lines.getPrice()));
 
-        if(orderCommand.orderType() == OrderType.ONLINE) order = new OnlineOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderCommand.orderType(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
-        else if(orderCommand.orderType() == OrderType.TABLE) {
-            if(!TableEventListener.tableExists(orderCommand.location()))
+        if (orderCommand.orderType() == OrderType.ONLINE) order = new OnlineOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderCommand.orderType(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
+        else if (orderCommand.orderType() == OrderType.TABLE) {
+            if (!TableEventListener.tableExists(orderCommand.location()))
                 throw new OrderWithUnknownRestaurantName();
             order = new TableOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderCommand.orderType(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
         }

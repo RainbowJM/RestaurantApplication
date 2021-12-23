@@ -26,7 +26,7 @@ public class TableEventListener {
     private static List<Table> tables = new ArrayList<>();
     private static boolean initialized = false;
 
-    public TableEventListener(OrderQueryService queryService, OrderCommandService commandService, TableRepository tableRepository){
+    public TableEventListener(OrderQueryService queryService, OrderCommandService commandService, TableRepository tableRepository) {
         this.queryService = queryService;
         this.commandService = commandService;
         this.tableRepository = tableRepository;
@@ -36,21 +36,20 @@ public class TableEventListener {
     public void onReadyEvent(ContextRefreshedEvent event) { initializeTables(); }
 
     private void initializeTables() {
-        if (!initialized){
+        if (!initialized) {
             try {
                 tables = new ArrayList<>(tableRepository.getAllTables());
-            } catch (ResourceAccessException exception) {
+            }
+            catch (ResourceAccessException exception) {
                 System.out.println("Failed to connect to Table because it probably hasn't started yet. UserReadyEvent will need to be used to initialize this server.");
                 return;
             }
-            for(Table table: tables)
-                System.out.println(table);
             initialized = true;
         }
     }
 
     @RabbitListener(queues = "#{'${message.queue.table-event}'}")
-    private void listen(TableEvent event){
+    private void listen(TableEvent event) {
         switch (event.getEventKey()) {
             case TableReadyEvent.KEY -> this.initializeTables();
             case TableCreatedEvent.KEY -> this.handle((TableCreatedEvent)event);
@@ -58,23 +57,19 @@ public class TableEventListener {
         }
     }
 
-    private void handle(TableCreatedEvent event){
+    private void handle(TableCreatedEvent event) {
         tables.add(new Table(event.getTableId()));
     }
 
-    private void handle(TableRemovedEvent event){
-        tables.removeIf(table -> table.getTableId().equals(event.getTableId()));
+    private void handle(TableRemovedEvent event) {
+        tables.removeIf(table -> table.getId().equals(event.getTableId()));
     }
 
-    public static List<Table> getTables(){
+    public static List<Table> getTables() {
         return tables;
     }
 
     public static boolean tableExists(String tableId){
-        System.out.println(tableId);
-        return tables.stream().anyMatch(table -> {
-            System.out.println(table.getTableId());
-            return table.getTableId().equals(tableId);
-        });
+        return tables.stream().anyMatch(table -> table.getId().equals(tableId));
     }
 }

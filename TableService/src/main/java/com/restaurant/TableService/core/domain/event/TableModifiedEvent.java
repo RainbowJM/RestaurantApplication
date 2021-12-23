@@ -12,7 +12,7 @@ public class TableModifiedEvent extends TableEvent {
         return KEY;
     }
     @Getter
-    private final String tableId;
+    private final String id;
 
     @Getter
     private final String restaurantId;
@@ -23,4 +23,7 @@ public class TableModifiedEvent extends TableEvent {
     @Getter
     private final String location;
 
+    private String getTableId() {
+        return id;
+    }
 }
