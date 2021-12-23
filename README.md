@@ -65,10 +65,43 @@ DELETE /order/:id/
 - Delete order at a certain restaurant
 
 ####Table Service
-path: http://localhost:8082 
+path: http://localhost:8082
+
+POST /table/
+
+- Creates table at a certain restaurant
+
+POST /table/reserve 
+
+- Used when walk-in users claim/reserve a table
+
+GET /table/
+
+- Gets information from a table
+
+PATCH /table/:id/
+
+- Allows you to update details from a table
+
+DELETE /table/:id/
+
+- Delete table at a certain restaurant
+
 
 ####User Service
 path: http://localhost:8083 
+
+GET /user/:restaurantId/ (only for staff)
+Gets all users from a certain restaurant
+GET /user/:id/
+Gets information of a user/guest/tableguest
+PATCH /user/:id/
+Allows you to update the user information, like roles etc.
+POST /user/
+Creates a user
+DELETE /user/:id/
+Delete a user
+
 
 ####Restaurant Service
 path: http://localhost:8085 
