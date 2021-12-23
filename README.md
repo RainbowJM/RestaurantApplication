@@ -16,7 +16,9 @@
 For each microservice there is a postman collection for the testing in `docs/postman`
 
 ### Endpoints
-Menu Service: http://localhost:8080 \
+#### Menu Service
+path: http://localhost:8080 
+
 GET /menu/:restaurantId/ 
 - Gets a restaurant menu from a certain restaurant 
 
@@ -39,8 +41,15 @@ POST /menu/:menuId/dish/
 DELETE /menu/:menuId/dish/:id
 - Deletes a dish from a menu
 
-Order Service: http://localhost:8081 \
-Table Service: http://localhost:8082 \
-User Service: http://localhost:8083 \
-Restaurant Service: http://localhost:8085 
+####Order Service
+path: http://localhost:8081 
+
+####Table Service
+path: http://localhost:8082 
+
+####User Service
+path: http://localhost:8083 
+
+####Restaurant Service
+path: http://localhost:8085 
 
