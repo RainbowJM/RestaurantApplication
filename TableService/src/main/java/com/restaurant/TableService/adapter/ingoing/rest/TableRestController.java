@@ -31,12 +31,6 @@ public class TableRestController {
     public List<Table> getTables(@RequestParam(required = false) String userId) {
         return this.tableQueryService.handle(new ListTablesQuery(userId));
     }
-    @GetMapping("/{restaurantId}")
-    @ResponseStatus(HttpStatus.OK)
-    @RolesAllowed({"User", "Staff", "Management", "OtherService"})
-    public List<Table> getTablesFromRestaurant(@PathVariable String restaurantId){
-        return this.tableQueryService.handle(new ListRestaurantTablesQuery(restaurantId));
-    }
 
     @PostMapping(path="/")
     @ResponseStatus(HttpStatus.CREATED)
