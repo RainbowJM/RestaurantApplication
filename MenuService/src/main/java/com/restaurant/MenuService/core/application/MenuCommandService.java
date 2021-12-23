@@ -10,9 +10,12 @@ import com.restaurant.MenuService.core.domain.Dish;
 import com.restaurant.MenuService.core.domain.Menu;
 import com.restaurant.MenuService.core.domain.event.MenuChangedEvent;
 import com.restaurant.MenuService.core.domain.event.MenuCreatedEvent;
+import com.restaurant.MenuService.core.domain.event.MenuReadyEvent;
 import com.restaurant.MenuService.core.domain.event.MenuRemovedEvent;
 import com.restaurant.MenuService.core.domain.exceptions.InvalidRestaurantIdException;
 import com.restaurant.MenuService.core.port.MenuRepository;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,4 +77,8 @@ public class MenuCommandService {
 		else throw new InstanceNotFoundException();
 	}
 
+	@EventListener
+	public void sendMenuReadyEvent(ApplicationReadyEvent event){
+		eventPublisher.publish(new MenuReadyEvent());
+	}
 }
