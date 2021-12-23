@@ -1,9 +1,9 @@
 package com.restaurant.TableService.core.port;
 
-import com.restaurant.TableService.adapter.outgoing.rest.RestaurantResult;
+import com.restaurant.TableService.core.domain.external.Restaurant;
 
 import java.util.List;
 
 public interface RestaurantRepository {
-    List<RestaurantResult> getRestaurantFromTable(String id);
+    List<Restaurant> getRestaurantFromTable(String id);
 }
