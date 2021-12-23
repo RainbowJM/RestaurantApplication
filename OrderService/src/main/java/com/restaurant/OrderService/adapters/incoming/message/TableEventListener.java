@@ -1,9 +1,8 @@
 package com.restaurant.OrderService.adapters.incoming.message;
 
-import com.restaurant.OrderService.adapters.incoming.message.event.RestaurantCreatedEvent;
-import com.restaurant.OrderService.adapters.incoming.message.event.RestaurantReadyEvent;
-import com.restaurant.OrderService.adapters.incoming.message.event.RestaurantRemovedEvent;
-import com.restaurant.OrderService.adapters.incoming.message.event.TableEvent;
+import com.restaurant.OrderService.adapters.incoming.message.event.table.TableCreatedEvent;
+import com.restaurant.OrderService.adapters.incoming.message.event.table.TableEvent;
+import com.restaurant.OrderService.adapters.incoming.message.event.table.TableRemovedEvent;
 import com.restaurant.OrderService.core.application.OrderCommandService;
 import com.restaurant.OrderService.core.application.OrderQueryService;
 import com.restaurant.OrderService.core.domain.external.Table;
@@ -47,10 +46,26 @@ public class TableEventListener {
 
     @RabbitListener(queues = "#{'${message.queue.restaurant-event}'}")
     private void listen(TableEvent event){
-//        switch (event.getEventKey()) {
+        switch (event.getEventKey()) {
 //            case RestaurantReadyEvent.KEY -> this.initializeRestaurants();
-//            case RestaurantCreatedEvent.KEY -> this.handle((RestaurantCreatedEvent)event);
-//            case RestaurantRemovedEvent.KEY -> this.handle((RestaurantRemovedEvent)event);
-//        }
+            case TableCreatedEvent.KEY -> this.handle((TableCreatedEvent)event);
+            case TableRemovedEvent.KEY -> this.handle((TableRemovedEvent)event);
+        }
+    }
+
+    private void handle(TableCreatedEvent event){
+        tables.add(new Table(event.getName()));
+    }
+
+    private void handle(TableRemovedEvent event){
+        tables.removeIf(table -> table.getName().equals(event.getName()));
+    }
+
+    public static List<Table> getTables(){
+        return tables;
+    }
+
+    public static boolean tableExists(String nameId){
+        return tables.stream().anyMatch(table -> table.getName().equals(nameId));
     }
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class Table {
     private String name;

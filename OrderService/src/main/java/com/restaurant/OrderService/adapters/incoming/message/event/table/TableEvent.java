@@ -1,4 +1,4 @@
-package com.restaurant.OrderService.adapters.incoming.message.event;
+package com.restaurant.OrderService.adapters.incoming.message.event.table;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
