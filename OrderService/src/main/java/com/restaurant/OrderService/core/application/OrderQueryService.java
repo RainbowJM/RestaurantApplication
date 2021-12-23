@@ -26,14 +26,11 @@ public class OrderQueryService {
     }
 
     public List<Order> handle(ListOrdersQuery listQuery) {
-        List<Order> orders = new ArrayList<>();
-        if(listQuery.optionalOrderId() == null)
+        if(listQuery.optionalUserId() == null && listQuery.optionalRestaurantId() == null)
             return this.repository.findAll();
-        Optional<Order> optOrder = this.repository.findById(listQuery.optionalOrderId());
-        if(optOrder.isEmpty())
-            throw new OrderNotFound(listQuery.optionalOrderId());
-        orders.add(optOrder.get());
-        return orders;
+        else if(listQuery.optionalUserId() != null)
+            return this.repository.findByUser(listQuery.optionalUserId());
+        return this.repository.findByRestaurantId(listQuery.optionalRestaurantId());
     }
 
     public List<Order> handle(ListRestaurantOrdersQuery listQuery) {

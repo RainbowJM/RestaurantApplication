@@ -35,9 +35,9 @@ public class OrderRestController {
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     @RolesAllowed({"User", "Staff", "Management", "OtherService"})
-    public List<Order> getOrder(@RequestParam(required = false) String orderId) {
+    public List<Order> getOrder(@RequestParam(required = false) String userId, @RequestParam(required = false) String restaurantId) {
         // fixme: check if owner stuff
-        return this.queryService.handle(new ListOrdersQuery(orderId));
+        return this.queryService.handle(new ListOrdersQuery(userId, restaurantId));
     }
 
     @GetMapping("/{restaurantId}")
@@ -52,7 +52,7 @@ public class OrderRestController {
     @ResponseStatus(HttpStatus.CREATED)
     @RolesAllowed({"User", "Staff", "Management", "OtherService"})
     public Order createOrder(@Valid @RequestBody CreateOrderRequest createOrderRequest) throws ParseException {
-        return this.commandService.handle(new CreateOrderCommand(createOrderRequest.getCustomerId(), createOrderRequest.getRestaurantId(), createOrderRequest.getOrderLines(), createOrderRequest.getOrderDate(), createOrderRequest.getStatus(), createOrderRequest.getDeliverAddress(), createOrderRequest.getTotalPrice()));
+        return this.commandService.handle(new CreateOrderCommand(createOrderRequest.getCustomerId(), createOrderRequest.getRestaurantId(), createOrderRequest.getOrderLines(), createOrderRequest.getOrderDate(), createOrderRequest.getStatus(), createOrderRequest.getDeliverAddress()));
     }
 
     // region Put
