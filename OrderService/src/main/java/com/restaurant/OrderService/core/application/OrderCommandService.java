@@ -8,13 +8,12 @@ import com.restaurant.OrderService.adapters.outgoing.message.EventPublisher;
 import com.restaurant.OrderService.core.application.command.ChangeOrderCommand;
 import com.restaurant.OrderService.core.application.command.CreateOrderCommand;
 import com.restaurant.OrderService.core.application.command.DeleteOrderCommand;
-import com.restaurant.OrderService.core.domain.Order;
-import com.restaurant.OrderService.core.domain.OrderLine;
-import com.restaurant.OrderService.core.domain.event.OrderReadyEvent;
+import com.restaurant.OrderService.core.domain.*;
 import com.restaurant.OrderService.core.domain.exception.OrderNotFound;
 import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownRestaurantName;
 import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownUsername;
 import com.restaurant.OrderService.core.port.OrderRepository;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
@@ -36,19 +35,28 @@ public class OrderCommandService {
     }
 
     public Order handle(CreateOrderCommand orderCommand) {
-        if (!UserEventListener.userExists(orderCommand.customerId())) {
-            throw new OrderWithUnknownUsername();
-        }
-
-        if (!RestaurantEventListener.restaurantExists(orderCommand.restaurantId())) {
-            throw new OrderWithUnknownRestaurantName();
-        }
+        // todo: is online- or tableOrder?
+        Order order;
+        if (!UserEventListener.userExists(orderCommand.customerId())) throw new OrderWithUnknownUsername();
+        if (!RestaurantEventListener.restaurantExists(orderCommand.restaurantId())) throw new OrderWithUnknownRestaurantName();
 
         List<OrderLine> orderLines = new ArrayList<>();
         for(CreateOrderLineRequest lines :  orderCommand.lines()){
             orderLines.add(new OrderLine(lines.getProductId(), lines.getAmount(), lines.getPrice()));
         }
-        Order order = new OnlineOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.deliverAddress());
+
+        if(orderCommand.orderType() == OrderType.ONLINE) order = new OnlineOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
+        else if(orderCommand.orderType() == OrderType.TABLE) order = new TableOrder();
+        else throw new OrderNotFound("none");
+        return this.repository.save(order);
+    }
+
+    public Order handleCreateOnlineOrder(CreateOrderCommand orderCommand){
+        List<OrderLine> orderLines = new ArrayList<>();
+        for(CreateOrderLineRequest lines :  orderCommand.lines()){
+            orderLines.add(new OrderLine(lines.getProductId(), lines.getAmount(), lines.getPrice()));
+        }
+        Order order = new OnlineOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
         return this.repository.save(order);
     }
 

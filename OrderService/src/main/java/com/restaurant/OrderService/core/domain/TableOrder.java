@@ -1,4 +1,4 @@
 package com.restaurant.OrderService.core.domain;
 
-public class TableOrder {
+public class TableOrder extends Order{
 }
