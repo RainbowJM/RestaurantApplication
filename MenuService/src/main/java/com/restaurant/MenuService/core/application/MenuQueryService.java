@@ -1,6 +1,9 @@
 package com.restaurant.MenuService.core.application;
 
-import com.restaurant.MenuService.adapters.rest.requestDTO.DishRequest;
+import com.restaurant.MenuService.adapters.incoming.rest.responseDTO.DishResponse;
+import com.restaurant.MenuService.core.application.query.GetDishByMenuQuery;
+import com.restaurant.MenuService.core.application.query.GetMenuQuery;
+import com.restaurant.MenuService.core.application.query.GetAllMenus;
 import com.restaurant.MenuService.core.domain.Dish;
 import com.restaurant.MenuService.core.domain.Menu;
 import com.restaurant.MenuService.core.port.MenuRepository;
@@ -20,16 +23,21 @@ public class MenuQueryService {
         this.menuRepository = menuRepository;
     }
 
-    public Optional<Menu> getMenuById(String menuId){
-        return this.menuRepository.findMenuById(menuId);
+    public Optional<Menu> handle(GetMenuQuery getMenuQuery){
+        return this.menuRepository.findMenuById(getMenuQuery.menuId());
     }
 
-    public Optional<Menu> getMenuByRestaurantId(String restaurantId){
-        return this.menuRepository.findMenuByRestaurantId(restaurantId);
+    public List<Menu> handle(GetAllMenus getAllMenus){
+        if (getAllMenus.restaurantId() != null){
+            return this.menuRepository.findAllByRestaurantId(getAllMenus.restaurantId());
+        }
+        else {
+            return this.menuRepository.findAll();
+        }
     }
 
-    public Dish getDishByMenu(String menuId, String dishId){
-        return this.menuRepository.findById(menuId).get().getDishById(dishId);
+    public DishResponse handle(GetDishByMenuQuery getDishByMenuQuery){
+        Dish dish = this.menuRepository.findById(getDishByMenuQuery.menuId()).get().getDishById(getDishByMenuQuery.dishId());
+        return new DishResponse(dish.getId(),dish.getName(),dish.getPrice(),dish.getIngredients(),dish.getCalories());
     }
-
 }
