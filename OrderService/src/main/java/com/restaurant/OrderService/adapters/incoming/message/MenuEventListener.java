@@ -1,17 +1,8 @@
 package com.restaurant.OrderService.adapters.incoming.message;
 
-import com.restaurant.OrderService.adapters.incoming.message.event.*;
-import com.restaurant.OrderService.adapters.incoming.message.event.table.TableReadyEvent;
-import com.restaurant.OrderService.core.application.OrderCommandService;
-import com.restaurant.OrderService.core.application.OrderQueryService;
-import com.restaurant.OrderService.core.application.command.DeleteOrderCommand;
-import com.restaurant.OrderService.core.application.query.ListOrdersQuery;
-import com.restaurant.OrderService.core.domain.Order;
+import com.restaurant.OrderService.adapters.incoming.message.event.menu.*;
 import com.restaurant.OrderService.core.domain.external.Menu;
-import com.restaurant.OrderService.core.domain.external.Restaurant;
-import com.restaurant.OrderService.core.domain.external.User;
 import com.restaurant.OrderService.core.port.MenuRepository;
-import com.restaurant.OrderService.core.port.RestaurantRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;

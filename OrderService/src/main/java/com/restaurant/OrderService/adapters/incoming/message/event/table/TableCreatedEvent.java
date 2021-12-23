@@ -1,7 +1,7 @@
 package com.restaurant.OrderService.adapters.incoming.message.event.table;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.restaurant.OrderService.adapters.incoming.message.event.RestaurantCreatedEvent;
+import com.restaurant.OrderService.adapters.incoming.message.event.restaurant.RestaurantCreatedEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

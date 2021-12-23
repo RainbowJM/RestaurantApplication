@@ -1,4 +1,4 @@
-package com.restaurant.OrderService.adapters.incoming.message.event;
+package com.restaurant.OrderService.adapters.incoming.message.event.user;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.AllArgsConstructor;

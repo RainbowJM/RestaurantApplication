@@ -1,8 +1,7 @@
-package com.restaurant.OrderService.adapters.incoming.message.event;
+package com.restaurant.OrderService.adapters.incoming.message.event.menu;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.Instant;
@@ -13,11 +12,12 @@ import java.util.UUID;
         property = "eventKey"
 )
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = RestaurantReadyEvent.class),
-        @JsonSubTypes.Type(value = RestaurantCreatedEvent.class),
-        @JsonSubTypes.Type(value = RestaurantRemovedEvent.class),
+        @JsonSubTypes.Type(value = MenuReadyEvent.class),
+        @JsonSubTypes.Type(value = MenuCreatedEvent.class),
+        @JsonSubTypes.Type(value = MenuChangedEvent.class),
+        @JsonSubTypes.Type(value = MenuRemovedEvent.class),
 })
-public abstract class RestaurantEvent {
+public abstract class MenuEvent {
     @Getter
     private final UUID id = UUID.randomUUID();
     @Getter

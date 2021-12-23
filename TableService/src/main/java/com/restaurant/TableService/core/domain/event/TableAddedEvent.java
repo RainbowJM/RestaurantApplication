@@ -12,6 +12,7 @@ public class TableAddedEvent extends TableEvent {
         return KEY;
     }
 
+    @Getter
     private final String tableId;
 
     @Getter

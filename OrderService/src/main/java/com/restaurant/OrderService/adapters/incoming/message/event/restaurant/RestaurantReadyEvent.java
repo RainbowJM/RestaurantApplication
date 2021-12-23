@@ -1,7 +1,6 @@
-package com.restaurant.OrderService.adapters.incoming.message.event;
+package com.restaurant.OrderService.adapters.incoming.message.event.restaurant;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import lombok.AllArgsConstructor;
 
 @JsonTypeName(RestaurantReadyEvent.KEY)
 public class RestaurantReadyEvent extends RestaurantEvent {

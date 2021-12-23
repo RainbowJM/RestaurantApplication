@@ -1,4 +1,4 @@
-package com.restaurant.OrderService.adapters.incoming.message.event;
+package com.restaurant.OrderService.adapters.incoming.message.event.restaurant;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -12,12 +12,11 @@ import java.util.UUID;
         property = "eventKey"
 )
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = UserReadyEvent.class),
-        @JsonSubTypes.Type(value = UserRegisteredEvent.class),
-        @JsonSubTypes.Type(value = UserRemovedEvent.class),
-        @JsonSubTypes.Type(value = UserChangedEvent.class),
+        @JsonSubTypes.Type(value = RestaurantReadyEvent.class),
+        @JsonSubTypes.Type(value = RestaurantCreatedEvent.class),
+        @JsonSubTypes.Type(value = RestaurantRemovedEvent.class),
 })
-public abstract class UserEvent {
+public abstract class RestaurantEvent {
     @Getter
     private final UUID id = UUID.randomUUID();
     @Getter

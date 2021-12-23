@@ -1,9 +1,9 @@
 package com.restaurant.OrderService.adapters.incoming.message;
 
-import com.restaurant.OrderService.adapters.incoming.message.event.RestaurantCreatedEvent;
-import com.restaurant.OrderService.adapters.incoming.message.event.RestaurantEvent;
-import com.restaurant.OrderService.adapters.incoming.message.event.RestaurantReadyEvent;
-import com.restaurant.OrderService.adapters.incoming.message.event.RestaurantRemovedEvent;
+import com.restaurant.OrderService.adapters.incoming.message.event.restaurant.RestaurantCreatedEvent;
+import com.restaurant.OrderService.adapters.incoming.message.event.restaurant.RestaurantEvent;
+import com.restaurant.OrderService.adapters.incoming.message.event.restaurant.RestaurantReadyEvent;
+import com.restaurant.OrderService.adapters.incoming.message.event.restaurant.RestaurantRemovedEvent;
 import com.restaurant.OrderService.core.application.OrderCommandService;
 import com.restaurant.OrderService.core.application.OrderQueryService;
 import com.restaurant.OrderService.core.domain.external.Restaurant;

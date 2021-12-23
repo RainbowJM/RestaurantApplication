@@ -1,6 +1,6 @@
 package com.restaurant.OrderService.adapters.incoming.message;
 
-import com.restaurant.OrderService.adapters.incoming.message.event.*;
+import com.restaurant.OrderService.adapters.incoming.message.event.user.*;
 import com.restaurant.OrderService.core.application.OrderCommandService;
 import com.restaurant.OrderService.core.application.OrderQueryService;
 import com.restaurant.OrderService.core.application.command.DeleteOrderCommand;
