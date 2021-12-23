@@ -24,7 +24,7 @@ public class Order {
     String id;
 
     @Getter @Setter
-    String restaurantId;
+    String restaurantId; // can refer to a non-existing restaurant if a restaurant has been deleted since the order was made
     @Getter @Setter
     String customerId;
 

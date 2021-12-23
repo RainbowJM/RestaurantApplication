@@ -1,12 +1,14 @@
 package com.restaurant.OrderService.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.restaurant.OrderService.adapters.outgoing.message.EventPublisher;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -28,9 +30,20 @@ public class RabbitMqConfig {
     @Value("${message.queue.user-event-binding}")
     private String userEventBinding;
 
+    @Value("${message.queue.restaurant-event}")
+    private String restaurantEventQueue;
+    @Value("${message.queue.restaurant-event-binding}")
+    private String restaurantEventBinding;
+
     @Bean
     public TopicExchange exchange() {
         return new TopicExchange(projectExchange);
+    }
+
+    // Register order event publisher
+    @Bean
+    public EventPublisher orderEventPublisher(RabbitTemplate template) {
+        return new EventPublisher(projectExchange, template);
     }
 
     // Register user event listener
@@ -43,7 +56,25 @@ public class RabbitMqConfig {
         return BindingBuilder.bind(userEventListeningQueue).to(exchange).with(userEventBinding);
     }
 
+    // Register restaurant event listener
+    @Bean
+    public Queue restaurantEventListeningQueue() {
+        return new Queue(restaurantEventQueue, true);
+    }
+    @Bean
+    public Binding restaurantEventListeningBinding(Queue restaurantEventListeningQueue, TopicExchange exchange) {
+        return BindingBuilder.bind(restaurantEventListeningQueue).to(exchange).with(restaurantEventBinding);
+    }
+
     // Setup RabbitMQ communication
+    @Bean
+    public RabbitTemplate rabbitTemplate(Jackson2JsonMessageConverter converter) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate();
+        rabbitTemplate.setConnectionFactory(connectionFactory());
+        rabbitTemplate.setMessageConverter(converter);
+        return rabbitTemplate;
+    }
+
     @Bean
     public Jackson2JsonMessageConverter converter(Jackson2ObjectMapperBuilder builder) {
         ObjectMapper objectMapper = builder.createXmlMapper(false).build();
