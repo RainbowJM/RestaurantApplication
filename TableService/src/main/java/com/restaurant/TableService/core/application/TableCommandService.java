@@ -1,9 +1,11 @@
 package com.restaurant.TableService.core.application;
 
+import com.restaurant.TableService.adapter.outgoing.message.EventPublisher;
 import com.restaurant.TableService.core.application.command.AddTableCommand;
 import com.restaurant.TableService.core.application.command.DeleteTableCommand;
 import com.restaurant.TableService.core.application.command.ModifyTableCommand;
 import com.restaurant.TableService.core.domain.Table;
+import com.restaurant.TableService.core.domain.event.TableAddedEvent;
 import com.restaurant.TableService.core.domain.exception.FailedToDeleteTable;
 import com.restaurant.TableService.core.domain.exception.RestaurantNotFound;
 import com.restaurant.TableService.core.domain.exception.TableNotFound;
@@ -19,10 +21,12 @@ import java.util.Optional;
 public class TableCommandService {
     private final TableRepository tableRepository;
     private final RestaurantRepository restaurantRepository;
+    private final EventPublisher eventPublisher;
 
-    public TableCommandService(TableRepository tableRepository, RestaurantRepository restaurantRepository) {
+    public TableCommandService(TableRepository tableRepository, RestaurantRepository restaurantRepository, EventPublisher event) {
         this.tableRepository = tableRepository;
         this.restaurantRepository = restaurantRepository;
+        this.eventPublisher = event;
     }
 
     public Table handle(AddTableCommand addTableCommand) {
@@ -32,6 +36,16 @@ public class TableCommandService {
         }
 
         // todo: publish events when a table has been deleted
+        Table  createdTable = tableRepository.save(new Table(addTableCommand.restaurantId(), addTableCommand.location(), addTableCommand.numberOfSeats()));
+
+        if (createdTable != null){
+            this.eventPublisher.publish(
+                    new TableAddedEvent(
+                            addTableCommand.tableId(),
+                            addTableCommand.restaurantId(),
+                            addTableCommand.numberOfSeats(),
+                            addTableCommand.location()));
+        }
         return tableRepository.save(new Table(addTableCommand.restaurantId(), addTableCommand.location(), addTableCommand.numberOfSeats()));
     }
 
