@@ -62,13 +62,11 @@ public class TableCommandService {
     }
 
     public void handle(DeleteTableCommand deleteTableCommand) {
-        if (this.tableRepository.deleteTableById(deleteTableCommand.id()) != null) {
-            throw new FailedToDeleteTable(deleteTableCommand.id());
-        }
-
         Table deletedTable = this.tableRepository.deleteTableById(deleteTableCommand.id());
         if (deletedTable != null) {
             this.eventPublisher.publish(new TableRemovedEvent(deleteTableCommand.id()));
+        }else{
+            throw new FailedToDeleteTable(deleteTableCommand.id());
         }
     }
 }
