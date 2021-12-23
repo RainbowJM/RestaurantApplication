@@ -18,7 +18,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @Document(collection = "Order")
-public class Order {
+public abstract class Order {
     @Id
     @Getter
     String id;
@@ -33,19 +33,19 @@ public class Order {
     @Getter @Setter
     Date orderDate;
     @Getter @Setter
-    String status;
+    OrderStatus status;
     @Getter @Setter
-    String deliverAddress;
-    @Getter @Setter
+    String location;
+    @Getter
     float totalPrice;
 
-    public Order(String customerId, String restaurantId, List<OrderLine> lines, Date orderDate, String status, String deliverAddress){
+    public Order(String customerId, String restaurantId, List<OrderLine> lines, Date orderDate, OrderStatus status, String location){
         this.customerId = customerId;
         this.restaurantId = restaurantId;
         this.orderLines = lines;
         this.orderDate = orderDate;
         this.status = status;
-        this.deliverAddress = deliverAddress;
+        this.location = location;
         if (!lines.isEmpty()) {
             for(OrderLine line : lines){
                 this.totalPrice += line.getPrice();
@@ -53,18 +53,21 @@ public class Order {
         }
     }
 
-    public Order changeOrder(ChangeOrderCommand orderCommand){
-        this.customerId = orderCommand.customerId();
-        this.restaurantId = orderCommand.restaurantId();
+    public void setStatus(String strStatus){
+        this.status = OrderStatus.valueOf(strStatus);
+    }
 
-        this.orderDate = orderCommand.orderDate();
-        this.status = orderCommand.status();
-        this.deliverAddress = orderCommand.deliverAddress();
-
+    public void changeOrderLines(List<CreateOrderLineRequest> lines){
+        System.out.println("Setting orderlines...");
         this.orderLines = new ArrayList<>();
-        for(CreateOrderLineRequest lineRequest: orderCommand.lines()){
+        for(CreateOrderLineRequest lineRequest: lines){
+            System.out.println(lineRequest);
             this.orderLines.add(new OrderLine(lineRequest.getProductId(), lineRequest.getAmount(), lineRequest.getPrice()));
         }
-        return this;
+        if (!orderLines.isEmpty()) {
+            for(OrderLine line : orderLines){
+                this.totalPrice += line.getPrice();
+            }
+        }
     }
 }

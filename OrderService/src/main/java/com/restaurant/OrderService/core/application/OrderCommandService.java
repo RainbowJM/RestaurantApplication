@@ -2,22 +2,24 @@ package com.restaurant.OrderService.core.application;
 
 import com.restaurant.OrderService.adapters.incoming.message.RestaurantEventListener;
 import com.restaurant.OrderService.adapters.incoming.message.UserEventListener;
-import com.restaurant.OrderService.adapters.incoming.message.event.UserEvent;
 import com.restaurant.OrderService.adapters.incoming.rest.requestDTO.CreateOrderLineRequest;
-import com.restaurant.OrderService.core.application.command.CancelOrderCommand;
+import com.restaurant.OrderService.core.application.command.UpdateOrderStatus;
+import com.restaurant.OrderService.adapters.outgoing.message.EventPublisher;
 import com.restaurant.OrderService.core.application.command.ChangeOrderCommand;
 import com.restaurant.OrderService.core.application.command.CreateOrderCommand;
 import com.restaurant.OrderService.core.application.command.DeleteOrderCommand;
-import com.restaurant.OrderService.core.domain.Order;
-import com.restaurant.OrderService.core.domain.OrderLine;
+import com.restaurant.OrderService.core.domain.*;
+import com.restaurant.OrderService.core.domain.event.OrderReadyEvent;
 import com.restaurant.OrderService.core.domain.exception.OrderNotFound;
 import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownRestaurantName;
 import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownUsername;
 import com.restaurant.OrderService.core.port.OrderRepository;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,25 +28,27 @@ import java.util.Optional;
 @Transactional
 public class OrderCommandService {
     private final OrderRepository repository;
+    private final EventPublisher eventPublisher;
 
-    public OrderCommandService(OrderRepository repository) {
+    public OrderCommandService(OrderRepository repository, EventPublisher eventPublisher) {
         this.repository = repository;
+        this.eventPublisher = eventPublisher;
     }
 
     public Order handle(CreateOrderCommand orderCommand) {
-        if (!UserEventListener.userExists(orderCommand.customerId())) {
-            throw new OrderWithUnknownUsername();
-        }
-
-        if (!RestaurantEventListener.restaurantExists(orderCommand.restaurantId())) {
-            throw new OrderWithUnknownRestaurantName();
-        }
+        // todo: is online- or tableOrder?
+        Order order;
+        if (!UserEventListener.userExists(orderCommand.customerId())) throw new OrderWithUnknownUsername();
+        if (!RestaurantEventListener.restaurantExists(orderCommand.restaurantId())) throw new OrderWithUnknownRestaurantName();
 
         List<OrderLine> orderLines = new ArrayList<>();
         for(CreateOrderLineRequest lines :  orderCommand.lines()){
             orderLines.add(new OrderLine(lines.getProductId(), lines.getAmount(), lines.getPrice()));
         }
-        Order order = new Order(orderCommand.customerId(), orderCommand.restaurantId(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.deliverAddress());
+
+        if(orderCommand.orderType() == OrderType.ONLINE) order = new OnlineOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
+        else if(orderCommand.orderType() == OrderType.TABLE) order = new TableOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
+        else throw new OrderNotFound("none");
         return this.repository.save(order);
     }
 
@@ -52,21 +56,27 @@ public class OrderCommandService {
         Optional<Order> optOrder = this.repository.findById(orderCommand.orderId());
         if (optOrder.isEmpty())
             throw new OrderNotFound(orderCommand.orderId());
-
         Order order = optOrder.get();
-        order.changeOrder(orderCommand);
+        System.out.println("changing order...");
+        System.out.println(orderCommand.lines());
+
+        if(orderCommand.customerId() != null) order.setCustomerId(orderCommand.customerId());
+        if(orderCommand.restaurantId() != null) order.setRestaurantId(orderCommand.restaurantId());
+        if(orderCommand.deliverAddress() != null) order.setLocation(orderCommand.deliverAddress());
+        if(orderCommand.lines() != null && !orderCommand.lines().isEmpty()) order.changeOrderLines(orderCommand.lines());
+        for(OrderLine orderLine: order.getOrderLines())
+            System.out.println(orderLine);
         this.repository.save(order);
-        System.out.println(order.getOrderLines());
         return order;
     }
 
-    public Order handle(CancelOrderCommand orderCommand){
+    public Order handle(UpdateOrderStatus orderCommand){
         Optional<Order> optOrder = this.repository.findById(orderCommand.orderId());
         if (optOrder.isEmpty())
             throw new OrderNotFound(orderCommand.orderId());
 
         Order order = optOrder.get();
-        order.setStatus("Cancelled");
+        order.setStatus(orderCommand.orderStatus());
         return this.repository.save(order);
     }
 
@@ -76,5 +86,10 @@ public class OrderCommandService {
             throw new OrderNotFound(orderCommand.orderId());
 
         this.repository.deleteOrderById(orderCommand.orderId());
+    }
+
+    @EventListener
+    public void sendOrderReadyEvent(ApplicationReadyEvent event) {
+        eventPublisher.publish(new OrderReadyEvent());
     }
 }

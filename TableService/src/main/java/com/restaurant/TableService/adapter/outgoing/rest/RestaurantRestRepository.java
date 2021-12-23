@@ -1,5 +1,6 @@
 package com.restaurant.TableService.adapter.outgoing.rest;
 
+import com.restaurant.TableService.core.domain.external.Restaurant;
 import com.restaurant.TableService.core.port.RestaurantRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.client.RestTemplate;
@@ -17,14 +18,14 @@ public class RestaurantRestRepository implements RestaurantRepository {
     private final RestTemplate client;
 
     @Override
-    public List<RestaurantResult> getRestaurantFromTable(String id) {
+    public List<Restaurant> getRestaurantFromTable(String id) {
         URI path = URI.create(this.restaurantEndpointPath + "/restaurant/?user=");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(privateToken);
 
-        ResponseEntity<RestaurantResult[]> restaurantResponse = this.client.
-                exchange(path,HttpMethod.GET, new HttpEntity(headers), RestaurantResult[].class);
+        ResponseEntity<Restaurant[]> restaurantResponse = this.client.
+                exchange(path,HttpMethod.GET, new HttpEntity(headers), Restaurant[].class);
 
         if (restaurantResponse.getStatusCode() == HttpStatus.OK && restaurantResponse.getBody() != null){
             return List.of(restaurantResponse.getBody());
