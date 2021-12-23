@@ -1,6 +1,5 @@
 package com.restaurant.TableService.adapter.outgoing.rest;
 
-import com.restaurant.TableService.adapter.outgoing.message.RestaurantResult;
 import com.restaurant.TableService.core.port.RestaurantRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.client.RestTemplate;
