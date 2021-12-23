@@ -76,8 +76,8 @@ public class OrderRestController {
     @DeleteMapping("/{orderId}/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RolesAllowed({"Management", "OtherService"})
-    public void deleteOrder(@PathVariable String id) {
-        this.commandService.handle(new DeleteOrderCommand(id));
+    public void deleteOrder(@PathVariable String orderId) {
+        this.commandService.handle(new DeleteOrderCommand(orderId));
     }
 
     // region Others
