@@ -16,4 +16,4 @@ jobs:
       - name: Run Testing Docker-Compose
         uses: sudo-bot/action-docker-compose@latest
         with:
-          cli-args: "-f /docker/docker-compose.test.yml up"
+          cli-args: "-f ./docker/docker-compose.test.yml up"
