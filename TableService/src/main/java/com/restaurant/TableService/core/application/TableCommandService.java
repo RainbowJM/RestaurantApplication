@@ -31,28 +31,27 @@ public class TableCommandService {
 
     public Table handle(AddTableCommand addTableCommand) {
         // todo: check whether restaurant exists
-        if (this.restaurantRepository.getRestaurantFromTable(addTableCommand.restaurantId()).isEmpty()){
+        if (this.restaurantRepository.getRestaurantFromTable(addTableCommand.restaurantId()).isEmpty()) {
             throw new RestaurantNotFound(addTableCommand.restaurantId());
         }
 
         // todo: publish events when a table has been deleted
-        Table  createdTable = tableRepository.save(new Table(addTableCommand.restaurantId(), addTableCommand.location(), addTableCommand.numberOfSeats()));
+        Table createdTable = tableRepository.save(new Table(addTableCommand.restaurantId(), addTableCommand.location(), addTableCommand.numberOfSeats()));
 
-        if (createdTable != null){
+        if (createdTable != null) {
             this.eventPublisher.publish(
                     new TableAddedEvent(
-                            addTableCommand.tableId(),
                             addTableCommand.restaurantId(),
                             addTableCommand.numberOfSeats(),
                             addTableCommand.location()));
         }
-        return tableRepository.save(new Table(addTableCommand.restaurantId(), addTableCommand.location(), addTableCommand.numberOfSeats()));
+        return createdTable;
     }
 
-    public Table handle(ModifyTableCommand modifyTableCommand){
+    public Table handle(ModifyTableCommand modifyTableCommand) {
         Optional<Table> optTable = this.tableRepository.findById(modifyTableCommand.tableId());
 
-        if (optTable.isEmpty()){
+        if (optTable.isEmpty()) {
             throw new TableNotFound(modifyTableCommand.tableId());
         }
 
