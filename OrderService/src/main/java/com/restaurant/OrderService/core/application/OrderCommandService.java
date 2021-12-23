@@ -24,7 +24,6 @@ import java.util.Optional;
 @Transactional
 public class OrderCommandService {
     private final OrderRepository repository;
-
     public OrderCommandService(OrderRepository repository) {
         this.repository = repository;
     }
@@ -36,12 +35,11 @@ public class OrderCommandService {
         if (!RestaurantEventListener.restaurantExists(orderCommand.restaurantId())) throw new OrderWithUnknownRestaurantName();
 
         List<OrderLine> orderLines = new ArrayList<>();
-        for(CreateOrderLineRequest lines :  orderCommand.lines()){
+        for(CreateOrderLineRequest lines :  orderCommand.lines())
             orderLines.add(new OrderLine(lines.getProductId(), lines.getAmount(), lines.getPrice()));
-        }
 
-        if(orderCommand.orderType() == OrderType.ONLINE) order = new OnlineOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
-        else if(orderCommand.orderType() == OrderType.TABLE) order = new TableOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
+        if(orderCommand.orderType() == OrderType.ONLINE) order = new OnlineOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderCommand.orderType(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
+        else if(orderCommand.orderType() == OrderType.TABLE) order = new TableOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderCommand.orderType(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
         else throw new OrderNotFound("none");
         return this.repository.save(order);
     }

@@ -11,7 +11,7 @@ import java.util.List;
 @Document(collection = "OnlineOrder")
 public class OnlineOrder extends Order {
 
-    public OnlineOrder(String customerId, String restaurantId, List<OrderLine> lines, Date orderDate, OrderStatus status, String deliverAddress){
-        super(customerId, restaurantId, lines, orderDate, status, deliverAddress);
+    public OnlineOrder(String customerId, String restaurantId, OrderType orderType, List<OrderLine> lines, Date orderDate, OrderStatus status, String deliverAddress){
+        super(customerId, restaurantId, orderType, lines, orderDate, status, deliverAddress);
     }
 }

@@ -17,7 +17,6 @@ import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
-@Document(collection = "Order")
 public abstract class Order {
     @Id
     @Getter
@@ -27,6 +26,8 @@ public abstract class Order {
     String restaurantId; // can refer to a non-existing restaurant if a restaurant has been deleted since the order was made
     @Getter @Setter
     String customerId;
+    @Getter
+    OrderType orderType;
 
     @Getter
     List<OrderLine> orderLines;
@@ -39,10 +40,11 @@ public abstract class Order {
     @Getter
     float totalPrice;
 
-    public Order(String customerId, String restaurantId, List<OrderLine> lines, Date orderDate, OrderStatus status, String location){
+    public Order(String customerId, String restaurantId, OrderType orderType, List<OrderLine> lines,  Date orderDate, OrderStatus status, String location){
         this.customerId = customerId;
         this.restaurantId = restaurantId;
         this.orderLines = lines;
+        this.orderType = orderType;
         this.orderDate = orderDate;
         this.status = status;
         this.location = location;

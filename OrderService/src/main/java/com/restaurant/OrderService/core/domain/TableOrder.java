@@ -10,8 +10,8 @@ import java.util.List;
 @Document(collection = "TableOrder")
 public class TableOrder extends Order{
 
-    public TableOrder(String customerId, String restaurantId, List<OrderLine> lines, Date orderDate, OrderStatus status, String tableId){
-        super(customerId, restaurantId, lines, orderDate, status, tableId);
+    public TableOrder(String customerId, String restaurantId, OrderType orderType, List<OrderLine> lines, Date orderDate, OrderStatus status, String tableId){
+        super(customerId, restaurantId, orderType, lines, orderDate, status, tableId);
     }
 }
 
