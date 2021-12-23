@@ -110,3 +110,14 @@ DELETE /user/:id/
 ####Restaurant Service
 path: http://localhost:8085 
 
+GET /restaurant/
+- Gets all restaurants
+
+GET /restaurant/:name/
+- Gets information of a restaurant by name
+
+POST /restaurant/
+- Creates a restaurant
+
+DELETE /restaurant/:name/
+- Delete a restaurant
