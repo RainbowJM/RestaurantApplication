@@ -3,14 +3,11 @@ package com.restaurant.MenuService.adapters.rest.requestDTO;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Getter
 public class MenuRequest {
 	@NotBlank(message = "restaurant id cannot be empty")
-	@Size(min=1, max=1, message = "the restaurant id can only be on number")
 	public String restaurantId;
 	@NotBlank(message = "the menu id cannot be empty")
-	@Size(min=1, max = 1, message = "the menu id can only be one number")
 	public String id;
 }

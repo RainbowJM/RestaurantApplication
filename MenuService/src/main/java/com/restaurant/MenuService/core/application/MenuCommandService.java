@@ -20,7 +20,7 @@ public class MenuCommandService {
 		this.menuRepository = menuRepository;
 	}
 
-	public Menu createMenu(AddMenuCommand addMenuCommand) throws InstanceAlreadyExistsException {
+	public Menu handle(AddMenuCommand addMenuCommand) throws InstanceAlreadyExistsException {
 		if (menuRepository.existsById(addMenuCommand.menuId())){
 			throw new InstanceAlreadyExistsException(addMenuCommand.menuId());
 		}
@@ -29,17 +29,11 @@ public class MenuCommandService {
 		return this.menuRepository.save(newMenu);
 	}
 
-	public void DeleteMenu(DeleteMenuCommand deleteMenuCommand) throws InstanceNotFoundException {
+	public void handle(DeleteMenuCommand deleteMenuCommand) throws InstanceNotFoundException {
 		if (menuRepository.existsById(deleteMenuCommand.menuId())){
 			menuRepository.deleteMenuById(deleteMenuCommand.menuId());
 		}
 		else throw new InstanceNotFoundException(deleteMenuCommand.menuId());
 	}
 
-	public void EditMenu(AddMenuCommand addMenuCommand) throws InstanceNotFoundException{
-		if(menuRepository.existsById(addMenuCommand.menuId())){
-			menuRepository.save(new Menu (addMenuCommand.menuId(), addMenuCommand.restaurantId()));
-		}
-		else throw new InstanceNotFoundException(addMenuCommand.menuId());
-	}
 }

@@ -1,5 +1,6 @@
 package com.restaurant.MenuService.core.application;
 
+import com.restaurant.MenuService.adapters.rest.requestDTO.DishRequest;
 import com.restaurant.MenuService.core.domain.Dish;
 import com.restaurant.MenuService.core.domain.Menu;
 import com.restaurant.MenuService.core.port.MenuRepository;
@@ -25,6 +26,10 @@ public class MenuQueryService {
 
     public Optional<Menu> getMenuByRestaurantId(String restaurantId){
         return this.menuRepository.findMenuByRestaurantId(restaurantId);
+    }
+
+    public Dish getDishByMenu(String menuId, String dishId){
+        return this.menuRepository.findById(menuId).get().getDishById(dishId);
     }
 
 }
