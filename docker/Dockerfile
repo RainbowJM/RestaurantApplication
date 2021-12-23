@@ -4,7 +4,9 @@ FROM openjdk:17-alpine as base
 WORKDIR /app/
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
-RUN ["./mvnw", "dependency:go-offline"]
+RUN dos2unix ./mvnw
+RUN chmod +x ./mvnw
+RUN ["./mvnw", "-B", "dependency:go-offline"]
 COPY src/ ./src/
 
 FROM base as test

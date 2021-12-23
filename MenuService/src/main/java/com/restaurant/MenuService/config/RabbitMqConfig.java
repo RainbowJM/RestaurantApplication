@@ -16,7 +16,7 @@ import javax.swing.event.MenuEvent;
 
 @Configuration
 public class RabbitMqConfig {
-	@Value("${spring.rabitmq.host}")
+	@Value("${spring.rabbitmq.host}")
 	private String host;
 
 	@Value("${spring.rabbitmq.port}")

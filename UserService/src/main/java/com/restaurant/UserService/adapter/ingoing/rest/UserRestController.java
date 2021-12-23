@@ -60,7 +60,7 @@ public class UserRestController {
     @DeleteMapping(path="/{username}/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RolesAllowed({"Management", "OtherService"})
-    public void deleteOtherUser(Authentication auth, @PathVariable String username) {
+    public void deleteOtherUser(@PathVariable String username) {
         this.commandService.handle(new DeleteUserCommand(username));
     }
 
@@ -81,7 +81,7 @@ public class UserRestController {
     @PutMapping(path="/{username}/")
     @ResponseStatus(HttpStatus.OK)
     @RolesAllowed({"Management", "OtherService"})
-    public User changeAccount(Authentication auth, @PathVariable String username, @Valid @RequestBody ChangeOtherUserRequest changeRequest) {
+    public User changeAccount(@PathVariable String username, @Valid @RequestBody ChangeOtherUserRequest changeRequest) {
         if (changeRequest.role == UserRole.OtherService) throw new RuntimeException("Can't upgrade your role to OtherService since it's reserved for internal services.");
         return this.commandService.handle(new ChangeUserCommand(username, changeRequest.password, changeRequest.role, changeRequest.firstName, changeRequest.lastName));
     }

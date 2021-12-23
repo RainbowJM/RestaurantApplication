@@ -7,6 +7,7 @@ import com.restaurant.TableService.core.domain.Table;
 import com.restaurant.TableService.core.domain.exception.FailedToDeleteTable;
 import com.restaurant.TableService.core.domain.exception.RestaurantNotFound;
 import com.restaurant.TableService.core.domain.exception.TableNotFound;
+import com.restaurant.TableService.core.port.RestaurantRepository;
 import com.restaurant.TableService.core.port.TableRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,14 +18,16 @@ import java.util.Optional;
 @Transactional
 public class TableCommandService {
     private final TableRepository tableRepository;
+    private final RestaurantRepository restaurantRepository;
 
-    public TableCommandService(TableRepository tableRepository) {
+    public TableCommandService(TableRepository tableRepository, RestaurantRepository restaurantRepository) {
         this.tableRepository = tableRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
     public Table handle(AddTableCommand addTableCommand) {
         // todo: check whether restaurant exists
-        if (this.tableRepository.findByRestaurantId(addTableCommand.restaurantId()).isEmpty()){
+        if (this.restaurantRepository.getRestaurantFromTable(addTableCommand.restaurantId()).isEmpty()){
             throw new RestaurantNotFound(addTableCommand.restaurantId());
         }
 
@@ -43,6 +46,7 @@ public class TableCommandService {
         table.changeTable(modifyTableCommand);
         return this.tableRepository.save(table);
     }
+
     public void handle(DeleteTableCommand deleteTableCommand) {
         if (this.tableRepository.deleteTableById(deleteTableCommand.id()).isEmpty()) {
             throw new FailedToDeleteTable(deleteTableCommand.id());
