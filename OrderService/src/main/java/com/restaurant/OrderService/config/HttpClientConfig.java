@@ -2,6 +2,7 @@ package com.restaurant.OrderService.config;
 
 import com.restaurant.OrderService.adapters.incoming.message.UserEventListener;
 import com.restaurant.OrderService.adapters.outgoing.rest.RestaurantRestRepository;
+import com.restaurant.OrderService.adapters.outgoing.rest.TableRestRepository;
 import com.restaurant.OrderService.adapters.outgoing.rest.UserRestRepository;
 import com.restaurant.OrderService.core.application.OrderCommandService;
 import com.restaurant.OrderService.core.application.OrderQueryService;
@@ -19,6 +20,9 @@ public class HttpClientConfig {
     @Value("${restaurant.rest.restaurant-path}")
     private String restaurantEndpointPath;
 
+    @Value("${restaurant.rest.table-path}")
+    private String tableEndpointPath;
+
     @Value("${restaurant.rest.private-token}")
     private String privateToken;
 
@@ -30,6 +34,11 @@ public class HttpClientConfig {
     @Bean
     public RestaurantRestRepository httpRestaurantRepository(RestTemplate restTemplate) {
         return new RestaurantRestRepository(privateToken, restaurantEndpointPath, restTemplate);
+    }
+
+    @Bean
+    public TableRestRepository httpTableRepository(RestTemplate restTemplate) {
+        return new TableRestRepository(privateToken, tableEndpointPath, restTemplate);
     }
 
     @Bean

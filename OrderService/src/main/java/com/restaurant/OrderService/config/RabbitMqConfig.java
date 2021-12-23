@@ -35,6 +35,12 @@ public class RabbitMqConfig {
     @Value("${message.queue.restaurant-event-binding}")
     private String restaurantEventBinding;
 
+    @Value("${message.queue.table-event}")
+    private String tableEventQueue;
+    @Value("${message.queue.table-event-binding}")
+    private String tableEventBinding;
+
+
     @Bean
     public TopicExchange exchange() {
         return new TopicExchange(projectExchange);
@@ -64,6 +70,16 @@ public class RabbitMqConfig {
     @Bean
     public Binding restaurantEventListeningBinding(Queue restaurantEventListeningQueue, TopicExchange exchange) {
         return BindingBuilder.bind(restaurantEventListeningQueue).to(exchange).with(restaurantEventBinding);
+    }
+
+    // Register table event listener
+    @Bean
+    public Queue tableEventListeningQueue(){
+        return new Queue(tableEventQueue, true);
+    }
+    @Bean
+    public Binding tableEventListeningBinding(Queue tableEventListeningQueue, TopicExchange exchange){
+        return BindingBuilder.bind(tableEventListeningQueue).to(exchange).with(tableEventBinding);
     }
 
     // Setup RabbitMQ communication

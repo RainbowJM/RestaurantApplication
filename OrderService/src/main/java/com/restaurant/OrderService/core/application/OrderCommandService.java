@@ -1,6 +1,7 @@
 package com.restaurant.OrderService.core.application;
 
 import com.restaurant.OrderService.adapters.incoming.message.RestaurantEventListener;
+import com.restaurant.OrderService.adapters.incoming.message.TableEventListener;
 import com.restaurant.OrderService.adapters.incoming.message.UserEventListener;
 import com.restaurant.OrderService.adapters.incoming.rest.requestDTO.CreateOrderLineRequest;
 import com.restaurant.OrderService.core.application.command.UpdateOrderStatus;
@@ -30,12 +31,15 @@ public class OrderCommandService {
     private final OrderRepository repository;
     public OrderCommandService(OrderRepository repository) {
         this.repository = repository;
-        this.eventPublisher = eventPublisher;
+//        this.eventPublisher = eventPublisher;
     }
 
     public Order handle(CreateOrderCommand orderCommand) {
         // todo: is online- or tableOrder?
         Order order;
+
+        System.out.println(orderCommand.location());
+        System.out.println(orderCommand.orderType());
         if (!UserEventListener.userExists(orderCommand.customerId())) throw new OrderWithUnknownUsername();
         if (!RestaurantEventListener.restaurantExists(orderCommand.restaurantId())) throw new OrderWithUnknownRestaurantName();
 
@@ -43,8 +47,16 @@ public class OrderCommandService {
         for(CreateOrderLineRequest lines :  orderCommand.lines())
             orderLines.add(new OrderLine(lines.getProductId(), lines.getAmount(), lines.getPrice()));
 
-        if(orderCommand.orderType() == OrderType.ONLINE) order = new OnlineOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderCommand.orderType(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
-        else if(orderCommand.orderType() == OrderType.TABLE) order = new TableOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderCommand.orderType(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
+        if(orderCommand.orderType() == OrderType.ONLINE) {
+            System.out.println("order");
+            order = new OnlineOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderCommand.orderType(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
+        }
+        else if(orderCommand.orderType() == OrderType.TABLE) {
+            System.out.println("table");
+            if(!TableEventListener.tableExists(orderCommand.location()))
+                throw new OrderWithUnknownRestaurantName();
+            order = new TableOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderCommand.orderType(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
+        }
         else throw new OrderNotFound("none");
         return this.repository.save(order);
     }
@@ -85,8 +97,8 @@ public class OrderCommandService {
         this.repository.deleteOrderById(orderCommand.orderId());
     }
 
-    @EventListener
-    public void sendOrderReadyEvent(ApplicationReadyEvent event) {
-        eventPublisher.publish(new OrderReadyEvent());
-    }
+//    @EventListener
+//    public void sendOrderReadyEvent(ApplicationReadyEvent event) {
+//        eventPublisher.publish(new OrderReadyEvent());
+//    }
 }

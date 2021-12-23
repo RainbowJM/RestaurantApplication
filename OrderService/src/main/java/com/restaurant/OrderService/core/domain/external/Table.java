@@ -9,5 +9,5 @@ import lombok.ToString;
 @AllArgsConstructor
 @Data
 public class Table {
-    private String name;
+    private String tableId;
 }

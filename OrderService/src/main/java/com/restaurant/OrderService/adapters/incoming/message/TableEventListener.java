@@ -11,11 +11,13 @@ import com.restaurant.OrderService.core.port.TableRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.ResourceAccessException;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TableEventListener {
     private final OrderQueryService queryService;
     private final OrderCommandService commandService;
@@ -31,9 +33,10 @@ public class TableEventListener {
     }
 
     @EventListener
-    private void onReadyEvent(ContextRefreshedEvent event) { initializeTables(); }
+    public void onReadyEvent(ContextRefreshedEvent event) { initializeTables(); }
 
     private void initializeTables(){
+        System.out.println("initializing...");
         if(!initialized){
             try{
                 tables = new ArrayList<>(tableRepository.getAllTables());
@@ -45,7 +48,7 @@ public class TableEventListener {
         }
     }
 
-    @RabbitListener(queues = "#{'${message.queue.restaurant-event}'}")
+    @RabbitListener(queues = "#{'${message.queue.table-event}'}")
     private void listen(TableEvent event){
         switch (event.getEventKey()) {
             case TableReadyEvent.KEY -> this.initializeTables();
@@ -59,14 +62,15 @@ public class TableEventListener {
     }
 
     private void handle(TableRemovedEvent event){
-        tables.removeIf(table -> table.getName().equals(event.getTableId()));
+        tables.removeIf(table -> table.getTableId().equals(event.getTableId()));
     }
 
     public static List<Table> getTables(){
         return tables;
     }
 
-    public static boolean tableExists(String nameId){
-        return tables.stream().anyMatch(table -> table.getName().equals(nameId));
+    public static boolean tableExists(String tableId){
+        System.out.println(tableId);
+        return tables.stream().anyMatch(table -> table.getTableId().equals(tableId));
     }
 }
