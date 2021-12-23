@@ -16,7 +16,7 @@ public class HttpClientConfig {
     private String orderEndpointPath;
 
     @Value("${restaurant.rest.private-token}")
-    public static String privateToken;
+    public String privateToken;
 
     @Bean
     public TableRestRepository httpTableRepository() {

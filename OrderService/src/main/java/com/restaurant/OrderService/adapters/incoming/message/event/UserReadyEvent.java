@@ -2,18 +2,14 @@ package com.restaurant.OrderService.adapters.incoming.message.event;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor
-@JsonTypeName(UserRemovedEvent.KEY)
-public class UserRemovedEvent extends UserEvent {
-    public static final String KEY = "user.event.removed";
+@JsonTypeName(UserReadyEvent.KEY)
+public class UserReadyEvent extends UserEvent {
+    public static final String KEY = "user.event.ready";
 
     @Override
     public String getEventKey() {
         return KEY;
     }
-
-    @Getter
-    private final String username;
 }
