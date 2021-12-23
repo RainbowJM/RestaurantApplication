@@ -1,4 +1,4 @@
-package com.restaurant.MenuService.adapters.incoming.message.rest.requestDTO;
+package com.restaurant.MenuService.adapters.incoming.rest.requestDTO;
 
 import lombok.Getter;
 

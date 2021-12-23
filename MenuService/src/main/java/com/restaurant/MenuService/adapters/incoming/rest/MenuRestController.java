@@ -1,7 +1,7 @@
-package com.restaurant.MenuService.adapters.incoming.message.rest;
+package com.restaurant.MenuService.adapters.incoming.rest;
 
-import com.restaurant.MenuService.adapters.incoming.message.rest.requestDTO.DishRequest;
-import com.restaurant.MenuService.adapters.incoming.message.rest.requestDTO.MenuRequest;
+import com.restaurant.MenuService.adapters.incoming.rest.requestDTO.DishRequest;
+import com.restaurant.MenuService.adapters.incoming.rest.requestDTO.MenuRequest;
 import com.restaurant.MenuService.core.application.MenuCommandService;
 import com.restaurant.MenuService.core.application.MenuQueryService;
 import com.restaurant.MenuService.core.application.command.AddMenuCommand;
