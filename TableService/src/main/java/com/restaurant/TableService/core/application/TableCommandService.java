@@ -50,6 +50,7 @@ public class TableCommandService {
     }
 
     public Table handle(ModifyTableCommand modifyTableCommand) {
+//        Table table = this.tableRepository.findTableById(modifyTableCommand.tableId());
         Optional<Table> optTable = this.tableRepository.findById(modifyTableCommand.tableId());
 
         if (optTable.isEmpty()) {
