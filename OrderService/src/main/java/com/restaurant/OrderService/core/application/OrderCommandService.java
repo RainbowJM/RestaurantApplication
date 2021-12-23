@@ -9,6 +9,7 @@ import com.restaurant.OrderService.core.application.command.ChangeOrderCommand;
 import com.restaurant.OrderService.core.application.command.CreateOrderCommand;
 import com.restaurant.OrderService.core.application.command.DeleteOrderCommand;
 import com.restaurant.OrderService.core.domain.*;
+import com.restaurant.OrderService.core.domain.event.OrderReadyEvent;
 import com.restaurant.OrderService.core.domain.exception.OrderNotFound;
 import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownRestaurantName;
 import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownUsername;
