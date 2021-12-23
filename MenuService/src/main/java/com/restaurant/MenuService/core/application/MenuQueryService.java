@@ -31,7 +31,7 @@ public class MenuQueryService {
             return this.menuRepository.findAllByRestaurantId(getAllMenus.restaurantId());
         }
         else {
-            return this.menuRepository.getAll();
+            return this.menuRepository.findAll();
         }
     }
 

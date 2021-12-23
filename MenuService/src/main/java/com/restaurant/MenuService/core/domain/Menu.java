@@ -1,6 +1,7 @@
 package com.restaurant.MenuService.core.domain;
 
 import com.restaurant.MenuService.core.domain.exceptions.InvalidRestaurantIdException;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -14,6 +15,7 @@ public class Menu {
 
     @Id
     @Getter
+    @Generated
     private String id;
 
     @Getter
@@ -23,8 +25,7 @@ public class Menu {
     @Getter
     private String restaurantId;
 
-    public Menu(String id, String restaurantId) {
-        this.id = id;
+    public Menu(String restaurantId) {
         setRestaurantId(restaurantId);
         this.dishes = new ArrayList<>();
     }

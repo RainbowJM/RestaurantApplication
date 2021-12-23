@@ -24,7 +24,7 @@ public class MenuCommandService {
 			throw new InstanceAlreadyExistsException(addMenuCommand.menuId());
 		}
 
-		Menu newMenu = new Menu(addMenuCommand.menuId(), addMenuCommand.restaurantId());
+		Menu newMenu = new Menu(addMenuCommand.restaurantId());
 		return this.menuRepository.save(newMenu);
 	}
 

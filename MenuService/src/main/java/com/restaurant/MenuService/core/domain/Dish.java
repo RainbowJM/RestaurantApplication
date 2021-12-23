@@ -1,5 +1,6 @@
 package com.restaurant.MenuService.core.domain;
 
+import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import java.util.List;
 public class Dish {
 	@Getter
 	@Setter
+	@Generated
 	private String id;
 	@Getter
 	@Setter
@@ -23,7 +25,6 @@ public class Dish {
 	private int calories;
 
 	public Dish(String id, String naam, Double prijs, String ingredienten, int calorie){
-		this.id = id;
 		this.naam = naam;
 		this.price = prijs;
 		this.ingredients = ingredienten;
