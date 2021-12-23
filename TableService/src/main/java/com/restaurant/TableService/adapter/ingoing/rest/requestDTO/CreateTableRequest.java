@@ -4,6 +4,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 public class CreateTableRequest {
+//    @NotBlank
+//    public String tableId;
+
     @NotBlank(message="You need to provide a restaurant id to create the table at")
     public String restaurantName;
 
