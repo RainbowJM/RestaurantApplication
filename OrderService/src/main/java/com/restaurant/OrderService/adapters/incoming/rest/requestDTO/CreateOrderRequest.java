@@ -7,6 +7,7 @@ import com.restaurant.OrderService.core.domain.OrderStatus;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
+import javax.xml.bind.SchemaOutputResolver;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,7 +19,7 @@ public class CreateOrderRequest {
     String customerId;
     @NotBlank(message = "restaurantId can't be empty")
     String restaurantId;
-    @NotBlank(message = "OrderLines can't be empty")
+//    @NotBlank(message = "OrderLines can't be empty")
     List<CreateOrderLineRequest> orderLines;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
     Date orderDate;
@@ -26,13 +27,13 @@ public class CreateOrderRequest {
     @NotBlank(message = "Delivery address can't be empty.")
     String deliverAddress;
 
-    public CreateOrderRequest(String customerId, String restaurantId, List<CreateOrderLineRequest> lines, String orderDate, String status, String deliverAddress){
+    public CreateOrderRequest(String customerId, String restaurantId, List<CreateOrderLineRequest> lines, String orderDate, String deliverAddress){
         this.customerId = customerId;
         this.restaurantId = restaurantId;
-        this.orderLines = lines;
         this.deliverAddress = deliverAddress;
-        if(status == null) this.status = OrderStatus.CREATED;
-        else this.status = OrderStatus.valueOf(status);
+        this.status = OrderStatus.CREATED;
+        System.out.println(lines);
+        this.orderLines = lines;
 
         try {
             this.orderDate = new SimpleDateFormat("dd/MM/yyyy").parse(orderDate);

@@ -4,7 +4,6 @@ import com.restaurant.OrderService.adapters.incoming.rest.requestDTO.*;
 import com.restaurant.OrderService.core.application.*;
 import com.restaurant.OrderService.core.application.command.*;
 import com.restaurant.OrderService.core.application.query.*;
-import com.restaurant.OrderService.core.domain.OnlineOrder;
 import com.restaurant.OrderService.core.domain.Order;
 import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownRestaurantName;
 import org.springframework.http.HttpStatus;
@@ -40,11 +39,11 @@ public class OrderRestController {
         return this.queryService.handle(new ListOrdersQuery(userId, restaurantId));
     }
 
-    @GetMapping("/{restaurantId}")
+    @GetMapping("/{orderId}")
     @ResponseStatus(HttpStatus.OK)
     @RolesAllowed({"User", "Staff", "Management", "OtherService"})
-    public List<Order> getOrdersFromRestaurant(@PathVariable String restaurantId ) {
-        return this.queryService.handle(new ListRestaurantOrdersQuery(restaurantId));
+    public Order getOrdersFromRestaurant(@PathVariable String orderId) {
+        return this.queryService.handle(new OrderQuery(orderId));
     }
     // endregion
 
@@ -60,7 +59,7 @@ public class OrderRestController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @RolesAllowed({"User", "Staff", "Management", "OtherService"})
     public Order changeOrder(@Valid @RequestBody ChangeOrderRequest changeOrderRequest){
-        return this.commandService.handle( new ChangeOrderCommand( changeOrderRequest.getOrderId(), changeOrderRequest.getRestaurantId(), changeOrderRequest.getCustomerId(), changeOrderRequest.getLines(), changeOrderRequest.getOrderDate(), changeOrderRequest.getStatus(), changeOrderRequest.getDeliverAddress()));
+        return this.commandService.handle( new ChangeOrderCommand( changeOrderRequest.getOrderId(), changeOrderRequest.getRestaurantId(), changeOrderRequest.getCustomerId(), changeOrderRequest.getLines(), changeOrderRequest.getStatus(), changeOrderRequest.getDeliverAddress()));
     }
 
     @PutMapping("/{orderId}/status/{newStatus}")
@@ -70,8 +69,7 @@ public class OrderRestController {
         if (authentication.getAuthorities().stream().findFirst().get().getAuthority().equals("User")) {
             // fixme: check if it's the same user who owns the order, otherwise throw an exception
         }
-        // todo: change to ChangeOrderStatusCommand
-        return this.commandService.handle(new CancelOrderCommand(orderId));
+        return this.commandService.handle(new UpdateOrderStatus(orderId, newStatus));
     }
     // endregion
 

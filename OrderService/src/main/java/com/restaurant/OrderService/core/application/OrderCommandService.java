@@ -2,9 +2,8 @@ package com.restaurant.OrderService.core.application;
 
 import com.restaurant.OrderService.adapters.incoming.message.RestaurantEventListener;
 import com.restaurant.OrderService.adapters.incoming.message.UserEventListener;
-import com.restaurant.OrderService.adapters.incoming.message.event.UserEvent;
 import com.restaurant.OrderService.adapters.incoming.rest.requestDTO.CreateOrderLineRequest;
-import com.restaurant.OrderService.core.application.command.CancelOrderCommand;
+import com.restaurant.OrderService.core.application.command.UpdateOrderStatus;
 import com.restaurant.OrderService.core.application.command.ChangeOrderCommand;
 import com.restaurant.OrderService.core.application.command.CreateOrderCommand;
 import com.restaurant.OrderService.core.application.command.DeleteOrderCommand;
@@ -19,7 +18,6 @@ import com.restaurant.OrderService.core.port.OrderRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -54,21 +52,27 @@ public class OrderCommandService {
         Optional<Order> optOrder = this.repository.findById(orderCommand.orderId());
         if (optOrder.isEmpty())
             throw new OrderNotFound(orderCommand.orderId());
-
         Order order = optOrder.get();
-        order.changeOrder(orderCommand);
+        System.out.println("changing order...");
+        System.out.println(orderCommand.lines());
+
+        if(orderCommand.customerId() != null) order.setCustomerId(orderCommand.customerId());
+        if(orderCommand.restaurantId() != null) order.setRestaurantId(orderCommand.restaurantId());
+        if(orderCommand.deliverAddress() != null) order.setDeliverAddress(orderCommand.deliverAddress());
+        if(orderCommand.lines() != null && !orderCommand.lines().isEmpty()) order.changeOrderLines(orderCommand.lines());
+        for(OrderLine orderLine: order.getOrderLines())
+            System.out.println(orderLine);
         this.repository.save(order);
-        System.out.println(order.getOrderLines());
         return order;
     }
 
-    public Order handle(CancelOrderCommand orderCommand){
+    public Order handle(UpdateOrderStatus orderCommand){
         Optional<Order> optOrder = this.repository.findById(orderCommand.orderId());
         if (optOrder.isEmpty())
             throw new OrderNotFound(orderCommand.orderId());
 
         Order order = optOrder.get();
-        order.setStatus(OrderStatus.CANCELLED);
+        order.setStatus(orderCommand.orderStatus());
         return this.repository.save(order);
     }
 

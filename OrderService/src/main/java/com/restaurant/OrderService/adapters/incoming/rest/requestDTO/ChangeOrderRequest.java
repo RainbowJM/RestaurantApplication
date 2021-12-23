@@ -15,21 +15,22 @@ public class ChangeOrderRequest {
     String restaurantId;
     String customerId;
     List<CreateOrderLineRequest> lines;
-    Date orderDate;
     OrderStatus status;
     String deliverAddress;
 
-    public ChangeOrderRequest(String customerId, String restaurantId, List<CreateOrderLineRequest> lines, String orderDate, String status, String deliverAddress){
-        this.customerId = customerId;
+    public ChangeOrderRequest(String orderId, String restaurantId, String customerId, List<CreateOrderLineRequest> lines, String status, String deliverAddress){
+        this.orderId = orderId;
         this.restaurantId = restaurantId;
+        this.customerId = customerId;
+        System.out.println(lines);
         this.lines = lines;
-        this.deliverAddress = deliverAddress;
         this.status = OrderStatus.valueOf(status);
+        this.deliverAddress = deliverAddress;
 
-        try {
-            this.orderDate = new SimpleDateFormat("dd/MM/yyyy").parse(orderDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            this.orderDate = new SimpleDateFormat("dd/MM/yyyy").parse(orderDate);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
     }
 }
