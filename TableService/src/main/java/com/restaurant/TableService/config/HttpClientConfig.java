@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class HttpClientConfig {
-    @Value("${restaurant.rest.restayrant-path}")
+    @Value("${restaurant.rest.restaurant-path}")
     private String restaurantEndpointPath;
 
     @Value("${restaurant.rest.private-token}")

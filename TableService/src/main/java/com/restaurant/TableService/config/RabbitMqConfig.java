@@ -14,7 +14,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 @Configuration
 public class RabbitMqConfig {
-    @Value("${spring.rabitmq.host}")
+    @Value("${spring.rabbitmq.host}")
     private String host;
 
     @Value("${spring.rabbitmq.port}")
