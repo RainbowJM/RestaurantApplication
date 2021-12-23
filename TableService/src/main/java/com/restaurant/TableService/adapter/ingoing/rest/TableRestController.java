@@ -40,12 +40,14 @@ public class TableRestController {
                 tableRequest.location, tableRequest.numberOfSeats));
     }
 
-    @PutMapping(path = "/")
+    @PutMapping(path = "/{id}/")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @RolesAllowed({"Staff", "Management", "OtherService"})
     public Table modifyTable(@Valid @RequestBody ModifyTableRequest modifyTableRequest){
-        return this.tableCommandService.handle(new ModifyTableCommand(modifyTableRequest.tableId,
-                modifyTableRequest.restaurantId, modifyTableRequest.location, modifyTableRequest.numberOfSeats));
+        return this.tableCommandService.handle(new ModifyTableCommand(
+                modifyTableRequest.tableId,
+                modifyTableRequest.location,
+                modifyTableRequest.numberOfSeats));
     }
 
     @DeleteMapping(path="/{id}/")

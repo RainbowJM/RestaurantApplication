@@ -5,11 +5,11 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 public class ModifyTableRequest {
-    @NotBlank
+
     public String tableId;
 
-    @NotBlank
-    public String restaurantId;
+//    @NotBlank
+//    public String restaurantId;
 
     @NotBlank
     public String location;
