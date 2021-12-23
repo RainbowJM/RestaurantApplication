@@ -9,6 +9,7 @@ import com.restaurant.MenuService.core.application.command.DeleteMenuCommand;
 import com.restaurant.MenuService.core.domain.Dish;
 import com.restaurant.MenuService.core.domain.Menu;
 import com.restaurant.MenuService.core.domain.event.MenuChangedEvent;
+import com.restaurant.MenuService.core.domain.event.MenuCreatedEvent;
 import com.restaurant.MenuService.core.domain.event.MenuRemovedEvent;
 import com.restaurant.MenuService.core.domain.exceptions.InvalidRestaurantIdException;
 import com.restaurant.MenuService.core.port.MenuRepository;
@@ -33,6 +34,7 @@ public class MenuCommandService {
 	public Menu handle(AddMenuCommand addMenuCommand) throws InvalidRestaurantIdException {
 		if (RestaurantEventListener.restaurantExists(addMenuCommand.restaurantId())) {
 			Menu newMenu = new Menu(addMenuCommand.restaurantId());
+			this.eventPublisher.publish(new MenuCreatedEvent(newMenu.getId(), newMenu.getAllDishIds(), newMenu.getRestaurantId()));
 			return this.menuRepository.save(newMenu);
 		}
 		else throw new InvalidRestaurantIdException(addMenuCommand.restaurantId());
