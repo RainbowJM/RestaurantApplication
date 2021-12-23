@@ -15,6 +15,10 @@
 ###Postman Collection 
 For each microservice there is a postman collection for the testing in `docs/postman`
 
+### Docker
+- In this project we used Docker compose to deploy mongoDB, our services and rabbitMQ
+- If you want to run this container use "docker-compose -f docker-compose.storage.yml up"
+
 ### Endpoints
 #### Menu Service
 path: http://localhost:8080 
