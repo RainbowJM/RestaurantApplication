@@ -12,5 +12,5 @@ public interface MenuRepository extends MongoRepository<Menu, String> {
 	Optional<Menu> findMenuById(String menuId);
 	Optional<Menu> findMenuByRestaurantId(String restaurantId);
 	boolean existsById(String menuId);
-	Boolean deleteMenuById(String menuId);
+	void deleteMenuById(String menuId);
 }

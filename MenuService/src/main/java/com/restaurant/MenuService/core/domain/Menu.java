@@ -6,9 +6,10 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Document(collation = "Menu")
+@Document(collection = "Menu")
 public class Menu {
 
     @Id
@@ -25,6 +26,7 @@ public class Menu {
     public Menu(String id, String restaurantId) {
         this.id = id;
         setRestaurantId(restaurantId);
+        this.dishes = new ArrayList<>();
     }
 
     public void setRestaurantId(String restaurantId){
