@@ -12,9 +12,5 @@ public class TableRemovedEvent extends TableEvent{
         return KEY;
     }
 
-    private final String id;
-
-    private String getTableId() {
-        return id;
-    }
+    private final String tableId;
 }

@@ -42,7 +42,6 @@ public class UserCommandService {
             throw new UsernameAlreadyTaken(registerCommand.username());
         }
 
-        // todo: check if user had any tables and if so prevent it from being deleted
         User newUser = this.userRepository.save(new User(registerCommand.username(), registerCommand.password(), registerCommand.firstName(), registerCommand.lastName()));
         eventPublisher.publish(new UserRegisteredEvent(newUser.getUsername(), newUser.getRole().name(), newUser.getFirstName(), newUser.getLastName()));
         return newUser;
@@ -52,7 +51,6 @@ public class UserCommandService {
         List<Order> orders = orderRepository.getAllOrdersFromUser(deleteCommand.username());
         boolean activeOrders = false;
         for (Order order : orders) {
-            // fixme: This should probably be using an enum
             if (order.status().equals("Active")) {
                 activeOrders = true;
                 break;
