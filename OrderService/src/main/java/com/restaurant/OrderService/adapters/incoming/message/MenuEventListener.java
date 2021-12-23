@@ -79,6 +79,16 @@ public class MenuEventListener {
         return menus;
     }
 
+    public static List<Menu> getMenusByRestaurant(String restaurantId) {
+        List<Menu> restaurantMenus = new ArrayList<>();
+        for(Menu menu : menus){
+            if(menu.getRestaurantId().equals(restaurantId)){
+                restaurantMenus.add(menu);
+            }
+        }
+        return restaurantMenus;
+    }
+
     public static boolean menuExists(String id) {
         return menus.stream().anyMatch(menu -> menu.getId().equals(id));
     }

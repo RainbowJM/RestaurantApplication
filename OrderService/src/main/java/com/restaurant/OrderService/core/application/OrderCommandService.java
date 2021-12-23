@@ -1,5 +1,6 @@
 package com.restaurant.OrderService.core.application;
 
+import com.restaurant.OrderService.adapters.incoming.message.MenuEventListener;
 import com.restaurant.OrderService.adapters.incoming.message.RestaurantEventListener;
 import com.restaurant.OrderService.adapters.incoming.message.TableEventListener;
 import com.restaurant.OrderService.adapters.incoming.message.UserEventListener;
@@ -12,8 +13,10 @@ import com.restaurant.OrderService.core.application.command.DeleteOrderCommand;
 import com.restaurant.OrderService.core.domain.*;
 import com.restaurant.OrderService.core.domain.event.OrderReadyEvent;
 import com.restaurant.OrderService.core.domain.exception.OrderNotFound;
+import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownDishes;
 import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownRestaurantName;
 import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownUsername;
+import com.restaurant.OrderService.core.domain.external.Menu;
 import com.restaurant.OrderService.core.port.OrderRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -40,6 +43,8 @@ public class OrderCommandService {
         Order order;
         if (!UserEventListener.userExists(orderCommand.customerId())) throw new OrderWithUnknownUsername();
         if (!RestaurantEventListener.restaurantExists(orderCommand.restaurantId())) throw new OrderWithUnknownRestaurantName();
+        List<Menu> menus = MenuEventListener.getMenusByRestaurant(orderCommand.restaurantId());
+        if (menus.isEmpty()) throw new OrderWithUnknownDishes();
 
         List<OrderLine> orderLines = new ArrayList<>();
         for(CreateOrderLineRequest lines :  orderCommand.lines())
