@@ -10,7 +10,7 @@ public interface OrderRepository extends MongoRepository<Order, String> {
     List<Order> findAll();
     Optional<Order> findById(String id);
     List<Order> findByRestaurantId(String id);
-    List<Order> findByUser(String userId);
+    List<Order> findByCustomerId(String customerId);
 
     void deleteOrderById(String orderId);
 }

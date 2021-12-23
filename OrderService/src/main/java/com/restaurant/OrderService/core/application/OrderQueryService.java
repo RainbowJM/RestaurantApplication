@@ -29,7 +29,7 @@ public class OrderQueryService {
         if(listQuery.optionalUserId() == null && listQuery.optionalRestaurantId() == null)
             return this.repository.findAll();
         else if(listQuery.optionalUserId() != null)
-            return this.repository.findByUser(listQuery.optionalUserId());
+            return this.repository.findByCustomerId(listQuery.optionalUserId());
         return this.repository.findByRestaurantId(listQuery.optionalRestaurantId());
     }
 

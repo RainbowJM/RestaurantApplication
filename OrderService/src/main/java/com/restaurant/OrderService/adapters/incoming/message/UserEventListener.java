@@ -72,7 +72,7 @@ public class UserEventListener {
         System.out.println(String.format("Deleting orders from this user %s because a user deletion event was received", event.getUsername()));
 
         // todo: maybe implement delete command could use a delete query to delete from certain users
-        for (Order order : queryService.handle(new ListOrdersQuery())) {
+        for (Order order : queryService.handle(new ListOrdersQuery(null, null))) {
             if (order.getCustomerId().equals(event.getUsername())) {
                 this.commandService.handle(new DeleteOrderCommand(order.getId()));
             }
