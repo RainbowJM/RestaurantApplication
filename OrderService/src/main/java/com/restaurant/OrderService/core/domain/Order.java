@@ -33,13 +33,13 @@ public class Order {
     @Getter @Setter
     Date orderDate;
     @Getter @Setter
-    String status;
+    OrderStatus status;
     @Getter @Setter
     String deliverAddress;
     @Getter @Setter
     float totalPrice;
 
-    public Order(String customerId, String restaurantId, List<OrderLine> lines, Date orderDate, String status, String deliverAddress){
+    public Order(String customerId, String restaurantId, List<OrderLine> lines, Date orderDate, OrderStatus status, String deliverAddress){
         this.customerId = customerId;
         this.restaurantId = restaurantId;
         this.orderLines = lines;
