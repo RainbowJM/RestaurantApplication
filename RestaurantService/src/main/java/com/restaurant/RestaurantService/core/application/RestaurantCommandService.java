@@ -5,8 +5,11 @@ import com.restaurant.RestaurantService.core.application.command.CreateRestauran
 import com.restaurant.RestaurantService.core.application.command.DeleteRestaurantCommand;
 import com.restaurant.RestaurantService.core.domain.Restaurant;
 import com.restaurant.RestaurantService.core.domain.event.RestaurantCreatedEvent;
+import com.restaurant.RestaurantService.core.domain.event.RestaurantReadyEvent;
 import com.restaurant.RestaurantService.core.domain.event.RestaurantRemovedEvent;
 import com.restaurant.RestaurantService.core.port.RestaurantRepository;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,5 +37,10 @@ public class RestaurantCommandService {
         if (deletedRestaurant != null) {
             this.eventPublisher.publish(new RestaurantRemovedEvent(deletedRestaurant.getName()));
         }
+    }
+
+    @EventListener
+    public void sendRestaurantReadyEvent(ApplicationReadyEvent event) {
+        eventPublisher.publish(new RestaurantReadyEvent());
     }
 }

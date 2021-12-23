@@ -30,7 +30,7 @@ public class RestaurantEventListener {
     }
 
     @EventListener
-    private void onReadyEvent(ContextRefreshedEvent event) {
+    public void onReadyEvent(ContextRefreshedEvent event) {
         initializeRestaurants();
     }
 

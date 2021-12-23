@@ -4,6 +4,8 @@ import com.restaurant.OrderService.adapters.incoming.message.RestaurantEventList
 import com.restaurant.OrderService.adapters.incoming.message.UserEventListener;
 import com.restaurant.OrderService.adapters.incoming.rest.requestDTO.CreateOrderLineRequest;
 import com.restaurant.OrderService.core.application.command.UpdateOrderStatus;
+import com.restaurant.OrderService.adapters.outgoing.message.EventPublisher;
+import com.restaurant.OrderService.core.application.command.CancelOrderCommand;
 import com.restaurant.OrderService.core.application.command.ChangeOrderCommand;
 import com.restaurant.OrderService.core.application.command.CreateOrderCommand;
 import com.restaurant.OrderService.core.application.command.DeleteOrderCommand;
@@ -11,10 +13,13 @@ import com.restaurant.OrderService.core.domain.OnlineOrder;
 import com.restaurant.OrderService.core.domain.Order;
 import com.restaurant.OrderService.core.domain.OrderLine;
 import com.restaurant.OrderService.core.domain.OrderStatus;
+import com.restaurant.OrderService.core.domain.event.OrderReadyEvent;
 import com.restaurant.OrderService.core.domain.exception.OrderNotFound;
 import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownRestaurantName;
 import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownUsername;
 import com.restaurant.OrderService.core.port.OrderRepository;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,9 +31,11 @@ import java.util.Optional;
 @Transactional
 public class OrderCommandService {
     private final OrderRepository repository;
+    private final EventPublisher eventPublisher;
 
-    public OrderCommandService(OrderRepository repository) {
+    public OrderCommandService(OrderRepository repository, EventPublisher eventPublisher) {
         this.repository = repository;
+        this.eventPublisher = eventPublisher;
     }
 
     public Order handle(CreateOrderCommand orderCommand) {
@@ -82,5 +89,10 @@ public class OrderCommandService {
             throw new OrderNotFound(orderCommand.orderId());
 
         this.repository.deleteOrderById(orderCommand.orderId());
+    }
+
+    @EventListener
+    public void sendOrderReadyEvent(ApplicationReadyEvent event) {
+        eventPublisher.publish(new OrderReadyEvent());
     }
 }
