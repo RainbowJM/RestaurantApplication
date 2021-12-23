@@ -13,9 +13,7 @@ import com.restaurant.UserService.core.application.query.GetUserQuery;
 import com.restaurant.UserService.core.application.query.ListAllUsersQuery;
 import com.restaurant.UserService.core.domain.User;
 import com.restaurant.UserService.core.domain.UserRole;
-import com.restaurant.UserService.core.domain.exception.FailedToDeleteUser;
-import com.restaurant.UserService.core.domain.exception.UserDeleteWithActiveOrders;
-import com.restaurant.UserService.core.domain.exception.UsernameAlreadyTaken;
+import com.restaurant.UserService.core.domain.exception.*;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -67,8 +65,17 @@ public class UserRestController {
     @GetMapping(path="/{username}/")
     @ResponseStatus(HttpStatus.OK)
     @RolesAllowed({"Management", "OtherService"})
-    public User getUser(@PathVariable String username) {
-        return this.queryService.handle(new GetUserQuery(username));
+    public User getUser(Authentication auth, @PathVariable String username) {
+        if (auth.getName().equals(username)) {
+            return this.queryService.handle(new GetUserQuery(username));
+        }
+        else {
+            String role = auth.getAuthorities().iterator().next().getAuthority();
+            if (role.equals("Staff") || role.equals("Management") || role.equals("OtherService")) {
+                return this.queryService.handle(new GetUserQuery(username));
+            }
+            else throw new QueryOtherUserWithInsufficientPermissions();
+        }
     }
 
     @PutMapping(path="/")
@@ -82,7 +89,8 @@ public class UserRestController {
     @ResponseStatus(HttpStatus.OK)
     @RolesAllowed({"Management", "OtherService"})
     public User changeAccount(@PathVariable String username, @Valid @RequestBody ChangeOtherUserRequest changeRequest) {
-        if (changeRequest.role == UserRole.OtherService) throw new RuntimeException("Can't upgrade your role to OtherService since it's reserved for internal services.");
+        if (changeRequest.role == UserRole.OtherService)
+            throw new OtherServiceRoleReserved();
         return this.commandService.handle(new ChangeUserCommand(username, changeRequest.password, changeRequest.role, changeRequest.firstName, changeRequest.lastName));
     }
 
@@ -97,7 +105,7 @@ public class UserRestController {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Collections.singletonMap("error", "Access was denied! You probably don't have the necessary privileges to call this endpoint."));
     }
 
-    @ExceptionHandler({FailedToDeleteUser.class, UserDeleteWithActiveOrders.class})
+    @ExceptionHandler({FailedToDeleteUser.class, UserDeleteWithActiveOrders.class, OtherServiceRoleReserved.class, QueryOtherUserWithInsufficientPermissions.class})
     public ResponseEntity<Map<String, String>> handleForbiddenType(RuntimeException exception) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Collections.singletonMap("error", exception.getMessage()));
     }

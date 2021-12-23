@@ -1,5 +1,6 @@
 package com.restaurant.OrderService.core.application;
 
+import com.restaurant.OrderService.adapters.incoming.message.RestaurantEventListener;
 import com.restaurant.OrderService.adapters.incoming.message.UserEventListener;
 import com.restaurant.OrderService.adapters.incoming.message.event.UserEvent;
 import com.restaurant.OrderService.adapters.incoming.rest.requestDTO.CreateOrderLineRequest;
@@ -10,6 +11,7 @@ import com.restaurant.OrderService.core.application.command.DeleteOrderCommand;
 import com.restaurant.OrderService.core.domain.Order;
 import com.restaurant.OrderService.core.domain.OrderLine;
 import com.restaurant.OrderService.core.domain.exception.OrderNotFound;
+import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownRestaurantName;
 import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownUsername;
 import com.restaurant.OrderService.core.port.OrderRepository;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,10 @@ public class OrderCommandService {
     public Order handle(CreateOrderCommand orderCommand) {
         if (!UserEventListener.userExists(orderCommand.customerId())) {
             throw new OrderWithUnknownUsername();
+        }
+
+        if (!RestaurantEventListener.restaurantExists(orderCommand.restaurantId())) {
+            throw new OrderWithUnknownRestaurantName();
         }
 
         List<OrderLine> orderLines = new ArrayList<>();
