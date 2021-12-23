@@ -13,7 +13,7 @@ public class MenuCreatedEvent extends MenuEvent{
 	public String getEventKey() { return KEY; }
 
 	@Getter
-	private final String id;
+	private final String menuId;
 
 	@Getter
 	private final List<String> dishIds;
