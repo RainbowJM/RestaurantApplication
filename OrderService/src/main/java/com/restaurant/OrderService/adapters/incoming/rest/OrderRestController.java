@@ -5,6 +5,7 @@ import com.restaurant.OrderService.core.application.*;
 import com.restaurant.OrderService.core.application.command.*;
 import com.restaurant.OrderService.core.application.query.*;
 import com.restaurant.OrderService.core.domain.Order;
+import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownRestaurantName;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -82,5 +83,10 @@ public class OrderRestController {
     @ExceptionHandler({AccessDeniedException.class})
     public ResponseEntity<Map<String, String>> handleOldTokenException(Exception exception) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Collections.singletonMap("error", "Access was denied! You probably don't have the necessary privileges to call this endpoint or your login token has expired."));
+    }
+
+    @ExceptionHandler({OrderWithUnknownRestaurantName.class, OrderWithUnknownRestaurantName.class})
+    public ResponseEntity<Map<String, String>> handleBadParametersException(Exception exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("error", exception.getMessage()));
     }
 }

@@ -2,6 +2,7 @@ package com.restaurant.OrderService.core.domain.external;
 
 import lombok.*;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Data
 @ToString
