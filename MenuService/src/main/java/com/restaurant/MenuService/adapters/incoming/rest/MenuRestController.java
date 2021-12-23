@@ -6,6 +6,9 @@ import com.restaurant.MenuService.core.application.MenuCommandService;
 import com.restaurant.MenuService.core.application.MenuQueryService;
 import com.restaurant.MenuService.core.application.command.AddMenuCommand;
 import com.restaurant.MenuService.core.application.command.DeleteMenuCommand;
+import com.restaurant.MenuService.core.application.query.GetDishByMenuQuery;
+import com.restaurant.MenuService.core.application.query.GetMenuQuery;
+import com.restaurant.MenuService.core.application.query.GetAllMenus;
 import com.restaurant.MenuService.core.domain.Dish;
 import com.restaurant.MenuService.core.domain.Menu;
 import org.springframework.http.HttpStatus;
@@ -18,6 +21,7 @@ import javax.management.InstanceNotFoundException;
 import javax.validation.Valid;
 import java.nio.file.AccessDeniedException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -32,17 +36,24 @@ public class MenuRestController {
 		this.menuCommandService = menuCommandService;
 	}
 
+	@GetMapping(path="/")
+	@RolesAllowed({"User", "Staff", "Management", "OtherService"})
+	@ResponseStatus(HttpStatus.OK)
+	public List<Menu> getAllMenus(@RequestParam(required = false) String restaurant){
+		return this.menuQueryService.handle(new GetAllMenus(restaurant));
+	}
+
 	@GetMapping(path="/{menuId}/")
 	@RolesAllowed({"User", "Staff", "Management", "OtherService"})
 	@ResponseStatus(HttpStatus.OK)
-	public Optional<Menu> getMenuById(@PathVariable String menuId){return this.menuQueryService.getMenuById(menuId);
+	public Optional<Menu> getMenuById(@PathVariable String menuId){return this.menuQueryService.handle(new GetMenuQuery(menuId));
 	}
 
-	@GetMapping(path="/restaurant/{menuId}/")
+	@GetMapping(path = "/{menuId}/{dishId}")
 	@RolesAllowed({"User", "Staff", "Management", "OtherService"})
 	@ResponseStatus(HttpStatus.OK)
-	public Optional<Menu> getMenuByRestaurantId(@PathVariable String menuId){
-		return this.menuQueryService.getMenuByRestaurantId(menuId);
+	public Dish getDishfromMenu(@PathVariable String menuId, @PathVariable String dishId){
+		return this.menuQueryService.handle(new GetDishByMenuQuery(menuId, dishId));
 	}
 
 	@PostMapping(path="/")
@@ -52,31 +63,25 @@ public class MenuRestController {
 		return this.menuCommandService.handle(new AddMenuCommand(menuRequest.id, menuRequest.restaurantId));
 	}
 
+	@PostMapping("/{menuId}/")
+	@RolesAllowed({"Staff", "Management"})
+	@ResponseStatus(HttpStatus.CREATED)
+	public DishRequest addDishToMenu(@RequestBody DishRequest dishRequest, @PathVariable String menuId){
+		this.menuQueryService.handle(new GetMenuQuery(menuId)).get().getDishes().add(new Dish(dishRequest.id, dishRequest.naam, dishRequest.prijs, dishRequest.ingredienten, dishRequest.calories));
+		return dishRequest;
+	}
+
 	@DeleteMapping(path = "/{menuId}/")
 	@RolesAllowed({"Staff", "Management"})
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteMenu(@PathVariable String menuId) throws InstanceNotFoundException {this.menuCommandService.handle(new DeleteMenuCommand(menuId));}
 
-	@GetMapping(path = "/{menuId}/{dishId}")
-	@RolesAllowed({"User", "Staff", "Management", "OtherService"})
-	@ResponseStatus(HttpStatus.OK)
-	public Dish getDishfromMenu(@PathVariable String menuId, @PathVariable String dishId){
-		return this.menuQueryService.getDishByMenu(menuId, dishId);
-	}
-
-	@PostMapping("/{menuId}/")
-	@RolesAllowed({"Staff", "Management"})
-	@ResponseStatus(HttpStatus.CREATED)
-	public DishRequest addDishToMenu(@RequestBody DishRequest dishRequest, @PathVariable String menuId){
-		this.menuQueryService.getMenuById(menuId).get().getDishes().add(new Dish(dishRequest.id, dishRequest.naam, dishRequest.prijs, dishRequest.ingredienten, dishRequest.calories));
-		return dishRequest;
-	}
 
 	@DeleteMapping("/{menuId}/{dishId}/")
 	@RolesAllowed({"Staff", "Management", "OtherService"})
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteDishFromMenu(@PathVariable String menuId, @PathVariable String dishId){
-		this.menuQueryService.getMenuById(menuId).get().deleteDishById(dishId);
+		this.menuQueryService.handle(new GetMenuQuery(menuId)).get().deleteDishById(dishId);
 	}
 
 	@ExceptionHandler({AccessDeniedException.class})
