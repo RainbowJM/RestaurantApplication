@@ -60,7 +60,7 @@ public class OrderRestController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @RolesAllowed({"User", "Staff", "Management", "OtherService"})
     public Order changeOrder(@Valid @RequestBody ChangeOrderRequest changeOrderRequest){
-        return this.commandService.handle( new ChangeOrderCommand( changeOrderRequest.getOrderId(), changeOrderRequest.getRestaurantId(), changeOrderRequest.getCustomerId(), changeOrderRequest.getLines(), changeOrderRequest.getOrderDate(), changeOrderRequest.getStatus(), changeOrderRequest.getDeliverAddress(), changeOrderRequest.getTotalPrice()));
+        return this.commandService.handle( new ChangeOrderCommand( changeOrderRequest.getOrderId(), changeOrderRequest.getRestaurantId(), changeOrderRequest.getCustomerId(), changeOrderRequest.getLines(), changeOrderRequest.getOrderDate(), changeOrderRequest.getStatus(), changeOrderRequest.getDeliverAddress()));
     }
 
     @PutMapping("/{orderId}/status/{newStatus}")

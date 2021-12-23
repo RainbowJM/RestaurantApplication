@@ -6,5 +6,5 @@ import com.restaurant.OrderService.core.domain.OrderStatus;
 import java.util.Date;
 import java.util.List;
 
-public record ChangeOrderCommand (String orderId, String customerId, String restaurantId, List<CreateOrderLineRequest> lines, Date orderDate, OrderStatus status, String deliverAddress, float totalPrice) {
+public record ChangeOrderCommand (String orderId, String customerId, String restaurantId, List<CreateOrderLineRequest> lines, Date orderDate, OrderStatus status, String deliverAddress) {
 }
