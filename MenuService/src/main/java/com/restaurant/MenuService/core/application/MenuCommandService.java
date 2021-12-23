@@ -29,7 +29,7 @@ public class MenuCommandService {
 		return this.menuRepository.save(newMenu);
 	}
 
-	public void DeleteMenu(DeleteMenuCommand deleteMenuCommand) throws InstanceNotFoundException {
+	public void handle(DeleteMenuCommand deleteMenuCommand) throws InstanceNotFoundException {
 		if (menuRepository.existsById(deleteMenuCommand.menuId())){
 			menuRepository.deleteMenuById(deleteMenuCommand.menuId());
 		}

@@ -47,7 +47,7 @@ public class MenuRestController {
 
 	@DeleteMapping(path = "/{menuId}/")
 	@ResponseStatus(HttpStatus.OK)
-	public void deleteMenu(@PathVariable String menuId) throws InstanceNotFoundException {this.menuCommandService.DeleteMenu(new DeleteMenuCommand(menuId));}
+	public void deleteMenu(@PathVariable String menuId) throws InstanceNotFoundException {this.menuCommandService.handle(new DeleteMenuCommand(menuId));}
 
 	@GetMapping(path = "/{menuId}/{dishId}")
 	@ResponseStatus(HttpStatus.OK)
