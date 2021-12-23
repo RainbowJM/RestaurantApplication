@@ -38,9 +38,6 @@ public class OrderCommandService {
 
     public Order handle(CreateOrderCommand orderCommand) {
         Order order;
-
-        System.out.println(orderCommand.location());
-        System.out.println(orderCommand.orderType());
         if (!UserEventListener.userExists(orderCommand.customerId())) throw new OrderWithUnknownUsername();
         if (!RestaurantEventListener.restaurantExists(orderCommand.restaurantId())) throw new OrderWithUnknownRestaurantName();
 
@@ -48,12 +45,8 @@ public class OrderCommandService {
         for(CreateOrderLineRequest lines :  orderCommand.lines())
             orderLines.add(new OrderLine(lines.getProductId(), lines.getAmount(), lines.getPrice()));
 
-        if(orderCommand.orderType() == OrderType.ONLINE) {
-            System.out.println("order");
-            order = new OnlineOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderCommand.orderType(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
-        }
+        if(orderCommand.orderType() == OrderType.ONLINE) order = new OnlineOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderCommand.orderType(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
         else if(orderCommand.orderType() == OrderType.TABLE) {
-            System.out.println("table");
             if(!TableEventListener.tableExists(orderCommand.location()))
                 throw new OrderWithUnknownRestaurantName();
             order = new TableOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderCommand.orderType(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
@@ -67,15 +60,11 @@ public class OrderCommandService {
         if (optOrder.isEmpty())
             throw new OrderNotFound(orderCommand.orderId());
         Order order = optOrder.get();
-        System.out.println("changing order...");
-        System.out.println(orderCommand.lines());
 
         if(orderCommand.customerId() != null) order.setCustomerId(orderCommand.customerId());
         if(orderCommand.restaurantId() != null) order.setRestaurantId(orderCommand.restaurantId());
         if(orderCommand.deliverAddress() != null) order.setLocation(orderCommand.deliverAddress());
         if(orderCommand.lines() != null && !orderCommand.lines().isEmpty()) order.changeOrderLines(orderCommand.lines());
-        for(OrderLine orderLine: order.getOrderLines())
-            System.out.println(orderLine);
         this.repository.save(order);
         return order;
     }

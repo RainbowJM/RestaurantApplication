@@ -43,6 +43,8 @@ public class TableEventListener {
                 System.out.println("Failed to connect to Table because it probably hasn't started yet. UserReadyEvent will need to be used to initialize this server.");
                 return;
             }
+            for(Table table: tables)
+                System.out.println(table);
             initialized = true;
         }
     }
@@ -70,6 +72,9 @@ public class TableEventListener {
 
     public static boolean tableExists(String tableId){
         System.out.println(tableId);
-        return tables.stream().anyMatch(table -> table.getTableId().equals(tableId));
+        return tables.stream().anyMatch(table -> {
+            System.out.println(table.getTableId());
+            return table.getTableId().equals(tableId);
+        });
     }
 }
