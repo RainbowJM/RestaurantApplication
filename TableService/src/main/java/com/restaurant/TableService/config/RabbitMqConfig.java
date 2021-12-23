@@ -30,7 +30,7 @@ public class RabbitMqConfig {
 
     // Register user event publisher
     @Bean
-    public EventPublisher userEventPublisher(RabbitTemplate template) {
+    public EventPublisher TableEventPublisher(RabbitTemplate template) {
         return new EventPublisher(projectExchange, template);
     }
 
