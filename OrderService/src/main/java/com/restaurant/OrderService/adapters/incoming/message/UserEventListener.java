@@ -33,7 +33,7 @@ public class UserEventListener {
     }
 
     @EventListener
-    private void onReadyEvent(ContextRefreshedEvent event) {
+    public void onReadyEvent(ContextRefreshedEvent event) {
         initializeUsers();
     }
 

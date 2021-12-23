@@ -30,4 +30,19 @@ public class OrderRestRepository implements OrderRepository {
             return new ArrayList<>();
         }
     }
+
+    @Override
+    public List<Order> getAllOrders() {
+        URI path = URI.create(this.orderEndpointPath + "/order/");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(privateToken);
+        ResponseEntity<Order[]> ordersResponse = this.client.exchange(path, HttpMethod.GET, new HttpEntity(headers), Order[].class);
+
+        if (ordersResponse.getStatusCode() == HttpStatus.OK && ordersResponse.getBody() != null) {
+            return List.of(ordersResponse.getBody());
+        }
+        else {
+            return new ArrayList<>();
+        }
+    }
 }
