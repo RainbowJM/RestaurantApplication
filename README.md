@@ -68,7 +68,7 @@ DELETE /order/:id/
 
 - Delete order at a certain restaurant
 
-####Table Service
+#### Table Service
 path: http://localhost:8082
 
 POST /table/
