@@ -11,3 +11,10 @@
 - Each domain object is tested using domain tests.
 - Each service is tested individually using service tests.
 - All of the endpoints are tested using multiple Postman scripts.
+
+### Endpoints
+menu-path: http://localhost:8080 \
+order-path: http://localhost:8081 \
+table-path: http://localhost:8082 \
+user-path: http://localhost:8083 \
+restaurant-path: http://localhost:8085 
