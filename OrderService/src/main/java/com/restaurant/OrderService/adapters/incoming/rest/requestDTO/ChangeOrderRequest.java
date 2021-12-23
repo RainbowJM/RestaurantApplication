@@ -1,6 +1,7 @@
 package com.restaurant.OrderService.adapters.incoming.rest.requestDTO;
 
 import com.restaurant.OrderService.core.domain.OrderLine;
+import com.restaurant.OrderService.core.domain.OrderStatus;
 import lombok.Getter;
 
 import java.text.ParseException;
@@ -15,7 +16,7 @@ public class ChangeOrderRequest {
     String customerId;
     List<CreateOrderLineRequest> lines;
     Date orderDate;
-    String status;
+    OrderStatus status;
     String deliverAddress;
     float totalPrice;
 
@@ -23,9 +24,9 @@ public class ChangeOrderRequest {
         this.customerId = customerId;
         this.restaurantId = restaurantId;
         this.lines = lines;
-        this.status = status;
         this.deliverAddress = deliverAddress;
         this.totalPrice = totalPrice;
+        this.status = OrderStatus.valueOf(status);
 
         try {
             this.orderDate = new SimpleDateFormat("dd/MM/yyyy").parse(orderDate);

@@ -8,8 +8,10 @@ import com.restaurant.OrderService.core.application.command.CancelOrderCommand;
 import com.restaurant.OrderService.core.application.command.ChangeOrderCommand;
 import com.restaurant.OrderService.core.application.command.CreateOrderCommand;
 import com.restaurant.OrderService.core.application.command.DeleteOrderCommand;
+import com.restaurant.OrderService.core.domain.OnlineOrder;
 import com.restaurant.OrderService.core.domain.Order;
 import com.restaurant.OrderService.core.domain.OrderLine;
+import com.restaurant.OrderService.core.domain.OrderStatus;
 import com.restaurant.OrderService.core.domain.exception.OrderNotFound;
 import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownRestaurantName;
 import com.restaurant.OrderService.core.domain.exception.OrderWithUnknownUsername;
@@ -44,7 +46,7 @@ public class OrderCommandService {
         for(CreateOrderLineRequest lines :  orderCommand.lines()){
             orderLines.add(new OrderLine(lines.getProductId(), lines.getAmount(), lines.getPrice()));
         }
-        Order order = new Order(orderCommand.customerId(), orderCommand.restaurantId(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.deliverAddress());
+        Order order = new OnlineOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.deliverAddress());
         return this.repository.save(order);
     }
 
@@ -66,7 +68,7 @@ public class OrderCommandService {
             throw new OrderNotFound(orderCommand.orderId());
 
         Order order = optOrder.get();
-        order.setStatus("Cancelled");
+        order.setStatus(OrderStatus.CANCELLED);
         return this.repository.save(order);
     }
 

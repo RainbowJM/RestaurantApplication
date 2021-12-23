@@ -1,6 +1,8 @@
 package com.restaurant.OrderService.adapters.incoming.rest.requestDTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.restaurant.OrderService.core.domain.Order;
+import com.restaurant.OrderService.core.domain.OrderStatus;
 import lombok.Getter;
 
 import java.text.ParseException;
@@ -15,7 +17,7 @@ public class CreateOrderRequest {
     List<CreateOrderLineRequest> orderLines;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
     Date orderDate;
-    String status;
+    OrderStatus status;
     String deliverAddress;
     float totalPrice;
 
@@ -23,9 +25,10 @@ public class CreateOrderRequest {
         this.customerId = customerId;
         this.restaurantId = restaurantId;
         this.orderLines = lines;
-        this.status = status;
         this.deliverAddress = deliverAddress;
         this.totalPrice = totalPrice;
+
+        this.status = OrderStatus.valueOf(status);
 
         try {
             this.orderDate = new SimpleDateFormat("dd/MM/yyyy").parse(orderDate);
