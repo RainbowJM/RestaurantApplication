@@ -3,6 +3,7 @@ package com.restaurant.MenuService.core.application;
 import com.restaurant.MenuService.adapters.incoming.message.RestaurantEventListener;
 import com.restaurant.MenuService.core.application.command.AddDishToMenuCommand;
 import com.restaurant.MenuService.core.application.command.AddMenuCommand;
+import com.restaurant.MenuService.core.application.command.DeleteDishFromMenuCommand;
 import com.restaurant.MenuService.core.application.command.DeleteMenuCommand;
 import com.restaurant.MenuService.core.domain.Dish;
 import com.restaurant.MenuService.core.domain.Menu;
@@ -49,6 +50,17 @@ public class MenuCommandService {
 			this.menuRepository.save(menu);
 		}
 		else throw new InstanceNotFoundException(addDishToMenuCommand.menuId());
+	}
+
+	public void handle(DeleteDishFromMenuCommand deleteDishFromMenu) throws InstanceNotFoundException{
+		if (menuRepository.existsById(deleteDishFromMenu.menuId())){
+			Optional<Menu> optional = menuRepository.findMenuById(deleteDishFromMenu.menuId());
+			Menu menu = optional.get();
+			this.menuRepository.deleteMenuById(deleteDishFromMenu.menuId());
+			menu.deleteDishById(deleteDishFromMenu.dishId());
+			this.menuRepository.save(menu);
+		}
+		else throw new InstanceNotFoundException();
 	}
 
 }

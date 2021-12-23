@@ -7,11 +7,11 @@ import com.restaurant.MenuService.core.application.MenuCommandService;
 import com.restaurant.MenuService.core.application.MenuQueryService;
 import com.restaurant.MenuService.core.application.command.AddDishToMenuCommand;
 import com.restaurant.MenuService.core.application.command.AddMenuCommand;
+import com.restaurant.MenuService.core.application.command.DeleteDishFromMenuCommand;
 import com.restaurant.MenuService.core.application.command.DeleteMenuCommand;
 import com.restaurant.MenuService.core.application.query.GetDishByMenuQuery;
 import com.restaurant.MenuService.core.application.query.GetMenuQuery;
 import com.restaurant.MenuService.core.application.query.GetAllMenus;
-import com.restaurant.MenuService.core.domain.Dish;
 import com.restaurant.MenuService.core.domain.Menu;
 import com.restaurant.MenuService.core.domain.exceptions.InvalidRestaurantIdException;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -76,16 +76,15 @@ public class MenuRestController {
 	}
 
 	@DeleteMapping(path = "/{menuId}/")
-	@RolesAllowed({"Staff", "Management"})
+	@RolesAllowed({"Staff", "Management", "OtherService"})
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteMenu(@PathVariable String menuId) throws InstanceNotFoundException {this.menuCommandService.handle(new DeleteMenuCommand(menuId));}
-
 
 	@DeleteMapping("/{menuId}/{dishId}/")
 	@RolesAllowed({"Staff", "Management", "OtherService"})
 	@ResponseStatus(HttpStatus.OK)
-	public void deleteDishFromMenu(@PathVariable String menuId, @PathVariable String dishId){
-		this.menuQueryService.handle(new GetMenuQuery(menuId)).get().deleteDishById(dishId);
+	public void deleteDishFromMenu(@PathVariable String menuId, @PathVariable String dishId) throws InstanceNotFoundException {
+		this.menuCommandService.handle(new DeleteDishFromMenuCommand(dishId, menuId));
 	}
 
 	@ExceptionHandler({AccessDeniedException.class})
