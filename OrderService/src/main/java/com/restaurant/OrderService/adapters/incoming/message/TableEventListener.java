@@ -35,10 +35,9 @@ public class TableEventListener {
     @EventListener
     public void onReadyEvent(ContextRefreshedEvent event) { initializeTables(); }
 
-    private void initializeTables(){
-        System.out.println("initializing...");
-        if(!initialized){
-            try{
+    private void initializeTables() {
+        if (!initialized){
+            try {
                 tables = new ArrayList<>(tableRepository.getAllTables());
             } catch (ResourceAccessException exception) {
                 System.out.println("Failed to connect to Table because it probably hasn't started yet. UserReadyEvent will need to be used to initialize this server.");

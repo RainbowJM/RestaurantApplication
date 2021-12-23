@@ -29,13 +29,14 @@ import java.util.Optional;
 @Transactional
 public class OrderCommandService {
     private final OrderRepository repository;
-    public OrderCommandService(OrderRepository repository) {
+    private final EventPublisher eventPublisher;
+
+    public OrderCommandService(OrderRepository repository, EventPublisher eventPublisher) {
         this.repository = repository;
 //        this.eventPublisher = eventPublisher;
     }
 
     public Order handle(CreateOrderCommand orderCommand) {
-        // todo: is online- or tableOrder?
         Order order;
 
         System.out.println(orderCommand.location());

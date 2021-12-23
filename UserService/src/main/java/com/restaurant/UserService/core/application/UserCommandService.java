@@ -84,7 +84,6 @@ public class UserCommandService {
         return updatedUser;
     }
 
-
     @EventListener
     public void sendUserReadyEvent(ApplicationReadyEvent event) {
         eventPublisher.publish(new UserReadyEvent());

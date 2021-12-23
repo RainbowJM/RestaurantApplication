@@ -7,12 +7,15 @@ import com.restaurant.TableService.core.application.command.ModifyTableCommand;
 import com.restaurant.TableService.core.domain.Table;
 import com.restaurant.TableService.core.domain.event.TableAddedEvent;
 import com.restaurant.TableService.core.domain.event.TableModifiedEvent;
+import com.restaurant.TableService.core.domain.event.TableReadyEvent;
 import com.restaurant.TableService.core.domain.event.TableRemovedEvent;
 import com.restaurant.TableService.core.domain.exception.FailedToDeleteTable;
 import com.restaurant.TableService.core.domain.exception.RestaurantNotFound;
 import com.restaurant.TableService.core.domain.exception.TableNotFound;
 import com.restaurant.TableService.core.port.RestaurantRepository;
 import com.restaurant.TableService.core.port.TableRepository;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,5 +85,10 @@ public class TableCommandService {
         }else{
             throw new FailedToDeleteTable(deleteTableCommand.id());
         }
+    }
+
+    @EventListener
+    public void sendTableReadyEvent(ApplicationReadyEvent event) {
+        eventPublisher.publish(new TableReadyEvent());
     }
 }

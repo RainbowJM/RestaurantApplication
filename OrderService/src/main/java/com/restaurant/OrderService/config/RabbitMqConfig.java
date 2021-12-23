@@ -35,6 +35,11 @@ public class RabbitMqConfig {
     @Value("${message.queue.restaurant-event-binding}")
     private String restaurantEventBinding;
 
+    @Value("${message.queue.menu-event}")
+    private String menuEventQueue;
+    @Value("${message.queue.menu-event-binding}")
+    private String menuEventBinding;
+
     @Value("${message.queue.table-event}")
     private String tableEventQueue;
     @Value("${message.queue.table-event-binding}")

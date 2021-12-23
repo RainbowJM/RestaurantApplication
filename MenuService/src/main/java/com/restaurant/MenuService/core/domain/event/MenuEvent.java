@@ -10,7 +10,7 @@ public abstract class MenuEvent {
 	private final UUID id = UUID.randomUUID();
 
 	@Getter
-	private  final Instant timestamp = Instant.now();
+	private final Instant timestamp = Instant.now();
 
 	public abstract String getEventKey();
 }
