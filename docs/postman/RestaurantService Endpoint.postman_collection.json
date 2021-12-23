@@ -1,0 +1,134 @@
+{
+	"info": {
+		"_postman_id": "2e0a45ba-0345-4ddd-977e-ca612783fab1",
+		"name": "RestaurantService Endpoint",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "All Requests",
+			"item": [
+				{
+					"name": "Get All Restaurants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{RestaurantServiceAddress}}/restaurant/",
+							"host": [
+								"{{RestaurantServiceAddress}}"
+							],
+							"path": [
+								"restaurant",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Restaurant",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"TestRestaurant\",\r\n    \"address\": \"Heidelberglaan 15\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{RestaurantServiceAddress}}/restaurant/",
+							"host": [
+								"{{RestaurantServiceAddress}}"
+							],
+							"path": [
+								"restaurant",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Restaurant",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{RestaurantServiceAddress}}/restaurant/TestRestaurant/",
+							"host": [
+								"{{RestaurantServiceAddress}}"
+							],
+							"path": [
+								"restaurant",
+								"TestRestaurant",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{JWToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "MenuServiceAddress",
+			"value": "localhost:8080"
+		},
+		{
+			"key": "OrderServiceAddress",
+			"value": "localhost:8081"
+		},
+		{
+			"key": "TableServiceAddress",
+			"value": "localhost:8082"
+		},
+		{
+			"key": "UserServiceAddress",
+			"value": "localhost:8083"
+		},
+		{
+			"key": "StorageServiceAddress",
+			"value": "localhost:8084"
+		},
+		{
+			"key": "RestaurantServiceAddress",
+			"value": "localhost:8085"
+		}
+	]
+}

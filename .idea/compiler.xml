@@ -2,27 +2,34 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="RestaurantService" />
         <module name="OrderService" />
         <module name="UserService" />
-        <module name="TableService" />
         <module name="MenuService" />
+        <module name="TableService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="MenuService" target="17" />
       <module name="OrderService" target="17" />
+      <module name="RestaurantService" target="17" />
+      <module name="StorageService" target="17" />
       <module name="TableService" target="17" />
       <module name="UserService" target="17" />
+      <module name="wrapper" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="MenuService" options="-parameters" />
       <module name="OrderService" options="-parameters" />
+      <module name="RestaurantService" options="-parameters" />
+      <module name="StorageService" options="-parameters" />
       <module name="TableService" options="-parameters" />
       <module name="UserService" options="-parameters" />
     </option>

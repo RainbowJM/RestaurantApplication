@@ -1,0 +1,291 @@
+{
+	"info": {
+		"_postman_id": "5c5d4a99-f84b-44da-961c-d61cd44faf96",
+		"name": "UserService Endpoint",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "All Requests",
+			"item": [
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.globals.set(\"JWToken\", jsonData.token);\r",
+									"console.info(\"Logged in successfully, and got a new JSON Web Token to be used for other requests: \"+jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user@example.com\",\r\n    \"password\": \"password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{UserServiceAddress}}/login",
+							"host": [
+								"{{UserServiceAddress}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.globals.set(\"JWToken\", jsonData.token);\r",
+									"console.info(\"Logged in successfully, and got a new JSON Web Token to be used for other requests: \"+jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin@example.com\",\r\n    \"password\": \"password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{UserServiceAddress}}/login",
+							"host": [
+								"{{UserServiceAddress}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{UserServiceAddress}}/user/",
+							"host": [
+								"{{UserServiceAddress}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register New User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"testuser@email.com\",\r\n    \"password\": \"password123\",\r\n    \"firstName\": \"first\",\r\n    \"lastName\": \"last\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{UserServiceAddress}}/user/",
+							"host": [
+								"{{UserServiceAddress}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Own User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"password123\",\r\n    \"firstName\": \"First\",\r\n    \"lastName\": \"Last\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{UserServiceAddress}}/user/",
+							"host": [
+								"{{UserServiceAddress}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"password123\",\r\n    \"role\": \"User\",\r\n    \"firstName\": \"First\",\r\n    \"lastName\": \"Last\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{UserServiceAddress}}/user/testuser@email.com/",
+							"host": [
+								"{{UserServiceAddress}}"
+							],
+							"path": [
+								"user",
+								"testuser@email.com",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Own User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{UserServiceAddress}}/user/",
+							"host": [
+								"{{UserServiceAddress}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{UserServiceAddress}}/user/testuser@email.com/",
+							"host": [
+								"{{UserServiceAddress}}"
+							],
+							"path": [
+								"user",
+								"testuser@email.com",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{JWToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "MenuServiceAddress",
+			"value": "localhost:8080"
+		},
+		{
+			"key": "OrderServiceAddress",
+			"value": "localhost:8081"
+		},
+		{
+			"key": "TableServiceAddress",
+			"value": "localhost:8082"
+		},
+		{
+			"key": "UserServiceAddress",
+			"value": "localhost:8083"
+		},
+		{
+			"key": "StorageServiceAddress",
+			"value": "localhost:8084"
+		},
+		{
+			"key": "RestaurantServiceAddress",
+			"value": "localhost:8085"
+		}
+	]
+}

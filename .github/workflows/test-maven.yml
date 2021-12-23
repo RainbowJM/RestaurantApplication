@@ -1,0 +1,27 @@
+name: Test All Services
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Test MenuService
+      run: mvn -B package --file ./MenuService/pom.xml
+    - name: Test OrderService
+      run: mvn -B package --file ./OrderService/pom.xml
+    - name: Test RestaurantService
+      run: mvn -B package --file ./RestaurantService/pom.xml
+    - name: Test TableService
+      run: mvn -B package --file ./TableService/pom.xml
+    - name: Test UserService
+      run: mvn -B package --file ./UserService/pom.xml
