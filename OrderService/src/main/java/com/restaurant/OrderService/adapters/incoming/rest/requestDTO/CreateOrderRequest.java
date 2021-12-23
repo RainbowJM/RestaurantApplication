@@ -36,9 +36,7 @@ public class CreateOrderRequest {
         this.restaurantId = restaurantId;
         this.location = location;
         this.status = OrderStatus.CREATED;
-        System.out.println(lines);
         this.orderLines = lines;
-        System.out.println(orderType);
 
         try {
             this.orderDate = new SimpleDateFormat("dd/MM/yyyy").parse(orderDate);

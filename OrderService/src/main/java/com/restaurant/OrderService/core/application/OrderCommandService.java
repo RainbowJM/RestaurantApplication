@@ -41,17 +41,8 @@ public class OrderCommandService {
         }
 
         if(orderCommand.orderType() == OrderType.ONLINE) order = new OnlineOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
-        else if(orderCommand.orderType() == OrderType.TABLE) order = new TableOrder();
+        else if(orderCommand.orderType() == OrderType.TABLE) order = new TableOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
         else throw new OrderNotFound("none");
-        return this.repository.save(order);
-    }
-
-    public Order handleCreateOnlineOrder(CreateOrderCommand orderCommand){
-        List<OrderLine> orderLines = new ArrayList<>();
-        for(CreateOrderLineRequest lines :  orderCommand.lines()){
-            orderLines.add(new OrderLine(lines.getProductId(), lines.getAmount(), lines.getPrice()));
-        }
-        Order order = new OnlineOrder(orderCommand.customerId(), orderCommand.restaurantId(), orderLines, orderCommand.orderdate(), orderCommand.status(), orderCommand.location());
         return this.repository.save(order);
     }
 
@@ -65,7 +56,7 @@ public class OrderCommandService {
 
         if(orderCommand.customerId() != null) order.setCustomerId(orderCommand.customerId());
         if(orderCommand.restaurantId() != null) order.setRestaurantId(orderCommand.restaurantId());
-        if(orderCommand.deliverAddress() != null) order.setDeliverAddress(orderCommand.deliverAddress());
+        if(orderCommand.deliverAddress() != null) order.setLocation(orderCommand.deliverAddress());
         if(orderCommand.lines() != null && !orderCommand.lines().isEmpty()) order.changeOrderLines(orderCommand.lines());
         for(OrderLine orderLine: order.getOrderLines())
             System.out.println(orderLine);

@@ -35,17 +35,17 @@ public abstract class Order {
     @Getter @Setter
     OrderStatus status;
     @Getter @Setter
-    String deliverAddress;
+    String location;
     @Getter
     float totalPrice;
 
-    public Order(String customerId, String restaurantId, List<OrderLine> lines, Date orderDate, OrderStatus status, String deliverAddress){
+    public Order(String customerId, String restaurantId, List<OrderLine> lines, Date orderDate, OrderStatus status, String location){
         this.customerId = customerId;
         this.restaurantId = restaurantId;
         this.orderLines = lines;
         this.orderDate = orderDate;
         this.status = status;
-        this.deliverAddress = deliverAddress;
+        this.location = location;
         if (!lines.isEmpty()) {
             for(OrderLine line : lines){
                 this.totalPrice += line.getPrice();
