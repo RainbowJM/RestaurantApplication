@@ -42,7 +42,27 @@ DELETE /menu/:menuId/dish/:id
 - Deletes a dish from a menu
 
 ####Order Service
-path: http://localhost:8081 
+path: http://localhost:8081
+
+GET /order/:restaurantId/ 
+
+- Gets queue from a certain restaurant
+
+POST /order/ 
+
+- Creates order in queue at a certain restaurant
+
+GET /order/:id/
+
+- Gets information and status from an order
+
+PATCH /order/:id/
+
+- Allows you to update status or order details from an order
+
+DELETE /order/:id/
+
+- Delete order at a certain restaurant
 
 ####Table Service
 path: http://localhost:8082 
