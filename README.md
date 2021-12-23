@@ -13,8 +13,8 @@
 - All of the endpoints are tested using multiple Postman scripts.
 
 ### Endpoints
-menu-path: http://localhost:8080 \
-order-path: http://localhost:8081 \
-table-path: http://localhost:8082 \
-user-path: http://localhost:8083 \
-restaurant-path: http://localhost:8085 
+Menu Service: http://localhost:8080 \
+Order Service: http://localhost:8081 \
+Table Service: http://localhost:8082 \
+User Service: http://localhost:8083 \
+Restaurant Service: http://localhost:8085 
