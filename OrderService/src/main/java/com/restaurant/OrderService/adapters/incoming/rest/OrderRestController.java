@@ -50,8 +50,8 @@ public class OrderRestController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     @RolesAllowed({"User", "Staff", "Management", "OtherService"})
-    public Order createOrder(@Valid @RequestBody CreateOrderRequest createOrderRequest) throws ParseException {
-        return this.commandService.handle(new CreateOrderCommand(createOrderRequest.getCustomerId(), createOrderRequest.getRestaurantId(), createOrderRequest.getOrderLines(), createOrderRequest.getOrderDate(), createOrderRequest.getStatus(), createOrderRequest.getDeliverAddress()));
+    public Order createOrder(@Valid @RequestBody CreateOrderRequest createOrderRequest) {
+        return this.commandService.handle(new CreateOrderCommand(createOrderRequest.getCustomerId(), createOrderRequest.getRestaurantId(), createOrderRequest.getOrderType(), createOrderRequest.getOrderLines(), createOrderRequest.getOrderDate(), createOrderRequest.getStatus(), createOrderRequest.getLocation()));
     }
 
     // region Put
