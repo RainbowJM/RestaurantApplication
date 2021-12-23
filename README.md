@@ -12,9 +12,35 @@
 - Each service is tested individually using service tests.
 - All of the endpoints are tested using multiple Postman scripts.
 
+###Postman Collection 
+For each microservice there is a postman collection for the testing in `docs/postman`
+
 ### Endpoints
 Menu Service: http://localhost:8080 \
+GET /menu/:restaurantId/ 
+- Gets a restaurant menu from a certain restaurant 
+
+POST /menu/:restaurantId/ 
+
+- Creates a new menu at a restaurant
+
+PATCH /menu/:menuId/
+
+- Allows you to change the menu using the menu id 
+
+GET /menu/:menuId/dish/:id/
+
+- Gets a restaurant dish with a specific id and see ingredient availability
+
+POST /menu/:menuId/dish/
+
+- Creates a new dish on a menu
+
+DELETE /menu/:menuId/dish/:id
+- Deletes a dish from a menu
+
 Order Service: http://localhost:8081 \
 Table Service: http://localhost:8082 \
 User Service: http://localhost:8083 \
 Restaurant Service: http://localhost:8085 
+
