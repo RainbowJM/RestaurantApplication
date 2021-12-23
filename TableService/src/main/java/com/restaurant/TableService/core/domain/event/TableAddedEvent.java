@@ -12,14 +12,14 @@ public class TableAddedEvent extends TableEvent {
         return KEY;
     }
 
-    @Getter
-    private final String tableId;
+//    @Getter
+//    private final String tableId;
 
     @Getter
     private final String restaurantId;
 
     @Getter
-    private final String numberOfSeats;
+    private final Long numberOfSeats;
 
     @Getter
     private final String location;

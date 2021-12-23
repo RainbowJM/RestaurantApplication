@@ -12,7 +12,7 @@ public class HttpClientConfig {
     private String restaurantEndpointPath;
 
     @Value("${restaurant.rest.private-token}")
-    public static String privateToken;
+    public String privateToken;
 
     @Bean
     public RestaurantRestRepository httpRestaurantRepository() {
