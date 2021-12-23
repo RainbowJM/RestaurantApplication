@@ -1,9 +1,8 @@
-package com.restaurant.MenuService.adapters.rest.requestDTO;
+package com.restaurant.MenuService.adapters.incoming.message.rest.requestDTO;
 
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 @Getter
 public class DishRequest {

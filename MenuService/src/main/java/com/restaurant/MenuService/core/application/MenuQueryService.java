@@ -1,13 +1,11 @@
 package com.restaurant.MenuService.core.application;
 
-import com.restaurant.MenuService.adapters.rest.requestDTO.DishRequest;
 import com.restaurant.MenuService.core.domain.Dish;
 import com.restaurant.MenuService.core.domain.Menu;
 import com.restaurant.MenuService.core.port.MenuRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

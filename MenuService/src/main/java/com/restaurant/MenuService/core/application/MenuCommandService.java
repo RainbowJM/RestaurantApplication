@@ -1,6 +1,5 @@
 package com.restaurant.MenuService.core.application;
 
-import com.restaurant.MenuService.adapters.rest.requestDTO.MenuRequest;
 import com.restaurant.MenuService.core.application.command.AddMenuCommand;
 import com.restaurant.MenuService.core.application.command.DeleteMenuCommand;
 import com.restaurant.MenuService.core.domain.Menu;
