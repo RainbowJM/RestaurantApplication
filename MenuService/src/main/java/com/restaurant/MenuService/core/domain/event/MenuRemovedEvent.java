@@ -13,5 +13,5 @@ public class MenuRemovedEvent extends MenuEvent {
 	}
 
 	@Getter
-	private final String id;
+	private final String menuId;
 }
