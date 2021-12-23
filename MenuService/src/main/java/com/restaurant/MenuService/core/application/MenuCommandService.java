@@ -1,13 +1,15 @@
 package com.restaurant.MenuService.core.application;
 
+import com.restaurant.MenuService.adapters.incoming.message.RestaurantEventListener;
 import com.restaurant.MenuService.core.application.command.AddMenuCommand;
 import com.restaurant.MenuService.core.application.command.DeleteMenuCommand;
 import com.restaurant.MenuService.core.domain.Menu;
+import com.restaurant.MenuService.core.domain.exceptions.InvalidRestaurantIdException;
+import com.restaurant.MenuService.core.domain.external.Restaurant;
 import com.restaurant.MenuService.core.port.MenuRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 
 @Service
@@ -19,13 +21,12 @@ public class MenuCommandService {
 		this.menuRepository = menuRepository;
 	}
 
-	public Menu handle(AddMenuCommand addMenuCommand) throws InstanceAlreadyExistsException {
-		if (menuRepository.existsById(addMenuCommand.menuId())){
-			throw new InstanceAlreadyExistsException(addMenuCommand.menuId());
+	public Menu handle(AddMenuCommand addMenuCommand) throws InvalidRestaurantIdException {
+		if (RestaurantEventListener.restaurantExists(addMenuCommand.restaurantId())) {
+			Menu newMenu = new Menu(addMenuCommand.restaurantId());
+			return this.menuRepository.save(newMenu);
 		}
-
-		Menu newMenu = new Menu(addMenuCommand.restaurantId());
-		return this.menuRepository.save(newMenu);
+		else throw new InvalidRestaurantIdException(addMenuCommand.restaurantId());
 	}
 
 	public void handle(DeleteMenuCommand deleteMenuCommand) throws InstanceNotFoundException {
